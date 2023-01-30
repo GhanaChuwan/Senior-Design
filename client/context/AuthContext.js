@@ -1,7 +1,8 @@
 import React, {createContext, useState, useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import axios from "../APIConnection/indexAPI";
 export const AuthContext = createContext();
+
 
 export const AuthProvider = ({children}) =>{
     const [isLoading, setIsLoading] = useState(false);
@@ -11,7 +12,7 @@ export const AuthProvider = ({children}) =>{
 
     const login = async (email, password) =>{
         setIsLoading(true);
-        axios.post('http://10.32.20.22:4000/sign-in', {
+        axios.post('/sign-in', {
             email, password
         }).then(async res => {
             let userInfo = res.data;
@@ -35,7 +36,7 @@ export const AuthProvider = ({children}) =>{
     const createAccount = async ({firstName, lastName, email, password, confirmPassword}) =>{
         setIsLoading(true);
         console.log({firstName, lastName, email, password, confirmPassword})
-        axios.post('http://10.32.20.22:4000/create-user', {
+        axios.post('/create-user', {
             email, firstName, lastName, password, confirmPassword
         }).then(async res => {
             let userInfo = res.data;
@@ -63,15 +64,19 @@ export const AuthProvider = ({children}) =>{
 
     const getSubjects = async ()=>{
         try{
-            const res = await axios.get("http://10.32.20.22:4000/subject",{
+
+            const res = await axios.get("/subject",{
                 headers:{
                     "authorization":`Bearer ${userToken}`
                 }
             })
+            console.log("HERE")
+
             setSubjects(res.data)
+
             await AsyncStorage.setItem('subjects', JSON.stringify(subjects));
         }catch (e){
-            console.log(error)
+            console.log(e)
         }
     }
 
@@ -80,6 +85,7 @@ export const AuthProvider = ({children}) =>{
             setIsLoading(true);
             let userInfo = await AsyncStorage.getItem('userInfo');
             let userToken = await AsyncStorage.getItem('userToken');
+
 
 
             userInfo = JSON.parse(userInfo);
@@ -94,6 +100,7 @@ export const AuthProvider = ({children}) =>{
         }catch (error)
         {
             console.log(`isLogged in error ${error}`);
+            setIsLoading(false);
         }
 
     }
@@ -101,7 +108,7 @@ export const AuthProvider = ({children}) =>{
         try{
             setIsLoading(true);
 
-            const data = await axios.post('http://10.32.20.22:4000/create-subject',{
+            const data = await axios.post('/create-subject',{
                 name:name,
                 color:color
             },{

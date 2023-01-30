@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useId} from "react";
 import {View, StyleSheet} from "react-native";
 import {
     Avatar,
@@ -31,7 +31,7 @@ export function SideBarContent(props) {
                    <View style={styles.userInfoSection}>
                        <View style={{flexDirection:'row', marginTop:15}}>
                            <Avatar.Text
-                               label="GC"
+                               label={`${userInfo.user.firstName[0].toUpperCase()}${userInfo.user.lastName[0].toUpperCase()}`}
                                size={64}
                            />
                            <View style={{flexDirection:'column', marginLeft:15}}>

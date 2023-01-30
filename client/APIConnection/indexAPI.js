@@ -1,4 +1,4 @@
 import axios from "axios";
 
-export default axios.create({baseURL:'http://192.168.1.5:4000'})
+export default axios.create({baseURL:'http://10.32.46.88:4000'})
 
