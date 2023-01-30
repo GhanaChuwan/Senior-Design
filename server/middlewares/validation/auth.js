@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken');
 const User = require('../../models/user.js')
 exports.isAuth = async (req, res, next) => {
-    console.log("HERE")
 
     try {
+        if (req.headers.authorization === undefined || req.headers.authorization == null) return res.json({ message: "unauthorized access!", success: false })
         const token = req.headers.authorization.split(" ")[1];
+
 
         let decodedData;
 
-        if (token) {
+        if (token != null) {
             decodedData = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decodedData)
 
@@ -18,8 +19,7 @@ exports.isAuth = async (req, res, next) => {
 
         next();
     } catch (error) {
-        console.log(error);
-        return res.json({message:"unauthorized access!", success:false})
+        return res.json({ message: "unauthorized access!", success: false })
     }
 
 };
