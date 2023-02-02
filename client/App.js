@@ -1,19 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import {SafeAreaView, StyleSheet,} from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import MainContainer from "./mainContainer/MainContainer";
 import SignIn from "./screens/SignInScreeen/SignIn";
+import { StyleSheet } from "react-native";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-        <MainContainer/>
-    </SafeAreaView>
+    <SafeAreaProvider style={styles.container}>
+      <MainContainer />
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdf6ec',
+    justifyContent: "space-between",
   },
 });

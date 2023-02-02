@@ -51,7 +51,7 @@ export default function CreateSubject({navigation, route}) {
                             thumbSize={40}
                             noSnap={true}
                             sliderSize={40}
-                            noSnap={true}
+                            // Snap={true}
                             row={false}
 
                         />
