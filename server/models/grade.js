@@ -1,26 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const gradeActivity = new mongoose.Schema({
+const gradeSchema = new mongoose.Schema({
     gradeName: {
         type: String,
-        required: true
+        required: true,
     },
     gradeType: {
         type: String,
-        required: true
+        required: true,
     },
     gradePoints: {
         type: String,
-        required: true
+        required: true,
     },
-    gradeSubject: {
+    createdBy: {
         type: String,
-        required: true
+        required: true,
     },
-    createdAt: {
-        type: Date,
-        default: new Date(),
-    }
-})
+});
 
-module.exports = mongoose.model('Grade', gradeActivity)
+module.exports = mongoose.model("Grade", gradeSchema);

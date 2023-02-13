@@ -10,19 +10,47 @@ export default function Grades({ navigation, route }) {
 
     const { title } = route.params;
     const { grades, setGrades } = useContext(AuthContext);
+    const { getAllGrades } = useContext(AuthContext);
+    const { deleteGrade } = useContext(AuthContext);
+
     useEffect(() => {
-        navigation.setOptions({ headerShown: true })
+        navigation.setOptions({ headerShown: true });
+        retrieveGrades();
     }, [])
+
+
+    const retrieveGrades = async () => {
+        try {
+            await getAllGrades({
+                subject: title,
+            })
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+    }
     const alertUser = (item) => {
         Alert.alert(undefined,
             "are you sure you want to delete task? ",
             [
-                { text: "Yes", onPress: () => { let newGrade = grades.filter(grade => grade != item); setGrades(newGrade) } },
+                {
+                    text: "Yes", onPress: async () => {
+                        // let newGrade = grades.filter(grade => grade != item);
+                        // setGrades(newGrade);
+                        console.log("deleting grade");
+                        await deleteGrade({
+                            subject: title,
+                            grade: item
+                        });
+                        //then update grades
+                    }
+                },
                 { text: "Cancel" }
             ],
         )
     }
     return (
+
         <SafeAreaView style={styles.container}>
 
             <View style={styles.header}>
@@ -40,7 +68,7 @@ export default function Grades({ navigation, route }) {
             <View style={styles.assignments}>
                 <FlatList
                     data={grades}
-                    renderItem={({ item }) => (<TouchableOpacity onLongPress={() => alertUser(item)} style={styles.task}><Text style={styles.name}>{item.name}</Text><Text style={styles.type}>{item.type}</Text><Text style={styles.points}>{item.points}</Text></TouchableOpacity>)}
+                    renderItem={({ item }) => (<TouchableOpacity onLongPress={() => alertUser(item)} style={styles.task}><Text style={styles.name}>{item.gradeName}</Text><Text style={styles.type}>{item.gradeType}</Text><Text style={styles.points}>{item.gradePoints}</Text></TouchableOpacity>)}
                 />
             </View>
 

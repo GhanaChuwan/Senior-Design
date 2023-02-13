@@ -20,7 +20,7 @@ export default function NewGrade({ navigation, route }) {
                 gradeName: name,
                 gradeType: type,
                 gradePoints: points,
-                subject: title
+                subject: title,
             })
         }
         catch (error) {
@@ -32,8 +32,8 @@ export default function NewGrade({ navigation, route }) {
         <View style={styles.container}>
             <TextInput style={styles.input} placeholder='Name' onChangeText={(e) => setName(e)} />
             <TextInput style={styles.input} placeholder='Grade Type' onChangeText={(e) => setType(e)} />
-            <TextInput style={styles.input} placeholder='Due Date' onChangeText={(e) => setPoints(e)} />
-            <TouchableOpacity onPress={() => { storeGrade; navigation.navigate("Grades", { title: title }) }}>
+            <TextInput style={styles.input} placeholder='points earned' onChangeText={(e) => setPoints(e)} />
+            <TouchableOpacity onPress={() => { storeGrade(); navigation.navigate("Grades", { title: title }) }}>
                 <Text style={styles.btn}>Create Grade</Text>
             </TouchableOpacity>
 
