@@ -5,7 +5,7 @@ import { StyleSheet, View, Text } from "react-native";
 import CreateMenu from "../../components/CreateMenu";
 
 export default function SubjectPage({ navigation, route }) {
-  const { title } = route.params;
+  const { title, subjectId } = route.params;
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });
@@ -14,7 +14,7 @@ export default function SubjectPage({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <CreateMenu />
+      <CreateMenu navigation={navigation} subjectId={subjectId} />
     </View>
   );
 }

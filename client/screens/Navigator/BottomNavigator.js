@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -15,7 +15,7 @@ const rewardName = "Reward";
 
 const Tab = createBottomTabNavigator();
 
-function BottomTabNavigator() {
+function BottomTabNavigator({ navigation, sideBarNav }) {
   return (
     <Tab.Navigator
       initialRouteName={subjectName}
@@ -47,22 +47,25 @@ function BottomTabNavigator() {
       <Tab.Screen
         name={subjectName}
         component={Subject}
-        initialParams={{ item: undefined }}
+        initialParams={{ item: undefined, title: "Subject" }}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name={calendarName}
         component={Calendar}
+        initialParams={{ sideBarNav: navigation, title: "Calander" }}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name={resourcesName}
         component={Resources}
+        initialParams={{ title: "Resource" }}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name={rewardName}
         component={Reward}
+        initialParams={{ title: "Reward" }}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
