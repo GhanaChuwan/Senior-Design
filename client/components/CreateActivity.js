@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-export default function CreateFolder({ navigation, location }) {
+export default function CreateActivity({ navigation, location }) {
   return (
     <TouchableOpacity style={styles.btn}>
       <View style={styles.btnContainer}>
         <AntDesign
-          name="addfolder"
+          name="addfile"
           size={30}
           onPress={() => navigation.navigate(location)}
         />
