@@ -1,25 +1,23 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import {
-  useSafeAreaFrame,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-
 import BottomNavigator from "../BottomNavigator";
 import { SideBarContent } from "./SideBarContent";
 import CreateSubject from "../../subjectScreens/CreateSubject";
 import SubjectPage from "../../subjectScreens/SubjectPage";
+import { View, StyleSheet, TouchableOpacity, Text, Button } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
+import AppHeader from "../../../components/AppHeader";
+import { Title } from "react-native-paper";
+import CreateFolder from "../../../components/CreateFolder";
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator;
 
-function SideNavigator() {
-  const insets = useSafeAreaInsets();
-
+function SideNavigator({ navigation }) {
   return (
     <Drawer.Navigator drawerContent={(props) => <SideBarContent {...props} />}>
+      {/* <Drawer.Screen name="Home" component={Home} /> */}
       <Drawer.Screen
         name="Dashboard"
         component={BottomNavigator}

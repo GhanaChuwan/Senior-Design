@@ -10,7 +10,7 @@ import SignUp from "../screens/SignUpScreen/SignUp";
 import CreateMenu from "../components/CreateMenu";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator, View } from "react-native";
-
+import CreateActivity from "../screens/activityScreen/CreateActivity";
 const Stack = createNativeStackNavigator();
 
 function MainNav() {
@@ -52,6 +52,12 @@ function MainNav() {
               options={{ title: "Create a subject" }}
             />
             <Stack.Screen name="SubjectPage" component={SubjectPage} />
+            <Stack.Screen
+              name="CreateActivity"
+              component={CreateActivity}
+              initialParams={{ color: undefined }}
+              options={{ title: "Create activity" }}
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>
