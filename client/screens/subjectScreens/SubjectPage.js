@@ -14,7 +14,7 @@ export default function SubjectPage({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <CreateMenu navigation={navigation} subjectId={subjectId} />
+      <CreateMenu navigation={navigation} subjectId={subjectId} title={title} />
     </View>
   );
 }

@@ -11,6 +11,8 @@ import CreateMenu from "../components/CreateMenu";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator, View } from "react-native";
 import CreateActivity from "../screens/activityScreen/CreateActivity";
+import Grades from "../../client/screens/activityScreen/Grade";
+import NewGrade from "../../client/screens/activityScreen/NewGrade";
 const Stack = createNativeStackNavigator();
 
 function MainNav() {
@@ -57,6 +59,12 @@ function MainNav() {
               component={CreateActivity}
               initialParams={{ color: undefined }}
               options={{ title: "Create activity" }}
+            />
+            <Stack.Screen name="Grades" component={Grades} />
+            <Stack.Screen
+              name="NewGrade"
+              component={NewGrade}
+              options={{ title: "Create a grade" }}
             />
           </Stack.Group>
         )}

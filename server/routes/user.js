@@ -30,7 +30,11 @@ const {
   validateResources,
 } = require("../middlewares/validation/resourcesValidation");
 const { resources } = require("../controllers/resources");
-const { createGrade, getAllGrades } = require("../controllers/grade");
+const {
+  createGrade,
+  getAllGrades,
+  deleteGrade,
+} = require("../controllers/grade");
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
@@ -43,7 +47,8 @@ router.delete("/delete-activity", isAuth, deleteActivity);
 router.post("/create-activity", isAuth, createActivity);
 router.get("/activity", isAuth, getActivity);
 router.get("/activity-all/:subjectId", isAuth, getAllActivity);
-router.post("/add-grade", isAuth, createGrade);
-router.get("/getAllGrade", isAuth, getAllGrades);
+router.post("/create-grade", isAuth, createGrade);
+router.post("/getAllGrades", isAuth, getAllGrades);
+router.post("/deleteGrade", isAuth, deleteGrade);
 router.post("/resources", validateResources, resources);
 module.exports = router;

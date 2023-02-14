@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, Divider, List } from "react-native-paper";
-export default function CreateMenu({ navigation, location, subjectId }) {
+export default function CreateMenu({ navigation, location, subjectId, title }) {
   return (
     <View>
       <TouchableOpacity>
@@ -16,7 +16,7 @@ export default function CreateMenu({ navigation, location, subjectId }) {
         <List.Item
           title="Grade"
           left={(props) => <List.Icon {...props} icon="folder" />}
-          onPress={() => navigation.navigate(location)}
+          onPress={() => navigation.navigate("Grades", { title: title })}
         />
         <Divider />
       </TouchableOpacity>
