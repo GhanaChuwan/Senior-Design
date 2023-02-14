@@ -1,12 +1,17 @@
 const Grade = require("../models/grade");
 const Subject = require("../models/subject");
 const User = require("../models/user");
+
 exports.createGrade = async (req, res) => {
   const { gradeName, gradeType, gradePoints, subjectId } = req.body;
   const { userId } = req.user;
 
   try {
-    const subject = await Subject.findById(subjectId);
+    const subjectID = await Subject.findOne({
+      name: subjectId,
+      createdBy: userId,
+    });
+    const subject = await Subject.findById(subjectID._id.toString());
 
     if (subject != null) {
       const grade = await Grade.create({
@@ -16,7 +21,8 @@ exports.createGrade = async (req, res) => {
         createdBy: userId,
       });
 
-      subject.grades.push(grade._id);
+      subject.grades.push(grade._id.toString());
+      subject.save();
       await Subject.findByIdAndUpdate(subjectId, subject, { new: true });
       return res.status(201).json(grade);
     } else {
@@ -28,18 +34,45 @@ exports.createGrade = async (req, res) => {
     return res.status(400).json({ success: false, message: error.message });
   }
 };
-exports.getAllGrades = async (res, req) => {
+exports.getAllGrades = async (req, res) => {
   const { subjectId } = req.body;
-
+  const { userId } = req.user;
   try {
     let grades = [];
-    const subject = await Subject.findById(subjectId);
+    const subjectID = await Subject.findOne({
+      name: subjectId,
+      createdBy: userId,
+    });
+    const subject = await Subject.findById(subjectID._id.toString());
 
     for (let i = 0; i < subject.grades.length; i++) {
       const a = await Grade.findById(subject.grades[i]);
       grades.push(a);
     }
+    return res.status(200).json(grades);
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
 
+exports.deleteGrade = async (req, res) => {
+  const { subjectId, grade } = req.body;
+  const { userId } = req.user;
+  try {
+    const subjectID = await Subject.findOne({
+      name: subjectId,
+      createdBy: userId,
+    });
+    const subject = await Subject.findById(subjectID._id.toString());
+
+    await Grade.findByIdAndDelete(grade._id);
+
+    for (let i = 0; i < subject.grades.length; i++) {
+      if (subject.grades[i] == grade._id) {
+        subject.grades.splice(i, 1);
+      }
+    }
+    subject.save();
     return res.status(200).json(grades);
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

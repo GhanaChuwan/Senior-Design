@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fdf6ec",
     flex: 1,
     marginTop: 5,
+    marginHorizontal: 10,
   },
   card: {
     backgroundColor: "#3B71F3",
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    marginVertical: 10,
   },
   card1: {
     backgroundColor: "#3B71F3",
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: 10,
+    marginVertical: 10,
   },
   card2: {
     backgroundColor: "#3B71F3",
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: 10,
+    marginVertical: 10,
   },
   card3: {
     backgroundColor: "#3B71F3",
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: 10,
+    marginVertical: 10,
   },
   card4: {
     backgroundColor: "#3B71F3",
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: 10,
+    marginVertical: 10,
   },
   card5: {
     backgroundColor: "#3B71F3",
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    marginTop: 10,
+    marginVertical: 10,
   },
   card6: {
     backgroundColor: "#3B71F3",

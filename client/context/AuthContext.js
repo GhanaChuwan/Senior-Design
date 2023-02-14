@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [grades, setGrades] = useState([]);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -183,6 +184,75 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const createGrade = async ({
+    gradeName,
+    gradeType,
+    gradePoints,
+    subject,
+  }) => {
+    try {
+      const data = await axios.post(
+        "/create-grade",
+        {
+          gradeName: gradeName,
+          gradeType: gradeType,
+          gradePoints: gradePoints,
+          subjectId: subject,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      console.log("2eq2q", data.message);
+      // setGrades([...grades, data.data])
+      await AsyncStorage.setItem("grades", JSON.stringify(grades));
+    } catch (error) {
+      console.log(error);
+      console.log("was not able to create grade");
+    }
+  };
+  const getAllGrades = async ({ subject }) => {
+    try {
+      const res = await axios.post(
+        "/getAllGrades",
+        {
+          subjectId: subject,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      setGrades(res.data);
+
+      await AsyncStorage.setItem("grades", JSON.stringify(grades));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const deleteGrade = async ({ subject, grade }) => {
+    console.log("delete authcontext");
+    try {
+      const res = axios.post(
+        "/deleteGrade",
+        {
+          subjectId: subject,
+          grade: grade,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -210,6 +280,10 @@ export const AuthProvider = ({ children }) => {
         createActivity,
         activities,
         getAllActivity,
+        createGrade,
+        getAllGrades,
+        deleteGrade,
+        grades,
       }}
     >
       {children}
