@@ -46,10 +46,11 @@ export default function Activity({ navigation, route }) {
   };
   const [name, setName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
-  const { Activities, setActivities } = useContext(AuthContext);
 
   const activity = async () => {
     try {
+      const { Activities, setActivities } = useContext(AuthContext);
+
       await createActivity({
         name: name,
         color: selectedColor,

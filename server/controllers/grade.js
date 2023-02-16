@@ -58,6 +58,7 @@ exports.getAllGrades = async (req, res) => {
 exports.deleteGrade = async (req, res) => {
   const { subjectId, grade } = req.body;
   const { userId } = req.user;
+  const grades = [];
   try {
     const subjectID = await Subject.findOne({
       name: subjectId,
@@ -72,6 +73,8 @@ exports.deleteGrade = async (req, res) => {
         subject.grades.splice(i, 1);
       }
     }
+    console.log(subject.grades);
+
     subject.save();
     return res.status(200).json(grades);
   } catch (error) {
