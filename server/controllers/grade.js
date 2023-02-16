@@ -7,11 +7,11 @@ exports.createGrade = async (req, res) => {
   const { userId } = req.user;
 
   try {
-    // const subjectID = await Subject.findOne({
-    //   name: subjectId,
-    //   createdBy: userId,
-    // });
-    const subject = await Subject.findById(subjectId);
+    const subjectID = await Subject.findOne({
+      name: subjectId,
+      createdBy: userId,
+    });
+    const subject = await Subject.findById(subjectID);
 
     if (subject != null) {
       const grade = await Grade.create({
@@ -46,8 +46,10 @@ exports.getAllGrades = async (req, res) => {
 
     for (let i = 0; i < subject.grades.length; i++) {
       const a = await Grade.findById(subject.grades[i]);
-      grades.push(a);
+      if (a != null)
+        grades.push(a);
     }
+    console.log(grades);
     return res.status(200).json(grades);
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

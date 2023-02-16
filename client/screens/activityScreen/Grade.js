@@ -87,6 +87,7 @@ export default function Grades({ navigation, route }) {
             grade: item,
           });
           //then update grades
+          retrieveGrades();
 
         },
       },
