@@ -63,7 +63,7 @@ function ActivityTime({ navigation, route }) {
           </Portal>
         </Provider>
         <CustomButton
-          style={{ marginTop: 10, alignItems: "flex-end", zIndex: -1 }}
+          style={{ marginTop: 10, alignItems: "flex-end", zIndex: zIndex }}
           text="Done"
           onPress={showModal}
         />

@@ -9,6 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  Platform,
 } from "react-native";
 import { Modal, Portal, Button, Provider, Title } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
@@ -85,13 +86,16 @@ export default function Activity({ navigation, route }) {
   }, [route]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+    >
       <View
         style={{
           position: "absolute",
           height: "100%",
           width: "100%",
-          zIndex: 1,
+          // zIndex: -1,
         }}
       >
         <Provider>
@@ -156,7 +160,7 @@ export default function Activity({ navigation, route }) {
       </Button>
 
       <FlatList
-        style={{ zIndex: zIndex, marginBottom: 5 }}
+        style={{ zIndex: -1, marginBottom: 10 }}
         data={activities}
         renderItem={({ item }) => (
           <CustomActivityCard
