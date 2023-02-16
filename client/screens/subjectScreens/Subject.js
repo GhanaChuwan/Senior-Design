@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   },
   subjectContainer: {
     marginTop: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
     flex: 1,
   },
 });

@@ -9,7 +9,7 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
           title="Activity"
           left={(props) => <List.Icon {...props} icon="folder" />}
           onPress={() =>
-            navigation.navigate("CreateActivity", { subjectId: subjectId })
+            navigation.navigate("Activity", { subjectId: subjectId })
           }
         />
         <Divider />

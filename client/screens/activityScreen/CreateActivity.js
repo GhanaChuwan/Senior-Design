@@ -8,6 +8,7 @@ import {
   title,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Modal, Portal, Button, Provider, Title } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
@@ -19,19 +20,19 @@ import { AuthContext } from "../../context/AuthContext";
 import moment from "moment";
 
 export default function Activity({ navigation, route }) {
-  const { createActivity, getAllActivity, activities } =
+  const { createActivity, getAllActivity, activities, deleteActivity } =
     useContext(AuthContext);
   const [visible, setVisible] = React.useState(false);
-  const [zIndex, setZIndex] = useState(2);
+  const [zIndex, setZIndex] = useState(3);
 
-  const { subjectId } = route.params;
+  const { subjectId, activityId } = route.params;
 
   useEffect(() => {
     getAllActivity({ subjectId });
   }, [subjectId]);
 
   const showModal = () => {
-    setZIndex(0);
+    setZIndex(-1);
     setVisible(true);
   };
   const hideModal = () => {
@@ -60,16 +61,20 @@ export default function Activity({ navigation, route }) {
       console.log(error.message);
     }
   };
-  const Delete = (activities) => {
-    setActivity((prev) => {
-      const r = prev.filter((pre) => pre !== activities);
-      return r;
-    });
-  };
+  // const Delete = (activities) => {
+  //   setActivity((prev) => {
+  //     const r = prev.filter((pre) => pre !== activities);
+  //     return r;
+  //   });
+  // };
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#fdf6ec",
+        color: "#fff",
+      },
       headerShown: true,
       //   headerRight: () => (
       //     <View>
@@ -144,14 +149,14 @@ export default function Activity({ navigation, route }) {
       </View>
 
       <Button
-        style={{ marginTop: 10, alignItems: "flex-end", zIndex: zIndex }}
+        style={{ marginTop: 20, alignItems: "flex-end", zIndex: zIndex }}
         onPress={showModal}
       >
         Create Activity +
       </Button>
 
       <FlatList
-        style={{ zIndex: zIndex, marginBottom: 0 }}
+        style={{ zIndex: zIndex, marginBottom: 5 }}
         data={activities}
         renderItem={({ item }) => (
           <CustomActivityCard
@@ -165,7 +170,30 @@ export default function Activity({ navigation, route }) {
   );
 }
 
-const CustomActivityCard = ({ activity }) => {
+const CustomActivityCard = ({
+  activity,
+  navigation,
+  route,
+  activityId,
+  item,
+}) => {
+  const AlertUser = () => {
+    Alert.alert(undefined, "are you sure you want to delete activity", [
+      {
+        text: "Yes",
+        onPress: async (name) => {
+          console.log("deleting activity");
+          await deleteActivity({
+            name: name,
+            color: selectedColor,
+            subjectId: subjectId,
+            activityId: activityId,
+          });
+        },
+      },
+      { text: "Cancel" },
+    ]);
+  };
   return (
     <Card
       style={{
@@ -175,7 +203,13 @@ const CustomActivityCard = ({ activity }) => {
         padding: 10,
       }}
     >
-      <TouchableOpacity style={styles.cardContainer}>
+      <TouchableOpacity
+        style={styles.cardContainer}
+        onLongPress={() => AlertUser(item)}
+        onPress={() => {
+          navigation.navigate("ActivitySession", { title: activity.name });
+        }}
+      >
         <Card.Content style={styles.card}>
           <Title style={styles.title}>{activity.name}</Title>
           <Text style={styles.date}>
@@ -188,29 +222,6 @@ const CustomActivityCard = ({ activity }) => {
   );
 };
 
-// const ActivityList = ({ navigation, route }) => {
-//   const { Activity, setActivity } = useContext(AuthContext);
-
-//   const Delete = (activities) => {
-//     setActivity((prev) => {
-//       const r = prev.filter((pre) => pre !== activities);
-//       return r;
-//     });
-//   };
-
-//   return (
-//     <FlatList
-//       data={Activity}
-//       renderItem={({ item }) => (
-//         <CustomActivityCard
-//           navigation={navigation}
-//           subject={item}
-//           deleteSubject={Delete}
-//         />
-//       )}
-//     />
-//   );
-// };
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fdf6ec",
@@ -227,6 +238,7 @@ const styles = StyleSheet.create({
     margin: 20,
     textAlign: "center",
   },
+
   colorChooser: {
     fontSize: 20,
     borderTopWidth: 1,

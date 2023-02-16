@@ -47,8 +47,10 @@ router.delete("/delete-activity", isAuth, deleteActivity);
 router.post("/create-activity", isAuth, createActivity);
 router.get("/activity", isAuth, getActivity);
 router.get("/activity-all/:subjectId", isAuth, getAllActivity);
+
 router.post("/create-grade", isAuth, createGrade);
 router.post("/getAllGrades", isAuth, getAllGrades);
 router.post("/deleteGrade", isAuth, deleteGrade);
+
 router.post("/resources", validateResources, resources);
 module.exports = router;

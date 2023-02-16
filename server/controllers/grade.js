@@ -7,11 +7,11 @@ exports.createGrade = async (req, res) => {
   const { userId } = req.user;
 
   try {
-    const subjectID = await Subject.findOne({
-      name: subjectId,
-      createdBy: userId,
-    });
-    const subject = await Subject.findById(subjectID._id.toString());
+    // const subjectID = await Subject.findOne({
+    //   name: subjectId,
+    //   createdBy: userId,
+    // });
+    const subject = await Subject.findById(subjectId);
 
     if (subject != null) {
       const grade = await Grade.create({
@@ -23,7 +23,6 @@ exports.createGrade = async (req, res) => {
 
       subject.grades.push(grade._id.toString());
       subject.save();
-      await Subject.findByIdAndUpdate(subjectId, subject, { new: true });
       return res.status(201).json(grade);
     } else {
       return res

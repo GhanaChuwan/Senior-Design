@@ -4487,7 +4487,7 @@
   "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
   "version" "4.1.1"
 
-"lodash@^4.17.13", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.17.4":
+"lodash@^4.0.0", "lodash@^4.17.13", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.17.4":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -5569,7 +5569,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.5.10", "prop-types@^15.7.0", "prop-types@^15.7.2":
+"prop-types@^15.5.10", "prop-types@^15.5.8", "prop-types@^15.7.0", "prop-types@^15.7.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -5706,6 +5706,11 @@
   "resolved" "https://registry.npmjs.org/react-moment/-/react-moment-1.1.3.tgz"
   "version" "1.1.3"
 
+"react-native-background-timer@*":
+  "integrity" "sha512-TE4Kiy7jUyv+hugxDxitzu38sW1NqjCk4uE5IgU2WevLv7sZacaBc6PZKOShNRPGirLl1NWkaG3LDEkdb9Um5g=="
+  "resolved" "https://registry.npmjs.org/react-native-background-timer/-/react-native-background-timer-2.4.1.tgz"
+  "version" "2.4.1"
+
 "react-native-calendars@^1.1293.0":
   "integrity" "sha512-/wWBlNOooHAVTCDhZptdeZEa1+DTUW1E3cI9auEPblJ56t1TXqe0gVK1UTchPDsA5d2eIXxdhTThpFD846yq7g=="
   "resolved" "https://registry.npmjs.org/react-native-calendars/-/react-native-calendars-1.1293.0.tgz"
@@ -5731,6 +5736,20 @@
     "flow-parser" "^0.121.0"
     "jscodeshift" "^0.13.1"
     "nullthrows" "^1.1.1"
+
+"react-native-countup-component@^0.0.3":
+  "integrity" "sha512-GM+oAqBSvS0uC6yqTmqjJyOAyF/cI2zzHxE0qdQaz0uDbJZdZzNRnSMgaZbVe/ZnO15dixqE/om7FetCXBiSqg=="
+  "resolved" "https://registry.npmjs.org/react-native-countup-component/-/react-native-countup-component-0.0.3.tgz"
+  "version" "0.0.3"
+  dependencies:
+    "lodash" "^4.0.0"
+    "prop-types" "^15.5.8"
+    "sprintf-js" "^1.1.1"
+
+"react-native-element-timer@^2.1.2":
+  "integrity" "sha512-gLlHg1Pwb88rDdPxUaUTfCtZWBfOFTv0uqb6g9XTjk1QUr1LZds8mWBa96Fm/a+WAQ3kCGgEROyXBDriXJyMSQ=="
+  "resolved" "https://registry.npmjs.org/react-native-element-timer/-/react-native-element-timer-2.1.2.tgz"
+  "version" "2.1.2"
 
 "react-native-elevation@^1.0.0":
   "integrity" "sha512-BWIKcEYtzjRV6GpkX0Km5/w2E7fgIcywiQOT7JZTc5NSbv/YI9kpFinB9lRFsOoRVGmiqq/O3VfP/oH2clIiBA=="
@@ -5808,7 +5827,7 @@
   dependencies:
     "react-native-elevation" "^1.0.0"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>= 0.30.0", "react-native@0.70.5":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>= 0.30.0", "react-native@>=0.47.0", "react-native@0.70.5":
   "integrity" "sha512-5NZM80LC3L+TIgQX/09yiyy48S73wMgpIgN5cCv3XTMR394+KpDI3rBZGH4aIgWWuwijz31YYVF5504+9n2Zfw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.70.5.tgz"
   "version" "0.70.5"
@@ -6431,6 +6450,11 @@
   "version" "1.0.1"
   dependencies:
     "through" "2"
+
+"sprintf-js@^1.1.1":
+  "integrity" "sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug=="
+  "resolved" "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.2.tgz"
+  "version" "1.1.2"
 
 "sprintf-js@~1.0.2":
   "integrity" "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g=="

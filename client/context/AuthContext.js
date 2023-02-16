@@ -184,6 +184,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteActivity = async ({ subjectId, activityId }) => {
+    try {
+      const res = axios.post(
+        "/delete-activity",
+        {
+          subjectId: subjectId,
+          activityId: activityId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const createGrade = async ({
     gradeName,
     gradeType,
@@ -280,6 +298,7 @@ export const AuthProvider = ({ children }) => {
         createActivity,
         activities,
         getAllActivity,
+        deleteActivity,
         createGrade,
         getAllGrades,
         deleteGrade,
