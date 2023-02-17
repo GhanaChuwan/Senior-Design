@@ -178,12 +178,7 @@ export default function Grades({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  modalHeader: {
-    textAlign: "center",
-    fontSize: 30,
-
-    marginTop: 20,
+    marginLeft: 12,
   },
   task: {
     marginTop: 15,
@@ -193,6 +188,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   assignments: {
+    top: 50,
+    marginLeft: 9,
+    position: "absolute",
+    bottom: 30,
     top: 50,
     marginLeft: 9,
     position: "absolute",

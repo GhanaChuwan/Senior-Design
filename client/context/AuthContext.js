@@ -134,7 +134,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(false);
   };
-  const deleteSubject = async ({}) => {
+  const deleteSubject = async ({ }) => {
     try {
       setIsLoading(true);
       const data = await axios.delete("/delete-subject");
@@ -224,7 +224,12 @@ export const AuthProvider = ({ children }) => {
         }
       );
       console.log("2eq2q", data.message);
-      // setGrades([...grades, data.data])
+      const oldGrade = grades;
+      console.log(data.data)
+      oldGrade.push(data.data)
+
+
+      setGrades([...grades, data.data])
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
@@ -244,7 +249,6 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-
       setGrades(res.data);
 
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
@@ -253,7 +257,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
   const deleteGrade = async ({ subject, grade }) => {
-    console.log("delete authcontext");
     try {
       const res = axios.post(
         "/deleteGrade",
