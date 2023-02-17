@@ -10,7 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
@@ -18,11 +18,12 @@ import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Grades({ navigation, route }) {
   const { title } = route.params;
-  const { grades, getAllGrades, createGrade, deleteGrade } = useContext(AuthContext);
+  const { grades, getAllGrades, createGrade, deleteGrade } =
+    useContext(AuthContext);
 
   const [visible, setVisible] = React.useState(false);
   const [zIndex, setZIndex] = useState(2);
@@ -31,8 +32,6 @@ export default function Grades({ navigation, route }) {
   const [pointsEarned, setPointsEarned] = useState();
   const [totalPoints, setTotalPoints] = useState();
   const [points, setPoints] = useState();
-
-
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
@@ -48,13 +47,10 @@ export default function Grades({ navigation, route }) {
         subject: title,
       });
       hideModal();
-
     } catch (error) {
       console.log(error.message);
     }
   };
-
-
 
   const showModal = () => {
     setZIndex(-1);
@@ -87,7 +83,6 @@ export default function Grades({ navigation, route }) {
             grade: item,
           });
           //then update grades
-
         },
       },
       { text: "Cancel" },
@@ -99,21 +94,20 @@ export default function Grades({ navigation, route }) {
     marginHorizontal: 20,
     padding: 10,
     borderRadius: 20,
-
   };
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Provider>
-        <Portal >
+        <Portal>
           <Modal
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
           >
-
             <View>
-
               <Text style={styles.modalHeader}>Let's create a grade</Text>
               <CustomInput
                 placeholder={"grade Name"}
@@ -131,23 +125,25 @@ export default function Grades({ navigation, route }) {
                 style={{ borderRadius: 30 }}
               />
 
-
-              <CustomButton text="Create Grade" onPress={() => { storeGrade() }} />
-
+              <CustomButton
+                text="Create Grade"
+                onPress={() => {
+                  storeGrade();
+                }}
+              />
             </View>
           </Modal>
         </Portal>
       </Provider>
       <View style={styles.header}>
-        <TouchableOpacity style={{ marginLeft: 11 }} onPress={() => showModal()}>
-          <View >
-            <AntDesign
-              name="upload"
-              style={styles.newTaskBtn}
-            />
+        <TouchableOpacity
+          style={{ marginLeft: 11 }}
+          onPress={() => showModal()}
+        >
+          <View>
+            <AntDesign name="upload" style={styles.newTaskBtn} />
             <Text style={styles.btnText}>New Grade</Text>
           </View>
-
         </TouchableOpacity>
 
         <TouchableOpacity style={{ marginLeft: 260 }}>
@@ -160,8 +156,7 @@ export default function Grades({ navigation, route }) {
         </TouchableOpacity>
       </View>
 
-
-      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
+      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5 }}>
         <FlatList
           data={grades}
           showsVerticalScrollIndicator={false}
@@ -178,18 +173,12 @@ export default function Grades({ navigation, route }) {
         />
       </View>
     </KeyboardAvoidingView>
-
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  modalHeader: {
-    textAlign: "center",
-    fontSize: 30,
-
-    marginTop: 20
+    marginLeft: 12,
   },
   task: {
     marginTop: 15,
@@ -201,7 +190,11 @@ const styles = StyleSheet.create({
   assignments: {
     top: 50,
     marginLeft: 9,
-    position: 'absolute',
+    position: "absolute",
+    bottom: 30,
+    top: 50,
+    marginLeft: 9,
+    position: "absolute",
     bottom: 30,
   },
   name: {
@@ -235,8 +228,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     position: "absolute",
-
-
   },
   newTaskBtn: {
     height: 40,

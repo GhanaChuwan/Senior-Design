@@ -14,11 +14,11 @@ function ActivityTime({ navigation, route }) {
   const [zIndex, setZIndex] = useState(2);
 
   const showModal = () => {
-    setZIndex(-1);
+    setZIndex(1);
     setVisible(true);
   };
   const hideModal = () => {
-    setZIndex(1);
+    setZIndex(-1);
     setVisible(false);
   };
   const containerStyle = {
@@ -44,7 +44,7 @@ function ActivityTime({ navigation, route }) {
           position: "absolute",
           height: "100%",
           width: "100%",
-          // zIndex: 1,
+          zIndex: 1,
         }}
       >
         <Provider>
@@ -57,13 +57,13 @@ function ActivityTime({ navigation, route }) {
               <CustomInput placeholder="Note" />
               <CustomButton
                 text="Save"
-                // onPress={() => navigation.navigate("ActivitySession")}
+                // onPress={() => navigation.navigate("ActivitySession", title)}
               />
             </Modal>
           </Portal>
         </Provider>
         <CustomButton
-          style={{ marginTop: 10, alignItems: "flex-end", zIndex: zIndex }}
+          style={{ marginTop: 10 }}
           text="Done"
           onPress={showModal}
         />
