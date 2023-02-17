@@ -25,7 +25,6 @@
     "react-moment": "^1.1.3",
     "react-native": "0.70.5",
     "react-native-calendars": "^1.1293.0",
-    "react-native-countup-component": "^0.0.3",
     "react-native-element-timer": "^2.1.2",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

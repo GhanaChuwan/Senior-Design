@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
 import { Modal, Portal, Text, Button, Provider } from "react-native-paper";
 // import { Timer, Countdown } from "react-native-element-timer";
-import Timer from "react-native-countup-component";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import Session from "../activityScreen/ActivitySession";
@@ -38,7 +37,7 @@ function ActivityTime({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Timer max={999} current={count} running={true} />
+      {/* <Timer max={999} current={count} running={true} /> */}
       <View
         style={{
           position: "absolute",

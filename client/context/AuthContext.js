@@ -111,8 +111,6 @@ export const AuthProvider = ({ children }) => {
   };
   const createSubject = async ({ name, color }) => {
     try {
-      setIsLoading(true);
-
       const data = await axios.post(
         "/create-subject",
         {
@@ -132,12 +130,28 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
       console.log(` YouCan not able to create subject`);
     }
-    setIsLoading(false);
   };
-  const deleteSubject = async ({ }) => {
+  const deleteSubject = async ({ subjectId }) => {
     try {
-      setIsLoading(true);
-      const data = await axios.delete("/delete-subject");
+      const data = await axios.post(
+        "/delete-subject",
+        { subjectId },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      console.log(data.data);
+
+      const newSubjects = subjects.filter((sub) => {
+        return sub._id != subjectId;
+      });
+
+      setSubjects(newSubjects);
+
+      await AsyncStorage.setItem("subjects", JSON.stringify(subjects));
     } catch (error) {
       console.log(error);
       console.log("You cannot able to delete subject ");
@@ -186,7 +200,7 @@ export const AuthProvider = ({ children }) => {
 
   const deleteActivity = async ({ subjectId, activityId }) => {
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "/delete-activity",
         {
           subjectId: subjectId,
@@ -198,6 +212,16 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+
+      console.log(res.data);
+
+      const newActivites = activities.filter((act) => {
+        return act._id != res.data._id;
+      });
+
+      setActivities(newActivites);
+
+      activities.find();
     } catch (error) {
       console.log(error);
     }
@@ -225,11 +249,10 @@ export const AuthProvider = ({ children }) => {
       );
       console.log("2eq2q", data.message);
       const oldGrade = grades;
-      console.log(data.data)
-      oldGrade.push(data.data)
+      console.log(data.data);
+      oldGrade.push(data.data);
 
-
-      setGrades([...grades, data.data])
+      setGrades([...grades, data.data]);
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
@@ -304,6 +327,7 @@ export const AuthProvider = ({ children }) => {
         deleteActivity,
         createGrade,
         getAllGrades,
+        deleteSubject,
         deleteGrade,
         grades,
       }}

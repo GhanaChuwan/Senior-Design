@@ -170,6 +170,8 @@ export default function Activity({ navigation, route }) {
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
+            subjectId={subjectId}
+            deleteActivity={deleteActivity}
           />
         )}
       />
@@ -179,9 +181,10 @@ export default function Activity({ navigation, route }) {
 
 const CustomActivityCard = ({
   activity,
+  deleteActivity,
   navigation,
   route,
-  activityId,
+  subjectId,
   item,
   zIndexCard,
 }) => {
@@ -191,11 +194,10 @@ const CustomActivityCard = ({
         text: "Yes",
         onPress: async (name) => {
           console.log("deleting activity");
+
           await deleteActivity({
-            name: name,
-            color: selectedColor,
             subjectId: subjectId,
-            activityId: activityId,
+            activityId: activity._id,
           });
         },
       },
