@@ -35,6 +35,7 @@ exports.createActivity = async (req, res) => {
 
 exports.deleteActivity = async (req, res) => {
   const { subjectId, activityId } = req.body;
+  console.log({ subjectId, activityId });
   const { userId } = req.user;
   try {
     const subject = await Subject.findById(subjectId);

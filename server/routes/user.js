@@ -41,8 +41,8 @@ router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);
-router.delete("/delete-subject", isAuth, deleteSubjects);
-router.delete("/delete-activity", isAuth, deleteActivity);
+router.post("/delete-subject", isAuth, deleteSubjects);
+router.post("/delete-activity", isAuth, deleteActivity);
 
 router.post("/create-activity", isAuth, createActivity);
 router.get("/activity", isAuth, getActivity);
