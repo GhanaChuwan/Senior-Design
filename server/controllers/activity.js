@@ -101,24 +101,32 @@ exports.addActivitySession = async (req, res) => {
     return res.status(400).json({ success: false, message: error.message });
   }
 };
+
 exports.getAllActivitySession = async (req, res) => {
   const { activityId } = req.body;
   const { userId } = req.user;
   try {
-    let activitySessionTime = [];
-    const activityID = await Activity.findOne({
-      name: activityId,
-      createdBy: userId,
-    });
-    const activitySession = await Activity.findById(activityID._id);
+    let activitySession = [];
+    const activity = await Activity.findById(activityId);
 
-    for (let i = 0; i < activitySession.totalSpent.length; i++) {
-      const time = await Activity.findById(
-        activitySession.activitySessionTime[i]
+    console.log(activity);
+
+    for (let i = 0; i < activity.activitySessionTime.length; i++) {
+      const session = await ActivitySession.findById(
+        activity.activitySessionTime[i]
       );
-      activitySessionTime.push(time);
+      activitySession.push(session);
     }
-    return res.status(200).json(totalSpent);
+
+    let totalTime = 0;
+
+    activitySession.forEach((session) => {
+      totalTime += session.time;
+    });
+
+    return res
+      .status(200)
+      .json({ activites: activitySession, totalTime: totalTime });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

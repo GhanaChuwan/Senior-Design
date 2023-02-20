@@ -231,7 +231,7 @@ export const AuthProvider = ({ children }) => {
     gradeName,
     gradeType,
     gradePoints,
-    subject,
+    subjectId,
   }) => {
     try {
       const data = await axios.post(
@@ -240,7 +240,7 @@ export const AuthProvider = ({ children }) => {
           gradeName: gradeName,
           gradeType: gradeType,
           gradePoints: gradePoints,
-          subjectId: subject,
+          subjectId: subjectId,
         },
         {
           headers: {
@@ -248,7 +248,6 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      console.log("2eq2q", data.message);
       const oldGrade = grades;
       console.log(data.data);
       oldGrade.push(data.data);
@@ -260,12 +259,12 @@ export const AuthProvider = ({ children }) => {
       console.log("was not able to create grade");
     }
   };
-  const getAllGrades = async ({ subject }) => {
+  const getAllGrades = async ({ subjectId }) => {
     try {
       const res = await axios.post(
         "/getAllGrades",
         {
-          subjectId: subject,
+          subjectId: subjectId,
         },
         {
           headers: {
