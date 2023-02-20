@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -47,6 +47,21 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+  useEffect(() => {
+    // navigation.setOptions({ headerTitle: title });
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
+      headerShown: true,
+      //   headerRight: () => (
+      //     <View>
+      //       <CreateActivity navigation={navigation} location={createActivity} />
+      //     </View>
+      //   ),
+    });
+  }, []);
   const navigation = useNavigation();
 
   const signUp = async (values, formikActions) => {
