@@ -66,12 +66,6 @@ export default function Activity({ navigation, route }) {
       console.log(error.message);
     }
   };
-  // const Delete = (activities) => {
-  //   setActivity((prev) => {
-  //     const r = prev.filter((pre) => pre !== activities);
-  //     return r;
-  //   });
-  // };
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });

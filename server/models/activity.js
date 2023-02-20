@@ -21,8 +21,8 @@ const activitySchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  timeSpent: {
-    type: [Object],
+  activitySessionTime: {
+    type: [String],
     default: [],
     require: false,
   },

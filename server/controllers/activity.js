@@ -1,5 +1,6 @@
 const Activity = require("../models/activity");
 const Subject = require("../models/subject");
+const ActivitySession = require("../models/activitySessions");
 const User = require("../models/user");
 
 exports.createActivity = async (req, res) => {
@@ -77,5 +78,48 @@ exports.getActivity = async (req, res) => {
     return res.status(200).json(activities);
   } catch (error) {
     res.status(409).json({ success: false, message: error.message });
+  }
+};
+
+exports.addActivitySession = async (req, res) => {
+  const { note, time, activityId } = req.body;
+  const { userId } = req.user;
+
+  try {
+    const activity = await Activity.findById(activityId);
+
+    const activitySession = await ActivitySession.create({
+      note,
+      time,
+      createdBy: userId,
+    });
+
+    activity.activitySessionTime.push(activitySession._id.toString());
+    activity.save();
+    return res.status(201).json(activitySession);
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+exports.getAllActivitySession = async (req, res) => {
+  const { activityId } = req.body;
+  const { userId } = req.user;
+  try {
+    let activitySessionTime = [];
+    const activityID = await Activity.findOne({
+      name: activityId,
+      createdBy: userId,
+    });
+    const activitySession = await Activity.findById(activityID._id);
+
+    for (let i = 0; i < activitySession.totalSpent.length; i++) {
+      const time = await Activity.findById(
+        activitySession.activitySessionTime[i]
+      );
+      activitySessionTime.push(time);
+    }
+    return res.status(200).json(totalSpent);
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
 };
