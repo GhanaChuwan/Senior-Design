@@ -35,6 +35,13 @@ export default function Grades({ navigation, route }) {
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
+      headerShown: true,
+    });
     retrieveGrades({ subjectId });
   }, [subjectId]);
 
