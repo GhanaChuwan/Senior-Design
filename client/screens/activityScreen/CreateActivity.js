@@ -74,11 +74,6 @@ export default function Activity({ navigation, route }) {
       },
       headerTintColor: "#fff",
       headerShown: true,
-      //   headerRight: () => (
-      //     <View>
-      //       <CreateActivity navigation={navigation} location={createActivity} />
-      //     </View>
-      //   ),
     });
   }, [route]);
 
