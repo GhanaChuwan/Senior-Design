@@ -208,6 +208,9 @@ export const AuthProvider = ({ children }) => {
     gradePoints,
     subject,
   }) => {
+    console.log(gradeName);
+    console.log(gradeType);
+    console.log(gradePoints);
     try {
       const data = await axios.post(
         "/create-grade",

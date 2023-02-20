@@ -17,8 +17,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { SelectList } from "react-native-dropdown-select-list";
 
 export default function Grades({ navigation, route }) {
   const { title } = route.params;
@@ -28,9 +27,11 @@ export default function Grades({ navigation, route }) {
   const [zIndex, setZIndex] = useState(2);
   const [name, setName] = useState();
   const [type, setType] = useState();
+  const [selected, setSelected] = useState();
   const [pointsEarned, setPointsEarned] = useState();
   const [totalPoints, setTotalPoints] = useState();
   const [points, setPoints] = useState();
+  const [gradeTypes, setGradeTypes] = useState(["this", "that"])
 
 
 
@@ -43,7 +44,7 @@ export default function Grades({ navigation, route }) {
     try {
       await createGrade({
         gradeName: name,
-        gradeType: type,
+        gradeType: selected,
         gradePoints: points,
         subject: title,
       });
@@ -75,13 +76,10 @@ export default function Grades({ navigation, route }) {
     }
   };
   const alertUser = (item) => {
-    Alert.alert(undefined, "are you sure you want to delete task? ", [
+    Alert.alert(undefined, "are you sure you want to delete grade? ", [
       {
         text: "Yes",
         onPress: async () => {
-          // let newGrade = grades.filter(grade => grade != item);
-          // setGrades(newGrade);
-          console.log("deleting grade");
           await deleteGrade({
             subject: title,
             grade: item,
@@ -121,16 +119,20 @@ export default function Grades({ navigation, route }) {
                 onChangeText={(newText) => setName(newText)}
                 style={{ borderRadius: 30 }}
               />
-              <CustomInput
-                placeholder={"grade Type"}
-                onChangeText={(newText) => setType(newText)}
-                style={{ borderRadius: 30 }}
-              />
-              <CustomInput
-                placeholder={"points earned"}
-                onChangeText={(newText) => setPoints(newText)}
-                style={{ borderRadius: 30 }}
-              />
+              <View style={styles.dropDown}>
+                <SelectList
+                  setSelected={(val) => setSelected(val)}
+                  data={gradeTypes}
+                  save="value"
+                />
+              </View>
+
+              <View style={styles.pointsDiv}>
+                <TextInput keyboardType='numeric' placeholder="points Earned" style={styles.input} onChangeText={text => { setPointsEarned(text); setPoints(text + " / " + totalPoints) }} />
+
+                <TextInput keyboardType='numeric' placeholder="total points" style={styles.input} onChangeText={text => { setTotalPoints(text); setPoints(pointsEarned + " / " + text) }} />
+              </View>
+
 
 
               <CustomButton text="Create Grade" onPress={() => { storeGrade() }} />
@@ -154,13 +156,12 @@ export default function Grades({ navigation, route }) {
         <TouchableOpacity style={{ marginLeft: 260 }}>
           <AntDesign
             name="filter"
-            onPress={() => alert("filtering stuff")}
+            onPress={() => (alert("filtering stuff"))}
             style={styles.newTaskBtn}
           />
           <Text style={[styles.btnText, { marginLeft: 14 }]}>filter</Text>
         </TouchableOpacity>
       </View>
-
 
       <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
         <FlatList
@@ -252,4 +253,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     position: "relative",
   },
+  input: {
+    borderWidth: 2,
+    borderColor: '#3B71F3',
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 16,
+    marginBottom: 10,
+    width: 157,
+    height: 20,
+    backgroundColor: "transparent",
+    marginHorizontal: 3,
+  },
+  pointsDiv: {
+    display: "flex",
+    flexDirection: "row",
+
+  },
+  dropDown: {
+    marginVertical: 10,
+    borderRadius: 10
+  }
 });
