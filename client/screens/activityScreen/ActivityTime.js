@@ -42,6 +42,10 @@ const Stopwatch = () => {
   };
 
   const stopStopwatch = () => {
+    // const date = new Date(null);
+    // date.setSeconds(time); // specify value for SECONDS here
+
+    // console.log(result);
     setIsRunning(false);
     clearInterval(intervalRef.current);
     setModalVisible(true);

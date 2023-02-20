@@ -11,6 +11,7 @@ exports.createGrade = async (req, res) => {
     //   name: subjectId,
     //   createdBy: userId,
     // });
+
     const subject = await Subject.findById(subjectId);
 
     if (subject != null) {

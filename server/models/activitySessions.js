@@ -6,10 +6,9 @@ const activitySessionSchema = new mongoose.Schema({
     required: true,
   },
   time: {
-    type: String,
+    type: Number,
     required: true,
   },
-
   createdBy: {
     type: String,
     required: true,

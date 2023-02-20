@@ -16,7 +16,9 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
         <List.Item
           title="Grade"
           left={(props) => <List.Icon {...props} icon="folder" />}
-          onPress={() => navigation.navigate("Grades", { title: title })}
+          onPress={() =>
+            navigation.navigate("Grades", { title: title, subjectId })
+          }
         />
         <Divider />
       </TouchableOpacity>

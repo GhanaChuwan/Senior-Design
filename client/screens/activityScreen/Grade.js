@@ -21,7 +21,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Grades({ navigation, route }) {
-  const { title } = route.params;
+  const { title, subjectId } = route.params;
   const { grades, getAllGrades, createGrade, deleteGrade } =
     useContext(AuthContext);
 
@@ -35,8 +35,8 @@ export default function Grades({ navigation, route }) {
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
-    retrieveGrades({ title });
-  }, [title]);
+    retrieveGrades({ subjectId });
+  }, [subjectId]);
 
   const storeGrade = async () => {
     try {
@@ -44,7 +44,7 @@ export default function Grades({ navigation, route }) {
         gradeName: name,
         gradeType: type,
         gradePoints: points,
-        subject: title,
+        subjectId: subjectId,
       });
       hideModal();
     } catch (error) {
@@ -64,7 +64,7 @@ export default function Grades({ navigation, route }) {
   const retrieveGrades = async () => {
     try {
       await getAllGrades({
-        subject: title,
+        subjectId: subjectId,
       });
     } catch (error) {
       console.log(error.message);

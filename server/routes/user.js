@@ -57,7 +57,7 @@ router.get("/activity", isAuth, getActivity);
 router.get("/activity-all/:subjectId", isAuth, getAllActivity);
 
 router.post("/create-activitySession", isAuth, addActivitySession);
-router.post("/getAllActivitySession", isAuth, getAllActivitySession);
+router.get("/getAllActivitySession", isAuth, getAllActivitySession);
 
 router.post("/create-grade", isAuth, createGrade);
 router.post("/getAllGrades", isAuth, getAllGrades);
