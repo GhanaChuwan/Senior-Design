@@ -25,6 +25,8 @@ const {
   getActivity,
   deleteActivity,
   getAllActivity,
+  addActivitySession,
+  getAllActivitySession,
 } = require("../controllers/activity");
 const {
   validateResources,
@@ -35,6 +37,12 @@ const {
   getAllGrades,
   deleteGrade,
 } = require("../controllers/grade");
+
+const {
+  createEvents,
+  getEvents,
+  deleteEvents,
+} = require("../controllers/calendar");
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
@@ -48,9 +56,15 @@ router.post("/create-activity", isAuth, createActivity);
 router.get("/activity", isAuth, getActivity);
 router.get("/activity-all/:subjectId", isAuth, getAllActivity);
 
+router.post("/create-activitySession", isAuth, addActivitySession);
+router.post("/getAllActivitySession", isAuth, getAllActivitySession);
+
 router.post("/create-grade", isAuth, createGrade);
 router.post("/getAllGrades", isAuth, getAllGrades);
 router.post("/deleteGrade", isAuth, deleteGrade);
 
+router.post("/create-event", isAuth, createEvents);
+router.post("/delete-event", isAuth, deleteEvents);
+router.post("/getEvent", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 module.exports = router;

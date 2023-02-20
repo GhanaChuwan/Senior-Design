@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [activitySession, setactivitySession] = useState([]);
   const [grades, setGrades] = useState([]);
 
   const login = async (email, password) => {
@@ -297,6 +298,55 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const addActivitySession = async (note, time, activity) => {
+    try {
+      const data = await axios.post(
+        "/create-activitySession",
+        {
+          note: note,
+          time: time,
+          activityId: activity,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      setactivitySession([...activitySession, data.data]);
+      await AsyncStorage.setItem(
+        "activitiesSession",
+        JSON.stringify(activitySession)
+      );
+    } catch (error) {
+      console.log(error);
+      console.log("was not able to add activity session");
+    }
+  };
+
+  const getAllActivitySession = async ({ activity }) => {
+    try {
+      const data = await axios.post(
+        "/getAllActivitySession",
+        {
+          activityId: activity,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      setactivitySession(data.data);
+      await AsyncStorage.setItem(
+        "activitiesSession",
+        JSON.stringify(activitySession)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -330,6 +380,9 @@ export const AuthProvider = ({ children }) => {
         deleteSubject,
         deleteGrade,
         grades,
+        addActivitySession,
+        getAllActivitySession,
+        activitySession,
       }}
     >
       {children}
