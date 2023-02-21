@@ -31,7 +31,7 @@ export default function Grades({ navigation, route }) {
   const [pointsEarned, setPointsEarned] = useState();
   const [totalPoints, setTotalPoints] = useState();
   const [points, setPoints] = useState();
-  const [gradeTypes, setGradeTypes] = useState(["this", "that"])
+  const [gradeTypes, setGradeTypes] = useState(["Exams", "Quizzes", "Labs", "Homeworks", "Discussions"])
 
 
 
@@ -153,14 +153,14 @@ export default function Grades({ navigation, route }) {
 
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ marginLeft: 260 }}>
+        {/* <TouchableOpacity style={{ marginLeft: 260 }}>
           <AntDesign
             name="filter"
             onPress={() => (alert("filtering stuff"))}
             style={styles.newTaskBtn}
           />
           <Text style={[styles.btnText, { marginLeft: 14 }]}>filter</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
