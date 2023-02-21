@@ -7,11 +7,11 @@ exports.createGrade = async (req, res) => {
   const { userId } = req.user;
 
   try {
-    const subjectID = await Subject.findOne({
-      name: subjectId,
-      createdBy: userId,
-    });
-    const subject = await Subject.findById(subjectID);
+    // const subjectID = await Subject.findOne({
+    //   name: subjectId,
+    //   createdBy: userId,
+    // });
+    const subject = await Subject.findById(subjectId);
 
 
     if (subject != null) {
@@ -39,11 +39,11 @@ exports.getAllGrades = async (req, res) => {
   const { userId } = req.user;
   try {
     let grades = [];
-    const subjectID = await Subject.findOne({
-      name: subjectId,
-      createdBy: userId,
-    });
-    const subject = await Subject.findById(subjectID._id.toString());
+    // const subjectID = await Subject.findOne({
+    //   name: subjectId,
+    //   createdBy: userId,
+    // });
+    const subject = await Subject.findById(subjectId);
 
     for (let i = 0; i < subject.grades.length; i++) {
       const a = await Grade.findById(subject.grades[i]);
