@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
 const CustomInput = (props) => {
+
   const { placeholder, label, error } = props;
   return (
     <>

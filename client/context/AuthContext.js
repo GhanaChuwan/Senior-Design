@@ -234,6 +234,9 @@ export const AuthProvider = ({ children }) => {
     gradePoints,
     subjectId,
   }) => {
+    console.log(gradeName);
+    console.log(gradeType);
+    console.log(gradePoints);
     try {
       const data = await axios.post(
         "/create-grade",
@@ -253,7 +256,9 @@ export const AuthProvider = ({ children }) => {
       console.log(data.data);
       oldGrade.push(data.data);
 
-      setGrades([...grades, data.data]);
+
+      // setGrades([...grades, data.data])
+
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);

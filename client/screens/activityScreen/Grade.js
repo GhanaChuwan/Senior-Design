@@ -18,8 +18,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import { SelectList } from "react-native-dropdown-select-list";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Grades({ navigation, route }) {
   const { title, subjectId } = route.params;
@@ -30,9 +30,11 @@ export default function Grades({ navigation, route }) {
   const [zIndex, setZIndex] = useState(2);
   const [name, setName] = useState();
   const [type, setType] = useState();
+  const [selected, setSelected] = useState();
   const [pointsEarned, setPointsEarned] = useState();
   const [totalPoints, setTotalPoints] = useState();
   const [points, setPoints] = useState();
+  const [gradeTypes, setGradeTypes] = useState(["Exams", "Quizzes", "Labs", "Homeworks", "Discussions"])
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
@@ -50,7 +52,7 @@ export default function Grades({ navigation, route }) {
     try {
       await createGrade({
         gradeName: name,
-        gradeType: type,
+        gradeType: selected,
         gradePoints: points,
         subjectId: subjectId,
       });
@@ -79,18 +81,18 @@ export default function Grades({ navigation, route }) {
     }
   };
   const alertUser = (item) => {
-    Alert.alert(undefined, "are you sure you want to delete task? ", [
+    Alert.alert(undefined, "are you sure you want to delete grade? ", [
       {
         text: "Yes",
         onPress: async () => {
-          // let newGrade = grades.filter(grade => grade != item);
-          // setGrades(newGrade);
-          console.log("deleting grade");
           await deleteGrade({
             subject: title,
             grade: item,
           });
           //then update grades
+          retrieveGrades();
+
+
         },
       },
       { text: "Cancel" },
@@ -117,21 +119,26 @@ export default function Grades({ navigation, route }) {
           >
             <View>
               <Text style={styles.modalHeader}>Let's create a grade</Text>
+
               <CustomInput
                 placeholder={"grade Name"}
                 onChangeText={(newText) => setName(newText)}
                 style={{ borderRadius: 30 }}
               />
-              <CustomInput
-                placeholder={"grade Type"}
-                onChangeText={(newText) => setType(newText)}
-                style={{ borderRadius: 30 }}
-              />
-              <CustomInput
-                placeholder={"points earned"}
-                onChangeText={(newText) => setPoints(newText)}
-                style={{ borderRadius: 30 }}
-              />
+              <View style={styles.dropDown}>
+                <SelectList
+                  setSelected={(val) => setSelected(val)}
+                  data={gradeTypes}
+                  save="value"
+                />
+              </View>
+
+              <View style={styles.pointsDiv}>
+                <TextInput keyboardType='numeric' placeholder="points Earned" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setPointsEarned(text); setPoints(text + " / " + totalPoints) }} />
+
+                <TextInput keyboardType='numeric' placeholder="total points" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setTotalPoints(text); setPoints(pointsEarned + " / " + text) }} />
+              </View>
+
 
               <CustomButton
                 text="Create Grade"
@@ -154,17 +161,18 @@ export default function Grades({ navigation, route }) {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ marginLeft: 260 }}>
+        {/* <TouchableOpacity style={{ marginLeft: 260 }}>
           <AntDesign
             name="filter"
-            onPress={() => alert("filtering stuff")}
+            onPress={() => (alert("filtering stuff"))}
             style={styles.newTaskBtn}
           />
           <Text style={[styles.btnText, { marginLeft: 14 }]}>filter</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5 }}>
+      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
+
         <FlatList
           data={grades}
           showsVerticalScrollIndicator={false}
@@ -250,4 +258,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     position: "relative",
   },
+  input: {
+    borderWidth: 2,
+    borderColor: '#3B71F3',
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 16,
+    marginBottom: 10,
+    width: 157,
+    height: 20,
+    backgroundColor: "transparent",
+    marginHorizontal: 3,
+  },
+  pointsDiv: {
+    display: "flex",
+    flexDirection: "row",
+
+  },
+  dropDown: {
+    marginVertical: 10,
+    borderRadius: 10
+  }
 });
