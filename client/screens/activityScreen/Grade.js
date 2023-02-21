@@ -114,6 +114,7 @@ export default function Grades({ navigation, route }) {
             <View>
 
               <Text style={styles.modalHeader}>Let's create a grade</Text>
+
               <CustomInput
                 placeholder={"grade Name"}
                 onChangeText={(newText) => setName(newText)}
@@ -128,9 +129,9 @@ export default function Grades({ navigation, route }) {
               </View>
 
               <View style={styles.pointsDiv}>
-                <TextInput keyboardType='numeric' placeholder="points Earned" style={styles.input} onChangeText={text => { setPointsEarned(text); setPoints(text + " / " + totalPoints) }} />
+                <TextInput keyboardType='numeric' placeholder="points Earned" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setPointsEarned(text); setPoints(text + " / " + totalPoints) }} />
 
-                <TextInput keyboardType='numeric' placeholder="total points" style={styles.input} onChangeText={text => { setTotalPoints(text); setPoints(pointsEarned + " / " + text) }} />
+                <TextInput keyboardType='numeric' placeholder="total points" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setTotalPoints(text); setPoints(pointsEarned + " / " + text) }} />
               </View>
 
 
@@ -164,6 +165,7 @@ export default function Grades({ navigation, route }) {
       </View>
 
       <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
+
         <FlatList
           data={grades}
           showsVerticalScrollIndicator={false}
