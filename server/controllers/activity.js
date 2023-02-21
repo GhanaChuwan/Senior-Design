@@ -1,5 +1,6 @@
 const Activity = require("../models/activity");
 const Subject = require("../models/subject");
+const ActivitySession = require("../models/activitySessions");
 const User = require("../models/user");
 
 exports.createActivity = async (req, res) => {
@@ -35,6 +36,7 @@ exports.createActivity = async (req, res) => {
 
 exports.deleteActivity = async (req, res) => {
   const { subjectId, activityId } = req.body;
+  console.log({ subjectId, activityId });
   const { userId } = req.user;
   try {
     const subject = await Subject.findById(subjectId);
@@ -76,5 +78,60 @@ exports.getActivity = async (req, res) => {
     return res.status(200).json(activities);
   } catch (error) {
     res.status(409).json({ success: false, message: error.message });
+  }
+};
+
+exports.addActivitySession = async (req, res) => {
+  const { note, time, activityId } = req.body;
+  const { userId } = req.user;
+
+  try {
+    const activity = await Activity.findById(activityId);
+
+    console.log({ note, time, activityId });
+
+    const activitySession = await ActivitySession.create({
+      note: note,
+      time: time,
+      createdBy: userId,
+    });
+
+    console.log(activitySession);
+
+    activity.activitySessionTime.push(activitySession._id.toString());
+    activity.save();
+    return res.status(201).json(activitySession);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+exports.getAllActivitySession = async (req, res) => {
+  const { activityId } = req.params;
+  try {
+    let activitySession = [];
+    const activity = await Activity.findById(activityId);
+
+    console.log(activity);
+
+    for (let i = 0; i < activity.activitySessionTime.length; i++) {
+      const session = await ActivitySession.findById(
+        activity.activitySessionTime[i]
+      );
+      activitySession.push(session);
+    }
+
+    let totalTime = 0;
+
+    activitySession.forEach((session) => {
+      totalTime += session.time;
+    });
+
+    return res
+      .status(200)
+      .json({ activites: activitySession, totalTime: totalTime });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
 };

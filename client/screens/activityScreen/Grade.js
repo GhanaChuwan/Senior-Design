@@ -10,18 +10,21 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
+
 import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { SelectList } from "react-native-dropdown-select-list";
 
+
 export default function Grades({ navigation, route }) {
-  const { title } = route.params;
-  const { grades, getAllGrades, createGrade, deleteGrade } = useContext(AuthContext);
+  const { title, subjectId } = route.params;
+  const { grades, getAllGrades, createGrade, deleteGrade } =
+    useContext(AuthContext);
 
   const [visible, setVisible] = React.useState(false);
   const [zIndex, setZIndex] = useState(2);
@@ -33,12 +36,17 @@ export default function Grades({ navigation, route }) {
   const [points, setPoints] = useState();
   const [gradeTypes, setGradeTypes] = useState(["Exams", "Quizzes", "Labs", "Homeworks", "Discussions"])
 
-
-
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
-    retrieveGrades({ title });
-  }, [title]);
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
+      headerShown: true,
+    });
+    retrieveGrades({ subjectId });
+  }, [subjectId]);
 
   const storeGrade = async () => {
     try {
@@ -46,16 +54,13 @@ export default function Grades({ navigation, route }) {
         gradeName: name,
         gradeType: selected,
         gradePoints: points,
-        subject: title,
+        subjectId: subjectId,
       });
       hideModal();
-
     } catch (error) {
       console.log(error.message);
     }
   };
-
-
 
   const showModal = () => {
     setZIndex(-1);
@@ -69,7 +74,7 @@ export default function Grades({ navigation, route }) {
   const retrieveGrades = async () => {
     try {
       await getAllGrades({
-        subject: title,
+        subjectId: subjectId,
       });
     } catch (error) {
       console.log(error.message);
@@ -87,6 +92,7 @@ export default function Grades({ navigation, route }) {
           //then update grades
           retrieveGrades();
 
+
         },
       },
       { text: "Cancel" },
@@ -98,21 +104,20 @@ export default function Grades({ navigation, route }) {
     marginHorizontal: 20,
     padding: 10,
     borderRadius: 20,
-
   };
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Provider>
-        <Portal >
+        <Portal>
           <Modal
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
           >
-
             <View>
-
               <Text style={styles.modalHeader}>Let's create a grade</Text>
 
               <CustomInput
@@ -135,23 +140,25 @@ export default function Grades({ navigation, route }) {
               </View>
 
 
-
-              <CustomButton text="Create Grade" onPress={() => { storeGrade() }} />
-
+              <CustomButton
+                text="Create Grade"
+                onPress={() => {
+                  storeGrade();
+                }}
+              />
             </View>
           </Modal>
         </Portal>
       </Provider>
       <View style={styles.header}>
-        <TouchableOpacity style={{ marginLeft: 11 }} onPress={() => showModal()}>
-          <View >
-            <AntDesign
-              name="upload"
-              style={styles.newTaskBtn}
-            />
+        <TouchableOpacity
+          style={{ marginLeft: 11 }}
+          onPress={() => showModal()}
+        >
+          <View>
+            <AntDesign name="upload" style={styles.newTaskBtn} />
             <Text style={styles.btnText}>New Grade</Text>
           </View>
-
         </TouchableOpacity>
 
         {/* <TouchableOpacity style={{ marginLeft: 260 }}>
@@ -182,18 +189,12 @@ export default function Grades({ navigation, route }) {
         />
       </View>
     </KeyboardAvoidingView>
-
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  modalHeader: {
-    textAlign: "center",
-    fontSize: 30,
-
-    marginTop: 20
+    marginLeft: 12,
   },
   task: {
     marginTop: 15,
@@ -205,7 +206,11 @@ const styles = StyleSheet.create({
   assignments: {
     top: 50,
     marginLeft: 9,
-    position: 'absolute',
+    position: "absolute",
+    bottom: 30,
+    top: 50,
+    marginLeft: 9,
+    position: "absolute",
     bottom: 30,
   },
   name: {
@@ -239,8 +244,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     position: "absolute",
-
-
   },
   newTaskBtn: {
     height: 40,

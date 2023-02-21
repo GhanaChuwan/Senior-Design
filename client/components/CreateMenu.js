@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, Divider, List } from "react-native-paper";
 export default function CreateMenu({ navigation, location, subjectId, title }) {
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity>
         <List.Item
           title="Activity"
@@ -16,7 +16,17 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
         <List.Item
           title="Grade"
           left={(props) => <List.Icon {...props} icon="folder" />}
-          onPress={() => navigation.navigate("Grades", { title: title })}
+          onPress={() =>
+            navigation.navigate("Grades", { title: title, subjectId })
+          }
+        />
+        <Divider />
+        <List.Item
+          title="View Progress"
+          left={(props) => <List.Icon {...props} icon="folder" />}
+          onPress={() =>
+            navigation.navigate("WeeklyProgress", { title: title })
+          }
         />
         <Divider />
       </TouchableOpacity>
@@ -25,8 +35,13 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 50,
-    flexDirection: "row",
-    justifyContent: "center",
+    backgroundColor: "#fdf6ec",
+    flex: 1,
+    // padding: 50,
+    // flexDirection: "row",
+    // justifyContent: "center",
+  },
+  titleText: {
+    color: "#3B71F3",
   },
 });

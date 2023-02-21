@@ -25,6 +25,7 @@ export default function Activity({ navigation, route }) {
     useContext(AuthContext);
   const [visible, setVisible] = React.useState(false);
   const [zIndex, setZIndex] = useState(3);
+  const [zIndexCard, setZIndexCard] = useState(1);
 
   const { subjectId, activityId } = route.params;
 
@@ -33,11 +34,13 @@ export default function Activity({ navigation, route }) {
   }, [subjectId]);
 
   const showModal = () => {
-    setZIndex(-1);
+    setZIndex(1);
+    setZIndexCard(-1);
     setVisible(true);
   };
   const hideModal = () => {
-    setZIndex(1);
+    setZIndex(-1);
+    setZIndexCard(1);
     setVisible(false);
   };
   const containerStyle = {
@@ -48,11 +51,10 @@ export default function Activity({ navigation, route }) {
   };
   const [name, setName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
+  const { Activities, setActivities } = useContext(AuthContext);
 
   const activity = async () => {
     try {
-      const { Activities, setActivities } = useContext(AuthContext);
-
       await createActivity({
         name: name,
         color: selectedColor,
@@ -63,28 +65,19 @@ export default function Activity({ navigation, route }) {
       console.log(error.message);
     }
   };
-  // const Delete = (activities) => {
-  //   setActivity((prev) => {
-  //     const r = prev.filter((pre) => pre !== activities);
-  //     return r;
-  //   });
-  // };
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: "#fdf6ec",
-        color: "#fff",
+        backgroundColor: "#1e407c",
       },
+      headerTintColor: "#fff",
       headerShown: true,
-      //   headerRight: () => (
-      //     <View>
-      //       <CreateActivity navigation={navigation} location={createActivity} />
-      //     </View>
-      //   ),
     });
   }, [route]);
+
+  console.log(activities);
 
   return (
     <View
@@ -96,7 +89,6 @@ export default function Activity({ navigation, route }) {
           position: "absolute",
           height: "100%",
           width: "100%",
-          // zIndex: -1,
         }}
       >
         <Provider>
@@ -131,7 +123,7 @@ export default function Activity({ navigation, route }) {
                       "#00aeef",
                       "#00c85d",
                       "#57ff0a",
-                      "#ffde17",
+                      "#fdb833",
                       "#f26522",
                     ]}
                     // Snap={true}
@@ -154,20 +146,22 @@ export default function Activity({ navigation, route }) {
       </View>
 
       <Button
-        style={{ marginTop: 20, alignItems: "flex-end", zIndex: zIndex }}
+        style={{ marginTop: 20, alignItems: "flex-end" }}
         onPress={showModal}
       >
         Create Activity +
       </Button>
 
       <FlatList
-        style={{ zIndex: -1, marginBottom: 10 }}
+        style={{ marginBottom: 10, zIndex: zIndexCard }}
         data={activities}
         renderItem={({ item }) => (
           <CustomActivityCard
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
+            subjectId={subjectId}
+            deleteActivity={deleteActivity}
           />
         )}
       />
@@ -177,10 +171,12 @@ export default function Activity({ navigation, route }) {
 
 const CustomActivityCard = ({
   activity,
+  deleteActivity,
   navigation,
   route,
-  activityId,
+  subjectId,
   item,
+  zIndexCard,
 }) => {
   const AlertUser = () => {
     Alert.alert(undefined, "are you sure you want to delete activity", [
@@ -188,31 +184,35 @@ const CustomActivityCard = ({
         text: "Yes",
         onPress: async (name) => {
           console.log("deleting activity");
+
           await deleteActivity({
-            name: name,
-            color: selectedColor,
             subjectId: subjectId,
-            activityId: activityId,
+            activityId: activity._id,
           });
         },
       },
       { text: "Cancel" },
     ]);
   };
+  console.table(activity);
+
   return (
-    <Card
-      style={{
-        backgroundColor: `${activity.color}`,
-        marginVertical: 5,
-        marginHorizontal: 10,
-        padding: 10,
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onLongPress={() => AlertUser(item)}
+      onPress={() => {
+        navigation.navigate("ActivitySession", {
+          title: activity.name,
+          activityId: activity._id,
+        });
       }}
     >
-      <TouchableOpacity
-        style={styles.cardContainer}
-        onLongPress={() => AlertUser(item)}
-        onPress={() => {
-          navigation.navigate("ActivitySession", { title: activity.name });
+      <Card
+        style={{
+          backgroundColor: `${activity.color}`,
+          marginVertical: 5,
+          marginHorizontal: 10,
+          padding: 10,
         }}
       >
         <Card.Content style={styles.card}>
@@ -222,8 +222,8 @@ const CustomActivityCard = ({
           </Text>
           <Title style={styles.totalTime}>0 Min ALL TIME</Title>
         </Card.Content>
-      </TouchableOpacity>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

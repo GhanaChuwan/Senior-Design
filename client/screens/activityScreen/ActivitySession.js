@@ -1,27 +1,79 @@
 import React from "react";
-import { useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { useEffect, useContext } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import { Card, Title } from "react-native-paper";
+import moment from "moment";
+import { AuthContext } from "../../context/AuthContext";
+
 export default function Session({ navigation, route }) {
-  const { title } = route.params;
+  const { getAllActivitySession, activitysessions } = useContext(AuthContext);
+  const { activityId, title } = route.params;
+
+  console.log(activitysessions);
 
   useEffect(() => {
+    getAllActivitySession({ activityId });
+
     navigation.setOptions({ headerTitle: title });
-    navigation.setOptions({ headerShown: true });
-  }, [title]);
+    navigation.setOptions({
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
+    });
+  }, [activityId]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Sessions</Text>
-      <View style={{ marginTop: 80, flex: 1 }}>
-        <CustomButton
-          text="Add Timer"
-          onPress={() => navigation.navigate("ActivityTime")}
-        />
-      </View>
+      <CustomButton
+        // style={{ marginTop: 20, alignItems: "flex-end" }}
+        text="Add Timer"
+        onPress={() =>
+          navigation.navigate("ActivityTime", { activityId: activityId })
+        }
+      />
+      <FlatList
+        data={activitysessions.activites}
+        renderItem={({ item }) => (
+          <CustomSessionsCard
+            keyExtractor={(item) => item._id}
+            activitySession={item}
+            navigation={navigation}
+          />
+        )}
+      />
     </View>
   );
 }
+const CustomSessionsCard = ({ activitySession }) => {
+  return (
+    <Card
+      style={{
+        marginVertical: 5,
+        marginHorizontal: 10,
+        padding: 10,
+        backgroundColor: "#3B71F3",
+      }}
+    >
+      <Card.Content style={styles.card}>
+        <Title style={styles.title}>{activitySession.note}</Title>
+        <Text style={styles.date}>
+          {moment(activitySession.createdAt).fromNow()}
+        </Text>
+        <Title style={styles.timeSpent}>{activitySession.time}</Title>
+      </Card.Content>
+    </Card>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -30,6 +82,25 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: "left",
+  },
+  timeSpent: {
+    fontSize: 14,
+    textAlign: "right",
+    color: "white",
+  },
+  card: {
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "left",
+    color: "white",
+  },
+  date: {
+    fontSize: 15,
+    textAlign: "left",
+    color: "white",
   },
 });

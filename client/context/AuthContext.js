@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
 
   const login = async (email, password) => {
@@ -101,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         await getSubjects();
         await getAllActivity();
+        // await getAllActivitySession();
       }
 
       setIsLoading(false);
@@ -111,8 +113,6 @@ export const AuthProvider = ({ children }) => {
   };
   const createSubject = async ({ name, color }) => {
     try {
-      setIsLoading(true);
-
       const data = await axios.post(
         "/create-subject",
         {
@@ -132,12 +132,28 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
       console.log(` YouCan not able to create subject`);
     }
-    setIsLoading(false);
   };
-  const deleteSubject = async ({ }) => {
+  const deleteSubject = async ({ subjectId }) => {
     try {
-      setIsLoading(true);
-      const data = await axios.delete("/delete-subject");
+      const data = await axios.post(
+        "/delete-subject",
+        { subjectId },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      console.log(data.data);
+
+      const newSubjects = subjects.filter((sub) => {
+        return sub._id != subjectId;
+      });
+
+      setSubjects(newSubjects);
+
+      await AsyncStorage.setItem("subjects", JSON.stringify(subjects));
     } catch (error) {
       console.log(error);
       console.log("You cannot able to delete subject ");
@@ -186,7 +202,7 @@ export const AuthProvider = ({ children }) => {
 
   const deleteActivity = async ({ subjectId, activityId }) => {
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "/delete-activity",
         {
           subjectId: subjectId,
@@ -198,6 +214,16 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+
+      console.log(res.data);
+
+      const newActivites = activities.filter((act) => {
+        return act._id != res.data._id;
+      });
+
+      setActivities(newActivites);
+
+      activities.find();
     } catch (error) {
       console.log(error);
     }
@@ -206,7 +232,7 @@ export const AuthProvider = ({ children }) => {
     gradeName,
     gradeType,
     gradePoints,
-    subject,
+    subjectId,
   }) => {
     console.log(gradeName);
     console.log(gradeType);
@@ -218,7 +244,7 @@ export const AuthProvider = ({ children }) => {
           gradeName: gradeName,
           gradeType: gradeType,
           gradePoints: gradePoints,
-          subjectId: subject,
+          subjectId: subjectId,
         },
         {
           headers: {
@@ -226,25 +252,25 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      console.log("2eq2q", data.message);
       const oldGrade = grades;
-      console.log(data.data)
-      oldGrade.push(data.data)
+      console.log(data.data);
+      oldGrade.push(data.data);
 
 
       // setGrades([...grades, data.data])
+
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
       console.log("was not able to create grade");
     }
   };
-  const getAllGrades = async ({ subject }) => {
+  const getAllGrades = async ({ subjectId }) => {
     try {
       const res = await axios.post(
         "/getAllGrades",
         {
-          subjectId: subject,
+          subjectId: subjectId,
         },
         {
           headers: {
@@ -273,6 +299,69 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addActivitySession = async ({ note, time, activityId }) => {
+    try {
+      const data = await axios.post(
+        "/create-activitySession",
+        {
+          note: note,
+          time: time,
+          activityId: activityId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      console.log("HERE");
+      console.log(data.data);
+
+      if (activities.activities != undefined || activities.activities != null) {
+        const d = data.data;
+        const newActives = activitysessions.activites;
+        newActives.push(d);
+        const newTotalTime = activitysessions.totalTime + d.time;
+
+        newActives.totalTime = newTotalTime;
+        setactivitySessions(newActives);
+      }
+
+      // console.log();
+      // setactivitySessions([...activitysessions, data.data]);
+      // await AsyncStorage.setItem(
+      //   "activitysessions",
+      //   JSON.stringify(activitysessions)
+      // );
+    } catch (error) {
+      console.log(error);
+      console.log("was not able to add activity session");
+    }
+  };
+
+  const getAllActivitySession = async ({ activityId }) => {
+    try {
+      const data = await axios.get(`/getAllActivitySession/${activityId}`, {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+
+      // // console.log(data.data);
+      // console.log("HERE2");
+      // console.log(data.data);
+
+      setactivitySessions(data.data);
+      // await AsyncStorage.setItem(
+      //   "activitysessions",
+      //   JSON.stringify(activitysessions)
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -307,8 +396,12 @@ export const AuthProvider = ({ children }) => {
         deleteActivity,
         createGrade,
         getAllGrades,
+        deleteSubject,
         deleteGrade,
         grades,
+        addActivitySession,
+        getAllActivitySession,
+        activitysessions,
       }}
     >
       {children}
