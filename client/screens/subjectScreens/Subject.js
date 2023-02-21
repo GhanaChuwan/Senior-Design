@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    marginLeft: 10,
     flex: 1,
   },
 });

@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
+
 import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
