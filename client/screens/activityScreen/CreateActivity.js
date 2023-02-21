@@ -77,6 +77,8 @@ export default function Activity({ navigation, route }) {
     });
   }, [route]);
 
+  console.log(activities);
+
   return (
     <View
       style={styles.container}
@@ -192,12 +194,17 @@ const CustomActivityCard = ({
       { text: "Cancel" },
     ]);
   };
+  console.table(activity);
+
   return (
     <TouchableOpacity
       style={styles.cardContainer}
       onLongPress={() => AlertUser(item)}
       onPress={() => {
-        navigation.navigate("ActivitySession", { title: activity.name });
+        navigation.navigate("ActivitySession", {
+          title: activity.name,
+          activityId: activity._id,
+        });
       }}
     >
       <Card

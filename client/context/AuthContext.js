@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [activitySession, setactivitySession] = useState([]);
+  const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
 
   const login = async (email, password) => {
@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         await getSubjects();
         await getAllActivity();
+        // await getAllActivitySession();
       }
 
       setIsLoading(false);
@@ -298,14 +299,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const addActivitySession = async (note, time, activity) => {
+  const addActivitySession = async ({ note, time, activityId }) => {
     try {
       const data = await axios.post(
         "/create-activitySession",
         {
           note: note,
           time: time,
-          activityId: activity,
+          activityId: activityId,
         },
         {
           headers: {
@@ -313,35 +314,49 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      setactivitySession([...activitySession, data.data]);
-      await AsyncStorage.setItem(
-        "activitiesSession",
-        JSON.stringify(activitySession)
-      );
+
+      console.log("HERE");
+      console.log(data.data);
+
+      if (activities.activities != undefined || activities.activities != null) {
+        const d = data.data;
+        const newActives = activitysessions.activites;
+        newActives.push(d);
+        const newTotalTime = activitysessions.totalTime + d.time;
+
+        newActives.totalTime = newTotalTime;
+        setactivitySessions(newActives);
+      }
+
+      // console.log();
+      // setactivitySessions([...activitysessions, data.data]);
+      // await AsyncStorage.setItem(
+      //   "activitysessions",
+      //   JSON.stringify(activitysessions)
+      // );
     } catch (error) {
       console.log(error);
       console.log("was not able to add activity session");
     }
   };
 
-  const getAllActivitySession = async ({ activity }) => {
+  const getAllActivitySession = async ({ activityId }) => {
     try {
-      const data = await axios.post(
-        "/getAllActivitySession",
-        {
-          activityId: activity,
+      const data = await axios.get(`/getAllActivitySession/${activityId}`, {
+        headers: {
+          authorization: `Bearer ${userToken}`,
         },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
-      setactivitySession(data.data);
-      await AsyncStorage.setItem(
-        "activitiesSession",
-        JSON.stringify(activitySession)
-      );
+      });
+
+      // // console.log(data.data);
+      // console.log("HERE2");
+      // console.log(data.data);
+
+      setactivitySessions(data.data);
+      // await AsyncStorage.setItem(
+      //   "activitysessions",
+      //   JSON.stringify(activitysessions)
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -381,7 +396,7 @@ export const AuthProvider = ({ children }) => {
         grades,
         addActivitySession,
         getAllActivitySession,
-        activitySession,
+        activitysessions,
       }}
     >
       {children}

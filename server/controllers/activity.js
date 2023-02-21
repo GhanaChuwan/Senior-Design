@@ -88,23 +88,27 @@ exports.addActivitySession = async (req, res) => {
   try {
     const activity = await Activity.findById(activityId);
 
+    console.log({ note, time, activityId });
+
     const activitySession = await ActivitySession.create({
-      note,
-      time,
+      note: note,
+      time: time,
       createdBy: userId,
     });
+
+    console.log(activitySession);
 
     activity.activitySessionTime.push(activitySession._id.toString());
     activity.save();
     return res.status(201).json(activitySession);
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ success: false, message: error.message });
   }
 };
 
 exports.getAllActivitySession = async (req, res) => {
-  const { activityId } = req.body;
-  const { userId } = req.user;
+  const { activityId } = req.params;
   try {
     let activitySession = [];
     const activity = await Activity.findById(activityId);
