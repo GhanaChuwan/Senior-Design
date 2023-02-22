@@ -20,7 +20,6 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { SelectList } from "react-native-dropdown-select-list";
 
-
 export default function Grades({ navigation, route }) {
   const { title, subjectId } = route.params;
   const { grades, getAllGrades, createGrade, deleteGrade } =
@@ -34,7 +33,13 @@ export default function Grades({ navigation, route }) {
   const [pointsEarned, setPointsEarned] = useState();
   const [totalPoints, setTotalPoints] = useState();
   const [points, setPoints] = useState();
-  const [gradeTypes, setGradeTypes] = useState(["Exams", "Quizzes", "Labs", "Homeworks", "Discussions"])
+  const [gradeTypes, setGradeTypes] = useState([
+    "Exams",
+    "Quizzes",
+    "Labs",
+    "Homeworks",
+    "Discussions",
+  ]);
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
@@ -91,8 +96,6 @@ export default function Grades({ navigation, route }) {
           });
           //then update grades
           retrieveGrades();
-
-
         },
       },
       { text: "Cancel" },
@@ -134,11 +137,28 @@ export default function Grades({ navigation, route }) {
               </View>
 
               <View style={styles.pointsDiv}>
-                <TextInput keyboardType='numeric' placeholder="points Earned" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setPointsEarned(text); setPoints(text + " / " + totalPoints) }} />
+                <TextInput
+                  keyboardType="numeric"
+                  placeholder="points Earned"
+                  placeholderTextColor="lightgray"
+                  style={styles.input}
+                  onChangeText={(text) => {
+                    setPointsEarned(text);
+                    setPoints(text + " / " + totalPoints);
+                  }}
+                />
 
-                <TextInput keyboardType='numeric' placeholder="total points" placeholderTextColor="lightgray" style={styles.input} onChangeText={text => { setTotalPoints(text); setPoints(pointsEarned + " / " + text) }} />
+                <TextInput
+                  keyboardType="numeric"
+                  placeholder="total points"
+                  placeholderTextColor="lightgray"
+                  style={styles.input}
+                  onChangeText={(text) => {
+                    setTotalPoints(text);
+                    setPoints(pointsEarned + " / " + text);
+                  }}
+                />
               </View>
-
 
               <CustomButton
                 text="Create Grade"
@@ -171,8 +191,7 @@ export default function Grades({ navigation, route }) {
         </TouchableOpacity> */}
       </View>
 
-      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5, }} >
-
+      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5 }}>
         <FlatList
           data={grades}
           showsVerticalScrollIndicator={false}
@@ -260,7 +279,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    borderColor: '#3B71F3',
+    borderColor: "#3B71F3",
     padding: 10,
     borderRadius: 5,
     fontSize: 16,
@@ -273,10 +292,9 @@ const styles = StyleSheet.create({
   pointsDiv: {
     display: "flex",
     flexDirection: "row",
-
   },
   dropDown: {
     marginVertical: 10,
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });

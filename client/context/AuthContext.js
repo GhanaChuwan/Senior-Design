@@ -237,7 +237,7 @@ export const AuthProvider = ({ children }) => {
     console.log(gradeName);
     console.log(gradeType);
     console.log(gradePoints);
-    console.log(subjectId)
+    console.log(subjectId);
     try {
       const data = await axios.post(
         "/create-grade",
@@ -256,7 +256,6 @@ export const AuthProvider = ({ children }) => {
       const oldGrade = grades;
       console.log(data.data);
       oldGrade.push(data.data);
-
 
       // setGrades([...grades, data.data])
 
@@ -320,9 +319,6 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-
-      console.log("HERE");
-      console.log(data.data);
 
       if (activities.activities != undefined || activities.activities != null) {
         const d = data.data;

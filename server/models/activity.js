@@ -26,6 +26,11 @@ const activitySchema = new mongoose.Schema({
     default: [],
     require: false,
   },
+  totalTime: {
+    type: Number,
+    default: 0,
+    require: false,
+  },
 });
 
 module.exports = mongoose.model("Activity", activitySchema);
