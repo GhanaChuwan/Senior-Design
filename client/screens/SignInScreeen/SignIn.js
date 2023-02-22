@@ -40,6 +40,7 @@ const SignIn = () => {
       },
       headerTintColor: "#fff",
       headerShown: true,
+      alignItems: "center",
       //   headerRight: () => (
       //     <View>
       //       <CreateActivity navigation={navigation} location={createActivity} />

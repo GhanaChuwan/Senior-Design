@@ -96,7 +96,7 @@ exports.addActivitySession = async (req, res) => {
       createdBy: userId,
     });
 
-    console.log(activitySession);
+    activity.totalTime += time;
 
     activity.activitySessionTime.push(activitySession._id.toString());
     activity.save();
@@ -122,15 +122,13 @@ exports.getAllActivitySession = async (req, res) => {
       activitySession.push(session);
     }
 
-    let totalTime = 0;
+    // let totalTime = 0;
 
-    activitySession.forEach((session) => {
-      totalTime += session.time;
-    });
+    // activitySession.forEach((session) => {
+    //   totalTime += session.time;
+    // });
 
-    return res
-      .status(200)
-      .json({ activites: activitySession, totalTime: totalTime });
+    return res.status(200).json({ activites: activitySession });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

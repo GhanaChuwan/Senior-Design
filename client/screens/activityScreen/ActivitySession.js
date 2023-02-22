@@ -11,12 +11,11 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import { Card, Title } from "react-native-paper";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
+import formatTime from "../../utils/formateTime";
 
 export default function Session({ navigation, route }) {
   const { getAllActivitySession, activitysessions } = useContext(AuthContext);
   const { activityId, title } = route.params;
-
-  console.log(activitysessions);
 
   useEffect(() => {
     getAllActivitySession({ activityId });
@@ -32,9 +31,18 @@ export default function Session({ navigation, route }) {
   }, [activityId]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Sessions</Text>
+    <View
+      style={styles.container}
+      // behavior={Platform.OS == "ios" ? "padding" : "height"}
+    >
+      {/* <Text style={styles.text}>Sessions</Text> */}
       <CustomButton
+        style={{
+          marginTop: 20,
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+        }}
+        type="LINKBUTTON"
         // style={{ marginTop: 20, alignItems: "flex-end" }}
         text="Add Timer"
         onPress={() =>
@@ -42,6 +50,7 @@ export default function Session({ navigation, route }) {
         }
       />
       <FlatList
+        style={{ marginBottom: 10 }}
         data={activitysessions.activites}
         renderItem={({ item }) => (
           <CustomSessionsCard
@@ -55,6 +64,8 @@ export default function Session({ navigation, route }) {
   );
 }
 const CustomSessionsCard = ({ activitySession }) => {
+  const timeStudied = formatTime(activitySession.time);
+
   return (
     <Card
       style={{
@@ -69,7 +80,9 @@ const CustomSessionsCard = ({ activitySession }) => {
         <Text style={styles.date}>
           {moment(activitySession.createdAt).fromNow()}
         </Text>
-        <Title style={styles.timeSpent}>{activitySession.time}</Title>
+        <Title style={styles.timeSpent}>
+          {`${timeStudied["hr"]} ${timeStudied["min"]} ${timeStudied["sec"]}`}
+        </Title>
       </Card.Content>
     </Card>
   );
@@ -77,8 +90,8 @@ const CustomSessionsCard = ({ activitySession }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#fdf6ec",
+    flexDirection: "column",
   },
   text: {
     fontSize: 20,

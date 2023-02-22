@@ -83,12 +83,6 @@ const SignUp = () => {
       <ScrollView
         contentContainerStyle={{ paddingTop: 70, paddingHorizontal: 20 }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SignIn")}
-          style={{ marginBottom: 10 }}
-        >
-          <AntDesign name="arrowleft" size={24} color="#3B71F3" />
-        </TouchableOpacity>
         <Text style={styles.title}>Create an account</Text>
         <View style={{ marginVertical: 20 }}>
           <Formik

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+
 import {
   Text,
   View,
@@ -19,19 +19,50 @@ import CreateActivity from "../../components/CreateActivity";
 import { Card } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import moment from "moment";
+import { SelectList } from "react-native-dropdown-select-list";
+import formatTime from "../../utils/formateTime";
 
 export default function Activity({ navigation, route }) {
-  const { createActivity, getAllActivity, activities, deleteActivity } =
-    useContext(AuthContext);
+  const {
+    createActivity,
+    getAllActivity,
+    activities,
+    deleteActivity,
+    getAllActivitySession,
+    activitysession,
+  } = useContext(AuthContext);
   const [visible, setVisible] = React.useState(false);
   const [zIndex, setZIndex] = useState(3);
   const [zIndexCard, setZIndexCard] = useState(1);
-
   const { subjectId, activityId } = route.params;
+  const [activityTypes, setActivityTypes] = useState([
+    "reading",
+    "reviewing notes",
+    "answering questions",
+    "quizzing",
+    "practice exams",
+    "complete ATl modules",
+    "complete EAQ questions",
+    "complete PREP U questions",
+    "study with a friend",
+    "go to tutoring",
+    "other",
+  ]);
+
+  const { Activities, setActivities, activitySession } =
+    useContext(AuthContext);
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, [subjectId]);
+  }, []);
+
+  useEffect(() => {
+    getAllActivity({ subjectId });
+  }, []);
+
+  useEffect(() => {
+    getAllActivitySession({ activityId });
+  }, []);
 
   const showModal = () => {
     setZIndex(1);
@@ -51,12 +82,12 @@ export default function Activity({ navigation, route }) {
   };
   const [name, setName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
-  const { Activities, setActivities } = useContext(AuthContext);
+  const [selected, setSelected] = useState();
 
   const activity = async () => {
     try {
       await createActivity({
-        name: name,
+        name: selected,
         color: selectedColor,
         subjectId: subjectId,
       });
@@ -76,8 +107,6 @@ export default function Activity({ navigation, route }) {
       headerShown: true,
     });
   }, [route]);
-
-  console.log(activities);
 
   return (
     <View
@@ -100,12 +129,21 @@ export default function Activity({ navigation, route }) {
             >
               <View>
                 <Text style={styles.header}>Let's create a Activity</Text>
-                <CustomInput
-                  placeholder={"create a activity"}
-                  onChangeText={(newText) => setName(newText)}
-                  style={{ borderRadius: 30 }}
-                />
-                <Text style={styles.colorChooser}>Choose a color </Text>
+
+                <View style={styles.dropDown}>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={activityTypes}
+                    placeholder="Select activity"
+                    boxStyles={{ backgroundColor: "#3B71F3" }}
+                    inputStyles={{ color: "#fff" }}
+                    disabledTextStyles={{ color: "#fff" }}
+                    dropdownStyles={{ backgroundColor: "#3B71F3" }}
+                    dropdownTextStyles={{ color: "#fff" }}
+                    save="value"
+                  />
+                </View>
+                <Text style={styles.colorChooser}>Select a color </Text>
                 <View style={styles.colorContainer}>
                   <ColorPicker
                     // ref={r => {  }}
@@ -160,6 +198,7 @@ export default function Activity({ navigation, route }) {
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
+            activitysession={activitysession}
             subjectId={subjectId}
             deleteActivity={deleteActivity}
           />
@@ -177,6 +216,7 @@ const CustomActivityCard = ({
   subjectId,
   item,
   zIndexCard,
+  activitysession,
 }) => {
   const AlertUser = () => {
     Alert.alert(undefined, "are you sure you want to delete activity", [
@@ -194,7 +234,8 @@ const CustomActivityCard = ({
       { text: "Cancel" },
     ]);
   };
-  console.table(activity);
+
+  const timeStudied = formatTime(activity.totalTime);
 
   return (
     <TouchableOpacity
@@ -220,7 +261,9 @@ const CustomActivityCard = ({
           <Text style={styles.date}>
             {moment(activity.createdAt).fromNow()}
           </Text>
-          <Title style={styles.totalTime}>0 Min ALL TIME</Title>
+          <Title
+            style={styles.totaltime}
+          >{`${timeStudied["hr"]} ${timeStudied["min"]} ${timeStudied["sec"]}`}</Title>
         </Card.Content>
       </Card>
     </TouchableOpacity>
@@ -242,22 +285,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 20,
     textAlign: "center",
+    color: "#3B71F3",
   },
 
   colorChooser: {
     fontSize: 20,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     marginTop: 20,
     marginBottom: 20,
     flexDirection: "row",
     justifyContent: "center",
     textAlign: "center",
-    color: "gray",
+    color: "#3B71F3",
   },
   colorContainer: {
     marginBottom: 20,
     height: 30,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -281,9 +325,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "white",
   },
-  totalTime: {
+  totaltime: {
     fontSize: 14,
     textAlign: "right",
     color: "white",
+  },
+  dropDown: {
+    marginVertical: 10,
+    borderRadius: 10,
   },
 });
