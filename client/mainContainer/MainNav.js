@@ -11,6 +11,11 @@ import CreateMenu from "../components/CreateMenu";
 import { AuthContext } from "../context/AuthContext";
 import { ActivityIndicator, View } from "react-native";
 import CreateActivity from "../screens/activityScreen/CreateActivity";
+import Grades from "../../client/screens/activityScreen/Grade";
+import NewGrade from "../../client/screens/activityScreen/NewGrade";
+import ActivitySession from "../screens/activityScreen/ActivitySession";
+import ActivityTime from "../screens/activityScreen/ActivityTime";
+import WeeklyProgress from "../screens/activityScreen/WeeklyProgress";
 const Stack = createNativeStackNavigator();
 
 function MainNav() {
@@ -53,11 +58,20 @@ function MainNav() {
             />
             <Stack.Screen name="SubjectPage" component={SubjectPage} />
             <Stack.Screen
-              name="CreateActivity"
+              name="Activity"
               component={CreateActivity}
               initialParams={{ color: undefined }}
-              options={{ title: "Create activity" }}
+              options={{ title: "Activity" }}
             />
+            <Stack.Screen name="ActivitySession" component={ActivitySession} />
+            <Stack.Screen name="ActivityTime" component={ActivityTime} />
+            <Stack.Screen name="Grades" component={Grades} />
+            <Stack.Screen
+              name="NewGrade"
+              component={NewGrade}
+              options={{ title: "Create a grade" }}
+            />
+            <Stack.Screen name="WeeklyProgress" component={WeeklyProgress} />
           </Stack.Group>
         )}
       </Stack.Navigator>

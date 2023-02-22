@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+
 import {
   Text,
   View,
@@ -8,6 +8,8 @@ import {
   title,
   FlatList,
   TouchableOpacity,
+  Alert,
+  Platform,
 } from "react-native";
 import { Modal, Portal, Button, Provider, Title } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
@@ -17,25 +19,59 @@ import CreateActivity from "../../components/CreateActivity";
 import { Card } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import moment from "moment";
+import { SelectList } from "react-native-dropdown-select-list";
+import formatTime from "../../utils/formateTime";
 
 export default function Activity({ navigation, route }) {
-  const { createActivity, getAllActivity, activities } =
-    useContext(AuthContext);
+  const {
+    createActivity,
+    getAllActivity,
+    activities,
+    deleteActivity,
+    getAllActivitySession,
+    activitysession,
+  } = useContext(AuthContext);
   const [visible, setVisible] = React.useState(false);
-  const [zIndex, setZIndex] = useState(2);
+  const [zIndex, setZIndex] = useState(3);
+  const [zIndexCard, setZIndexCard] = useState(1);
+  const { subjectId, activityId } = route.params;
+  const [activityTypes, setActivityTypes] = useState([
+    "reading",
+    "reviewing notes",
+    "answering questions",
+    "quizzing",
+    "practice exams",
+    "complete ATl modules",
+    "complete EAQ questions",
+    "complete PREP U questions",
+    "study with a friend",
+    "go to tutoring",
+    "other",
+  ]);
 
-  const { subjectId } = route.params;
+  const { Activities, setActivities, activitySession } =
+    useContext(AuthContext);
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, [subjectId]);
+  }, []);
+
+  useEffect(() => {
+    getAllActivity({ subjectId });
+  }, []);
+
+  useEffect(() => {
+    getAllActivitySession({ activityId });
+  }, []);
 
   const showModal = () => {
-    setZIndex(0);
+    setZIndex(1);
+    setZIndexCard(-1);
     setVisible(true);
   };
   const hideModal = () => {
-    setZIndex(1);
+    setZIndex(-1);
+    setZIndexCard(1);
     setVisible(false);
   };
   const containerStyle = {
@@ -46,12 +82,12 @@ export default function Activity({ navigation, route }) {
   };
   const [name, setName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
-  const { Activities, setActivities } = useContext(AuthContext);
+  const [selected, setSelected] = useState();
 
   const activity = async () => {
     try {
       await createActivity({
-        name: name,
+        name: selected,
         color: selectedColor,
         subjectId: subjectId,
       });
@@ -60,33 +96,28 @@ export default function Activity({ navigation, route }) {
       console.log(error.message);
     }
   };
-  const Delete = (activities) => {
-    setActivity((prev) => {
-      const r = prev.filter((pre) => pre !== activities);
-      return r;
-    });
-  };
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
       headerShown: true,
-      //   headerRight: () => (
-      //     <View>
-      //       <CreateActivity navigation={navigation} location={createActivity} />
-      //     </View>
-      //   ),
     });
   }, [route]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+    >
       <View
         style={{
           position: "absolute",
           height: "100%",
           width: "100%",
-          zIndex: 1,
         }}
       >
         <Provider>
@@ -98,12 +129,21 @@ export default function Activity({ navigation, route }) {
             >
               <View>
                 <Text style={styles.header}>Let's create a Activity</Text>
-                <CustomInput
-                  placeholder={"create a activity"}
-                  onChangeText={(newText) => setName(newText)}
-                  style={{ borderRadius: 30 }}
-                />
-                <Text style={styles.colorChooser}>Choose a color </Text>
+
+                <View style={styles.dropDown}>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={activityTypes}
+                    placeholder="Select activity"
+                    boxStyles={{ backgroundColor: "#3B71F3" }}
+                    inputStyles={{ color: "#fff" }}
+                    disabledTextStyles={{ color: "#fff" }}
+                    dropdownStyles={{ backgroundColor: "#3B71F3" }}
+                    dropdownTextStyles={{ color: "#fff" }}
+                    save="value"
+                  />
+                </View>
+                <Text style={styles.colorChooser}>Select a color </Text>
                 <View style={styles.colorContainer}>
                   <ColorPicker
                     // ref={r => {  }}
@@ -121,7 +161,7 @@ export default function Activity({ navigation, route }) {
                       "#00aeef",
                       "#00c85d",
                       "#57ff0a",
-                      "#ffde17",
+                      "#fdb833",
                       "#f26522",
                     ]}
                     // Snap={true}
@@ -144,20 +184,23 @@ export default function Activity({ navigation, route }) {
       </View>
 
       <Button
-        style={{ marginTop: 10, alignItems: "flex-end", zIndex: zIndex }}
+        style={{ marginTop: 20, alignItems: "flex-end" }}
         onPress={showModal}
       >
         Create Activity +
       </Button>
 
       <FlatList
-        style={{ zIndex: zIndex, marginBottom: 0 }}
+        style={{ marginBottom: 10, zIndex: zIndexCard }}
         data={activities}
         renderItem={({ item }) => (
           <CustomActivityCard
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
+            activitysession={activitysession}
+            subjectId={subjectId}
+            deleteActivity={deleteActivity}
           />
         )}
       />
@@ -165,52 +208,68 @@ export default function Activity({ navigation, route }) {
   );
 }
 
-const CustomActivityCard = ({ activity }) => {
+const CustomActivityCard = ({
+  activity,
+  deleteActivity,
+  navigation,
+  route,
+  subjectId,
+  item,
+  zIndexCard,
+  activitysession,
+}) => {
+  const AlertUser = () => {
+    Alert.alert(undefined, "are you sure you want to delete activity", [
+      {
+        text: "Yes",
+        onPress: async (name) => {
+          console.log("deleting activity");
+
+          await deleteActivity({
+            subjectId: subjectId,
+            activityId: activity._id,
+          });
+        },
+      },
+      { text: "Cancel" },
+    ]);
+  };
+
+  const timeStudied = formatTime(activity.totalTime);
+
   return (
-    <Card
-      style={{
-        backgroundColor: `${activity.color}`,
-        marginVertical: 5,
-        marginHorizontal: 10,
-        padding: 10,
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onLongPress={() => AlertUser(item)}
+      onPress={() => {
+        navigation.navigate("ActivitySession", {
+          title: activity.name,
+          activityId: activity._id,
+        });
       }}
     >
-      <TouchableOpacity style={styles.cardContainer}>
+      <Card
+        style={{
+          backgroundColor: `${activity.color}`,
+          marginVertical: 5,
+          marginHorizontal: 10,
+          padding: 10,
+        }}
+      >
         <Card.Content style={styles.card}>
           <Title style={styles.title}>{activity.name}</Title>
           <Text style={styles.date}>
             {moment(activity.createdAt).fromNow()}
           </Text>
-          <Title style={styles.totalTime}>0 Min ALL TIME</Title>
+          <Title
+            style={styles.totaltime}
+          >{`${timeStudied["hr"]} ${timeStudied["min"]} ${timeStudied["sec"]}`}</Title>
         </Card.Content>
-      </TouchableOpacity>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 };
 
-// const ActivityList = ({ navigation, route }) => {
-//   const { Activity, setActivity } = useContext(AuthContext);
-
-//   const Delete = (activities) => {
-//     setActivity((prev) => {
-//       const r = prev.filter((pre) => pre !== activities);
-//       return r;
-//     });
-//   };
-
-//   return (
-//     <FlatList
-//       data={Activity}
-//       renderItem={({ item }) => (
-//         <CustomActivityCard
-//           navigation={navigation}
-//           subject={item}
-//           deleteSubject={Delete}
-//         />
-//       )}
-//     />
-//   );
-// };
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fdf6ec",
@@ -226,21 +285,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 20,
     textAlign: "center",
+    color: "#3B71F3",
   },
+
   colorChooser: {
     fontSize: 20,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     marginTop: 20,
     marginBottom: 20,
     flexDirection: "row",
     justifyContent: "center",
     textAlign: "center",
-    color: "gray",
+    color: "#3B71F3",
   },
   colorContainer: {
     marginBottom: 20,
     height: 30,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -264,9 +325,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "white",
   },
-  totalTime: {
+  totaltime: {
     fontSize: 14,
     textAlign: "right",
     color: "white",
+  },
+  dropDown: {
+    marginVertical: 10,
+    borderRadius: 10,
   },
 });

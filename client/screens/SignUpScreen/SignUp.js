@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -47,6 +47,21 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+  useEffect(() => {
+    // navigation.setOptions({ headerTitle: title });
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+      headerTintColor: "#fff",
+      headerShown: true,
+      //   headerRight: () => (
+      //     <View>
+      //       <CreateActivity navigation={navigation} location={createActivity} />
+      //     </View>
+      //   ),
+    });
+  }, []);
   const navigation = useNavigation();
 
   const signUp = async (values, formikActions) => {
@@ -68,12 +83,6 @@ const SignUp = () => {
       <ScrollView
         contentContainerStyle={{ paddingTop: 70, paddingHorizontal: 20 }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SignIn")}
-          style={{ marginBottom: 10 }}
-        >
-          <AntDesign name="arrowleft" size={24} color="#3B71F3" />
-        </TouchableOpacity>
         <Text style={styles.title}>Create an account</Text>
         <View style={{ marginVertical: 20 }}>
           <Formik

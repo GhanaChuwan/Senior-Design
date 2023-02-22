@@ -28,6 +28,8 @@ export default function CreateSubject({ navigation, route }) {
         name: name,
         color: selectedColor,
       });
+
+      navigation.pop();
     } catch (error) {
       console.log(error.message);
     }

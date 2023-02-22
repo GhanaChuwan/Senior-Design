@@ -23,10 +23,7 @@ export default function Subject({ navigation, route }) {
   const { deleteSubject, setDeleteSubjects } = useContext(AuthContext);
 
   const Delete = (subject) => {
-    setSubjects((prev) => {
-      const r = prev.filter((pre) => pre !== subject);
-      return r;
-    });
+    deleteSubject({ subjectId: subject._id });
   };
   return (
     <SafeAreaView style={{ backgroundColor: "#fdf6ec", flex: 1 }}>
@@ -53,10 +50,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   subjectContainer: {
-    margin: 10,
-    paddingTop: 30,
+    marginTop: 5,
     alignItems: "flex-start",
+    justifyContent: "flex-start",
+    marginLeft: 10,
     flex: 1,
-    marginTop: -20,
   },
 });

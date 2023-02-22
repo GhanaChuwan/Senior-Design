@@ -25,25 +25,46 @@ const {
   getActivity,
   deleteActivity,
   getAllActivity,
+  addActivitySession,
+  getAllActivitySession,
 } = require("../controllers/activity");
 const {
   validateResources,
 } = require("../middlewares/validation/resourcesValidation");
 const { resources } = require("../controllers/resources");
-const { createGrade, getAllGrades } = require("../controllers/grade");
+const {
+  createGrade,
+  getAllGrades,
+  deleteGrade,
+} = require("../controllers/grade");
+
+const {
+  createEvents,
+  getEvents,
+  deleteEvents,
+} = require("../controllers/calendar");
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);
-router.delete("/delete-subject", isAuth, deleteSubjects);
-router.delete("/delete-activity", isAuth, deleteActivity);
+router.post("/delete-subject", isAuth, deleteSubjects);
+router.post("/delete-activity", isAuth, deleteActivity);
 
 router.post("/create-activity", isAuth, createActivity);
 router.get("/activity", isAuth, getActivity);
 router.get("/activity-all/:subjectId", isAuth, getAllActivity);
-router.post("/add-grade", isAuth, createGrade);
-router.get("/getAllGrade", isAuth, getAllGrades);
+
+router.post("/create-activitySession", isAuth, addActivitySession);
+router.get("/getAllActivitySession/:activityId", isAuth, getAllActivitySession);
+
+router.post("/create-grade", isAuth, createGrade);
+router.post("/getAllGrades", isAuth, getAllGrades);
+router.post("/deleteGrade", isAuth, deleteGrade);
+
+router.post("/create-event", isAuth, createEvents);
+router.post("/delete-event", isAuth, deleteEvents);
+router.post("/getEvent", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 module.exports = router;

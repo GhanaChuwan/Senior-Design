@@ -9,12 +9,19 @@ export default function SubjectPage({ navigation, route }) {
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: title });
-    navigation.setOptions({ headerShown: true });
+    navigation.setOptions({
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: "#1e407c",
+      },
+
+      headerTintColor: "#fff",
+    });
   }, [title]);
 
   return (
     <View style={styles.container}>
-      <CreateMenu navigation={navigation} subjectId={subjectId} />
+      <CreateMenu navigation={navigation} subjectId={subjectId} title={title} />
     </View>
   );
 }

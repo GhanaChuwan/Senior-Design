@@ -22,7 +22,6 @@ function BottomTabNavigator({ navigation, sideBarNav }) {
       screenOptions={({ route }) => ({
         tabBarStyle: {
           backgroundColor: "#1e407c",
-          activeColor: "#fff",
         },
         tabBarInactiveTintColor: "#fff",
         tabBaractiveTintColor: "#fff",
