@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Title, Card, Paragraph } from "react-native-paper";
-import { SafeAreaView, ScrollView, StyleSheet, Linking } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Linking, Text, View} from "react-native";
 
 export default function Resources({ navigation, route }) {
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              PennState Starfish Information
+           <Text style={styles.underline}>PennState Starfish Information</Text>
             </Paragraph>
             <Paragraph
               onPress={() =>
@@ -32,7 +32,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Log into Starfish
+             <Text style={styles.underline}>Log into Starfish</Text> 
             </Paragraph>
             <Paragraph
               onPress={() =>
@@ -43,7 +43,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              FAQ's about Penn State Starfish
+               <Text style={styles.underline}>FAQ's about Penn State Starfish</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -59,21 +59,21 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Exploratory & Pre-Major Advising Information
+              <Text style={styles.underline}>Exploratory & Pre-Major Advising Information</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("mailto:bdadvising@psu.edu")}
               target="_blank"
               style={styles.paragraph}
             >
-              Email ID: bdadvising@psu.edu
+            Email:  <Text style={styles.underline}>bdadvising@psu.edu</Text>  
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8148986164")}
               target="_blank"
               style={styles.paragraph}
             >
-              Phone Number: 814-898-6164
+               Phone Number: <Text style={styles.underline}>814-898-6164</Text> 
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Office: Monday-Friday, 8:00am-5:00pm
@@ -87,7 +87,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              125 Reed Union Building (Second Floor)
+              <Text style={styles.underline}>125 Reed Union Building (Second Floor)</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -103,21 +103,21 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Behrend Peer Tutoring Information
+             <Text style={styles.underline}>Behrend Peer Tutoring Information</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("mailto:bdtutor@psu.edu")}
               target="_blank"
               style={styles.paragraph}
             >
-              Email ID: bdtutor@psu.edu
+              Email: <Text style={styles.underline}>bdtutor@psu.edu</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8148986164")}
               target="_blank"
               style={styles.paragraph}
             >
-              Phone Number: 814-898-6164
+              Phone Number: <Text style={styles.underline}>814-898-6164</Text> 
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Monday-Friday, 8:00am-5:00pm. (appointments preferred)
@@ -131,7 +131,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              203 John M. Lilley Library (Second Floor)
+             <Text style={styles.underline}> 203 John M. Lilley Library (Second Floor)</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -147,14 +147,14 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Personal Counseling Information
+               <Text style={styles.underline}>Personal Counseling Information</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8144562014")}
               target="_blank"
               style={styles.paragraph}
             >
-              Crisis Services
+              Phone Number:<Text style={styles.underline}> 814-456-2014</Text> 
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Monday-Friday, 8:00am-5:00pm. (appointments preferred)
@@ -168,7 +168,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              1 Reed Union Building (First Floor)
+               <Text style={styles.underline}>1 Reed Union Building (First Floor)</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -184,21 +184,21 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Student Disability Resource Information
+              <Text style={styles.underline}>Student Disability Resource Information</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("mailto:DiversityBehrend@psu.edu")}
               target="_blank"
               style={styles.paragraph}
             >
-              Email ID: DiversityBehrend@psu.edu
+              Email: <Text style={styles.underline}>DiversityBehrend@psu.edu</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8148987101")}
               target="_blank"
               style={styles.paragraph}
             >
-              Phone Number: 814-898-7101
+              Phone Number:<Text style={styles.underline}> 814-898-7101</Text> 
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Monday-Friday, 8:00am-5:00pm. (appointments preferred)
@@ -212,15 +212,15 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              1 Reed Union Building (First Floor)
+              <Text style={styles.underline}>1 Reed Union Building (First Floor)</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
         <Card style={styles.card}>
           <Card.Content style={styles.cardContainer}>
             <Title style={styles.title}>
-              {" "}
-              Campus Health and Wellness Center{" "}
+             
+            Campus Health and Wellness Center
             </Title>
             <Paragraph
               onPress={() =>
@@ -231,9 +231,11 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Campus Health and Wellness Center Information
+               <Text style={styles.underline}>Campus Health and Wellness Center Information</Text> 
             </Paragraph>
-            <Paragraph style={styles.paragraph}>Phone: 814-898-6217</Paragraph>
+            <Paragraph style={styles.paragraph}>
+            Phone Number: <Text style={styles.underline}>814-898-6217</Text> 
+              </Paragraph>
             <Paragraph style={styles.paragraph}>
               Office Hours: Monday-Friday, 8:00am-5:00pm
             </Paragraph>
@@ -246,7 +248,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Carriage House/Burke 110
+             <Text style={styles.underline}>Carriage House/Burke 110</Text>  
             </Paragraph>
           </Card.Content>
         </Card>
@@ -262,14 +264,14 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              International Student Advising Information
+              <Text style={styles.underline}>International Student Advising Information</Text>  
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8148986031")}
               target="_blank"
               style={styles.paragraph}
             >
-              Phone: 814-898-6031
+              Phone Number: <Text style={styles.underline}>814-898-6031</Text>  
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Office Hours: Monday-Friday, 8:00am-5:00pm
@@ -283,7 +285,7 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Perry Hall, Floor 1
+              <Text style={styles.underline}>Perry Hall, Floor 1</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -299,20 +301,20 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-              Student Affairs Information
+                <Text style={styles.underline}>Student Affairs Information</Text> 
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL("tel:8148986111")}
               target="_blank"
               style={styles.paragraph}
             >
-              Phone:814-898-6111
+              Phone Number:<Text style={styles.underline}> 814-898-6111</Text> 
             </Paragraph>
             <Paragraph style={styles.paragraph}>
               Office Hours: Monday-Friday, 8:00am-5:00pm
             </Paragraph>
             <Paragraph style={styles.paragraph}>
-              155 Reed Union Building (Second Floor)
+            <Text style={styles.underline}>155 Reed Union Building (Second Floor)</Text> 
             </Paragraph>
           </Card.Content>
         </Card>
@@ -341,9 +343,13 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#fff",
+    
   },
   paragraph: {
     color: "#fff",
     fontSize: 16,
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 });
