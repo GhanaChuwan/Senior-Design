@@ -7,7 +7,8 @@ export default function CreateFolder({ navigation, location }) {
       <View style={styles.btnContainer}>
         <AntDesign
           name="addfolder"
-          size={30}
+          color="#3B71F3"
+          size={32}
           onPress={() => navigation.navigate(location)}
         />
       </View>
@@ -17,8 +18,7 @@ export default function CreateFolder({ navigation, location }) {
 const styles = StyleSheet.create({
   btn: {
     fontSize: 90,
-    color: "#3B71F3",
-    borderRadius: 30,
+    borderRadius: 25,
     width: 45,
     marginBottom: 5,
     height: 45,

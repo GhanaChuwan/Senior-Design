@@ -132,6 +132,12 @@ export default function Grades({ navigation, route }) {
                 <SelectList
                   setSelected={(val) => setSelected(val)}
                   data={gradeTypes}
+                  placeholder="Select Grade"
+                  boxStyles={{ backgroundColor: "#3B71F3" }}
+                  inputStyles={{ color: "#fff" }}
+                  disabledTextStyles={{ color: "#fff" }}
+                  dropdownStyles={{ backgroundColor: "#3B71F3" }}
+                  dropdownTextStyles={{ color: "#fff" }}
                   save="value"
                 />
               </View>
@@ -296,5 +302,11 @@ const styles = StyleSheet.create({
   dropDown: {
     marginVertical: 10,
     borderRadius: 10,
+  },
+  modalHeader: {
+    fontSize: 30,
+    margin: 20,
+    textAlign: "center",
+    color: "#3B71F3",
   },
 });
