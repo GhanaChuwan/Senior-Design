@@ -76,9 +76,9 @@ const CustomSessionsCard = ({ activitySession }) => {
       }}
     >
       <Card.Content style={styles.card}>
-        <Title style={styles.title}>{activitySession.note}</Title>
+        <Text style={styles.texts}>{activitySession.note}</Text>
         <Text style={styles.date}>
-          {moment(activitySession.createdAt).fromNow()}
+          {/* {moment(activitySession.createdAt).fromNow()} */}
         </Text>
         <Title style={styles.timeSpent}>
           {`${timeStudied["hr"]} ${timeStudied["min"]} ${timeStudied["sec"]}`}
@@ -113,6 +113,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 15,
+    textAlign: "left",
+    color: "white",
+  },
+  texts: {
+    fontSize: 14,
     textAlign: "left",
     color: "white",
   },

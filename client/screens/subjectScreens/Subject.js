@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
   },
   subjectContainer: {
     marginTop: 5,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    // marginLeft: 10,
     flex: 1,
   },
 });

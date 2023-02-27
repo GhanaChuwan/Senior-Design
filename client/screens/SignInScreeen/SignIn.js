@@ -127,9 +127,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    marginLeft: 40,
-    width: 300,
-    height: 300,
+    marginTop: 10,
+    marginLeft: 120,
+    width: 100,
+    height: 100,
   },
 });
 export default SignIn;

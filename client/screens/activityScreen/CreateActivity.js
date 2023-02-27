@@ -251,9 +251,9 @@ const CustomActivityCard = ({
       <Card
         style={{
           backgroundColor: `${activity.color}`,
-          marginVertical: 5,
+          marginVertical: 1,
           marginHorizontal: 10,
-          padding: 10,
+          padding: 1,
         }}
       >
         <Card.Content style={styles.card}>
@@ -313,6 +313,7 @@ const styles = StyleSheet.create({
   },
   card: {
     justifyContent: "center",
+    height: 80,
   },
   title: {
     fontSize: 24,
@@ -326,7 +327,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   totaltime: {
-    fontSize: 14,
+    fontSize: 20,
     textAlign: "right",
     color: "white",
   },
