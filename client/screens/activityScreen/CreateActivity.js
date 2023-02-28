@@ -62,7 +62,7 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivitySession({ activityId });
-  }, []);
+  }, [activityId]);
 
   const showModal = () => {
     setZIndex(1);
@@ -217,6 +217,7 @@ const CustomActivityCard = ({
   item,
   zIndexCard,
   activitysession,
+  activityId,
 }) => {
   const AlertUser = () => {
     Alert.alert(undefined, "are you sure you want to delete activity", [
@@ -241,6 +242,9 @@ const CustomActivityCard = ({
     <TouchableOpacity
       style={styles.cardContainer}
       onLongPress={() => AlertUser(item)}
+      // onPress={() => {
+      //   navigation.navigate("ActivityTime", { activityId: activityId });
+      // }}
       onPress={() => {
         navigation.navigate("ActivitySession", {
           title: activity.name,

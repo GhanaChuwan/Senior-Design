@@ -80,11 +80,12 @@ const SignUp = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fdf6ec", flex: 1 }}>
-      <ScrollView
+      {/* <ScrollView
         contentContainerStyle={{ paddingTop: 70, paddingHorizontal: 20 }}
-      >
+      > */}
+      <View style={{ paddingHorizontal: 20 }}>
         <Text style={styles.title}>Create an account</Text>
-        <View style={{ marginVertical: 20 }}>
+        <View>
           <Formik
             initialValues={userInfo}
             validationSchema={validationSchema}
@@ -163,15 +164,17 @@ const SignUp = () => {
             }}
           </Formik>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    padding: 20,
-    marginTop: 10,
+    flex: 1,
+    justifyContent: "center",
+    // padding: 20,
+    // marginTop: 10,
   },
   title: {
     fontSize: 24,
