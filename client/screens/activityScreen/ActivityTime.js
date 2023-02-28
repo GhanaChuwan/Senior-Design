@@ -56,7 +56,7 @@ function ActivityTime({ navigation, route }) {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
-  const [zIndex, setZIndex] = useState(3);
+  const [zIndex, setZIndex] = useState(1);
   const startStopwatch = () => {
     setIsRunning(true);
     intervalRef.current = setInterval(() => {
@@ -72,6 +72,7 @@ function ActivityTime({ navigation, route }) {
     setIsRunning(false);
     clearInterval(intervalRef.current);
     setModalVisible(true);
+    showModal(true);
   };
 
   const resetStopwatch = () => {
@@ -99,23 +100,24 @@ function ActivityTime({ navigation, route }) {
   };
   const containerStyle = {
     backgroundColor: "white",
-    // marginHorizontal: 20,
+    marginHorizontal: 20,
     padding: 20,
-    // borderRadius: 20,
+    padding: 10,
+    borderRadius: 20,
   };
 
   // Using the function to add activity session
 
   return (
     <View style={styles.container}>
-      {/* <View
+      {/* { <View
         style={{
           position: "absolute",
           height: "100%",
           width: "100%",
           zIndex: 1,
         }}
-      > */}
+      > } */}
       <View style={{ marginTop: 90 }}>
         <Text
           style={{
@@ -123,7 +125,8 @@ function ActivityTime({ navigation, route }) {
             fontWeight: "bold",
             alignItems: "center",
             // justifyContent: "center",
-            marginLeft: 60,
+            marginLeft: 80,
+            color: "#3B71F3",
           }}
         >
           {formatTime(time)}
@@ -136,18 +139,28 @@ function ActivityTime({ navigation, route }) {
           flexDirection: "row",
           justifyContent: "space-between",
           width: "100%",
+          zIndex: zIndex,
         }}
       >
         {!isRunning ? (
-          <TouchableOpacity style={styles.button} onPress={startStopwatch}>
+          <TouchableOpacity
+            style={[styles.button, styles.circularButton, { marginLeft: 70 }]}
+            onPress={startStopwatch}
+          >
             <Text style={styles.buttonText}>Start</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.button} onPress={stopStopwatch}>
+          <TouchableOpacity
+            style={[styles.button, styles.circularButton, { marginLeft: 70 }]}
+            onPress={stopStopwatch}
+          >
             <Text style={styles.buttonText}>Done</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity style={styles.button} onPress={resetStopwatch}>
+        <TouchableOpacity
+          style={[styles.button, styles.circularButton, { marginRight: 60 }]}
+          onPress={resetStopwatch}
+        >
           <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
       </View>
@@ -168,8 +181,11 @@ function ActivityTime({ navigation, route }) {
             >
               <Text style={styles.modalTitle}>Time</Text>
               <Text style={styles.modalTime}>{formatTime(time)}</Text>
-              {/* <CustomInput placeholder="Note" /> */}
-              <TextInput value={note} onChangeText={(e) => setNote(e)} />
+              <CustomInput
+                placeholder="Note"
+                onChangeText={(e) => setNote(e)}
+              />
+              {/* <TextInput value={note} onChangeText={(e) => setNote(e)} /> */}
               <CustomButton
                 text="Save"
                 onPress={async () => {
@@ -199,21 +215,28 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   button: {
-    flex: 1,
+    width: 100,
+    height: 100,
+    // flex: 1,
     marginVertical: 10,
     backgroundColor: "#3B71F3",
     alignSelf: "flex-start",
     borderRadius: 20,
     elevation: 5,
-    shadowColor: "black",
     shadowOpacity: 0.5,
     shadowRadius: 10,
     padding: 30,
     alignItems: "center",
   },
+  circularButton: {
+    borderRadius: 100,
+    width: 100,
+    height: 100,
+  },
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    marginTop: 5,
   },
   modalContent: {
     backgroundColor: "white",
@@ -224,14 +247,15 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-    alignContent: "center",
+    color: "#3B71F3",
+    marginLeft: 150,
   },
   modalTime: {
     fontSize: 48,
     fontWeight: "bold",
-    marginBottom: 20,
-    alignContent: "center",
+    marginBottom: 10,
+    marginLeft: 100,
+    color: "#3B71F3",
   },
 });
 export default ActivityTime;

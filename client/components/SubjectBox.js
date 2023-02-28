@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "left",
     padding: 10,
+    marginTop: 10,
     color: "white",
+    fontStyle: "Bold",
   },
   top: {
     width: 60,

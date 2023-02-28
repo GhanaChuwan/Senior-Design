@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import Logo from "../../assets/Images/PSULogo.png";
@@ -40,6 +41,7 @@ const SignIn = () => {
       },
       headerTintColor: "#fff",
       headerShown: true,
+
       alignItems: "center",
       //   headerRight: () => (
       //     <View>
@@ -59,10 +61,11 @@ const SignIn = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fdf6ec", flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ paddingTop: 70, paddingHorizontal: 20 }}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View>
+        <View style={{ paddingTop: 70, paddingHorizontal: 20 }}>
           <Image source={Logo} style={styles.logo} resizeMode="center" />
           <Formik
             initialValues={userInfo}
@@ -116,7 +119,7 @@ const SignIn = () => {
             }}
           </Formik>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -127,8 +130,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    marginTop: 10,
-    marginLeft: 120,
+    marginTop: 5,
+    marginLeft: 140,
     width: 100,
     height: 100,
   },

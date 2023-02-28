@@ -23,7 +23,8 @@ function BottomTabNavigator({ navigation, sideBarNav }) {
         tabBarStyle: {
           backgroundColor: "#1e407c",
         },
-        tabBarInactiveTintColor: "#fff",
+
+        tabBarActiveTintColor: "white",
 
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
 const CustomInput = (props) => {
-
   const { placeholder, label, error } = props;
   return (
     <>
@@ -20,8 +19,8 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 2,
     borderColor: "#3B71F3",
-    padding: 10,
-    borderRadius: 5,
+    padding: 15,
+    borderRadius: 20,
     fontSize: 16,
     paddingLeft: 10,
     marginBottom: 10,
