@@ -1,43 +1,19 @@
 import { View, Text, Dimensions, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
-
-// const screenWidth = Dimensions.get("window").width;
-
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-      strokeWidth: 2, // optional
-    },
-  ],
-  legend: ["Rainy Days"], // optional
-};
-
-const chartConfig = {
-  backgroundGradientFrom: "#1E2923",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#08130D",
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false, // optional
-};
+import React, { useEffect, useContext } from "react";
+import { BarChart } from "react-native-chart-kit";
+import { AuthContext } from "../../context/AuthContext";
+import formatTime from "../../utils/formateTime";
 
 const WeeklyProgress = ({ navigation, route }) => {
-  const { title } = route.params;
+  const { subjectId, activityId } = route.params;
+  const { getAllActivity, activities } = useContext(AuthContext);
+
   useEffect(() => {
-    navigation.setOptions({ headerTitle: title });
+    getAllActivity({ activityId });
+  }, [activityId]);
+
+  useEffect(() => {
+    //navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#1e407c",
@@ -47,11 +23,12 @@ const WeeklyProgress = ({ navigation, route }) => {
     });
   }, [route]);
 
+  // console.log(timeStudied);
   const data = {
     labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: [10, 20, 30, 40, 50, 60],
+        data: [`${activities.totalTime}`],
       },
     ],
   };
@@ -74,58 +51,6 @@ const WeeklyProgress = ({ navigation, route }) => {
         }}
         style={{ borderRadius: 10, alignSelf: "center" }}
       />
-      {/* <LineChart
-        data={data}
-        width={Dimensions.get("window").width}
-        height={220}
-        chartConfig={chartConfig}
-      />
-      {/* <View>
-        <Text>Bezier Line Chart</Text>
-        <LineChart
-          data={{
-            labels: ["January", "February", "March", "April", "May", "June"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
-              },
-            ],
-          }}
-          width={Dimensions.get("window").width} // from react-native
-          height={220}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundColor: "#e26a00",
-            backgroundGradientFrom: "#fb8c00",
-            backgroundGradientTo: "#ffa726",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#ffa726",
-            },
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-      </View> */}
     </View>
   );
 };
@@ -137,10 +62,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 5,
     // padding: 50,
-    // flexDirection: "row",
-    // justifyContent: "center",
+    // flexDirection: "row" /,
+    //justifyContent: "center",
   },
   titleText: {
     color: "#3B71F3",
+    fontSize: 24,
+    marginLeft: 100,
+    marginBottom: 10,
   },
 });

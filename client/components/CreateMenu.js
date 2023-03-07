@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 import { Card, Divider, List } from "react-native-paper";
+
 export default function CreateMenu({ navigation, location, subjectId, title }) {
   return (
     <View style={styles.container}>
@@ -13,6 +14,9 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
           onPress={() =>
             navigation.navigate("Activity", { subjectId: subjectId })
           }
+          right={(props) => (
+            <List.Icon {...props} icon="chevron-double-right" color="#3B71F3" />
+          )}
         />
         <Divider style={{ backgroundColor: "#1e407c" }} />
         <List.Item
@@ -23,6 +27,9 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
           onPress={() =>
             navigation.navigate("Grades", { title: title, subjectId })
           }
+          right={(props) => (
+            <List.Icon {...props} icon="chevron-double-right" color="#3B71F3" />
+          )}
         />
         <Divider style={{ backgroundColor: "#1e407c" }} />
         <List.Item
@@ -33,9 +40,18 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
           onPress={() =>
             navigation.navigate("WeeklyProgress", { title: title })
           }
+          right={(props) => (
+            <List.Icon {...props} icon="chevron-double-right" color="#3B71F3" />
+          )}
         />
         <Divider style={{ backgroundColor: "#1e407c" }} />
       </TouchableOpacity>
+      <View style={styles.picture}>
+        <Image
+          style={{ width: 500, height: 500 }}
+          source={require("../assets/Images/student.png")}
+        />
+      </View>
     </View>
   );
 }
@@ -50,5 +66,10 @@ const styles = StyleSheet.create({
   titleText: {
     color: "#3B71F3",
     fontSize: 24,
+  },
+  picture: {
+    flex: 1,
+    alignSelf: "center",
+    marginRight: 20,
   },
 });
