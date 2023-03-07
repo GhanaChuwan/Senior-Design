@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
+const nodemailer = require("nodemailer");
 
 exports.createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
