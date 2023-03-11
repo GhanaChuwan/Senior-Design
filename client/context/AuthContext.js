@@ -11,6 +11,9 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
+  const [days, setDays] = useState([{ completed: false, day: "M" }, { completed: false, day: "Tu" }, { completed: false, day: "W" }, { completed: false, day: "Th" }, { completed: false, day: "F" }, { completed: false, day: "Sa" }, { completed: false, day: "Su" }]);
+  const [challenges, setChallenges] = useState([{ emblem: "book-open", description: "study for 50 minutes this week " }, { emblem: "brain", description: "have a grade above 80%" }, { emblem: "folder", description: "have 3 or more subjects" }, { emblem: "fire", description: "have a streak of 10" }]);
+  const [streak, setStreak] = useState(10);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -363,6 +366,48 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const getStreak = async () => {
+    try {
+      console.log("getting streaks");
+      const data = await axios.get("/getStreak", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        }
+      })
+      // setStreak(data.streak);
+    } catch (error) {
+      console.log("get streak error")
+    }
+  }
+  const getDays = async () => {
+    try {
+      console.log("getting days");
+
+      const data = await axios.get("/getDays", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        }
+      })
+      //setDays(data.days);
+    } catch (error) {
+      console.log("get days error")
+    }
+  }
+  const getChallenges = async () => {
+    try {
+      console.log("getting challenges");
+
+      const data = await axios.get("/getChallenges", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        }
+      })
+      //setChallenges(data.challenges);
+    } catch (error) {
+      console.log("get challenges error")
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -399,6 +444,12 @@ export const AuthProvider = ({ children }) => {
         addActivitySession,
         getAllActivitySession,
         activitysessions,
+        days,
+        challenges,
+        streak,
+        getDays,
+        getStreak,
+        getChallenges
       }}
     >
       {children}
