@@ -76,8 +76,6 @@ export function SideBarContent(props) {
             )}
             label={() => <Text style={{ color: "white" }}>Setting</Text>}
           />
-        </Drawer.Section>
-        <Drawer.Section style={styles.bottomDrawerSection}>
           <DrawerItem
             icon={({ color, size }) => (
               <Icon name="exit-to-app" color="white" size={size} />
@@ -88,6 +86,9 @@ export function SideBarContent(props) {
             }}
           />
         </Drawer.Section>
+        {/* <Drawer.Section style={styles.bottomDrawerSection}>
+          
+        </Drawer.Section> */}
         {/* <Drawer.Section style={styles.drawerSection} title="Preferences">
           <TouchableRipple
             onPress={() => {
@@ -140,11 +141,11 @@ const styles = StyleSheet.create({
   },
   drawerSection: {
     marginTop: 15,
-    borderTopColor: "#fff",
+    //borderTopColor: "#fff",
   },
   bottomDrawerSection: {
     marginBottom: 15,
-    borderTopColor: "#f4f4f4",
+    // borderTopColor: "#f4f4f4",
     //  borderTopWidth: 1,
     color: "white",
   },

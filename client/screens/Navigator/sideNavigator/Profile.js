@@ -32,15 +32,24 @@ const Profile = ({ navigation, route }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}> First Name:</Text>
-        <Text style={styles.input}> {userInfo.user.firstName}</Text>
+        <Text style={[styles.input, { height: 40 }]}>
+          {" "}
+          {userInfo.user.firstName}
+        </Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}> Last Name:</Text>
-        <Text style={styles.input}> {userInfo.user.lastName}</Text>
+        <Text style={[styles.input, { height: 40 }]}>
+          {" "}
+          {userInfo.user.lastName}
+        </Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}> Email Id:</Text>
-        <Text style={styles.input}> {userInfo.user.email}</Text>
+        <Text style={[styles.input, { height: 40 }]}>
+          {" "}
+          {userInfo.user.email}
+        </Text>
       </View>
       <View
         style={{
@@ -53,7 +62,7 @@ const Profile = ({ navigation, route }) => {
       <View style={styles.row}>
         <Text style={styles.label}> Current Password:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { height: 40 }]}
           onChangeText={(text) => setInputValue(text)}
           value={inputValue}
         />
@@ -61,7 +70,7 @@ const Profile = ({ navigation, route }) => {
       <View style={styles.row}>
         <Text style={styles.label}> New Password:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { height: 40 }]}
           onChangeText={(text) => setInputValue(text)}
           value={inputValue}
         />
@@ -69,7 +78,7 @@ const Profile = ({ navigation, route }) => {
       <View style={styles.row}>
         <Text style={styles.label}> Confirm Password:</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { height: 40 }]}
           onChangeText={(text) => setInputValue(text)}
           value={inputValue}
         />
