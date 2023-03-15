@@ -321,21 +321,31 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (activities.activities != undefined || activities.activities != null) {
-        const d = data.data;
-        const newActives = activitysessions.activites;
-        newActives.push(d);
-        const newTotalTime = activitysessions.totalTime + d.time;
+        // Retrieve updated activity session data from response
+        const newActivitySessionData = data.data;
+        // Update activity sessions state with new activity session data
+        setactivitySessions((prevState) => ({
+          ...prevState,
+          activities: [...prevState.activities, newActivitySessionData],
+        }));
 
-        newActives.totalTime = newTotalTime;
-        setactivitySessions(newActives);
+        // Update total time of activity sessions state
+        setactivitySessions((prevState) => ({
+          ...prevState,
+          totalTime: prevState.totalTime + newActivitySessionData.time,
+        }));
       }
 
-      // console.log();
-      // setactivitySessions([...activitysessions, data.data]);
-      // await AsyncStorage.setItem(
-      //   "activitysessions",
-      //   JSON.stringify(activitysessions)
-      // );
+      // if (activities.activities != undefined || activities.activities != null) {
+      //   const d = data.data;
+      //   const newActives = activitysessions.activites;
+      //   newActives.push(d);
+      //   const newTotalTime = activitysessions.totalTime + d.time;
+
+      //   newActives.totalTime = newTotalTime;
+
+      //   setactivitySessions(newActives);
+      // }
     } catch (error) {
       console.log(error);
       console.log("was not able to add activity session");
@@ -349,20 +359,15 @@ export const AuthProvider = ({ children }) => {
           authorization: `Bearer ${userToken}`,
         },
       });
-
-      // // console.log(data.data);
-      // console.log("HERE2");
-      // console.log(data.data);
-
-      setactivitySessions(data.data);
-      // await AsyncStorage.setItem(
-      //   "activitysessions",
-      //   JSON.stringify(activitysessions)
-      // );
+      // Retrieve updated activity session data from response
+      const newActivitySessionData = data.data;
+      // Update activity sessions state with new activity session data
+      setactivitySessions(newActivitySessionData);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {

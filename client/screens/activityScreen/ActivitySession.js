@@ -18,8 +18,6 @@ export default function Session({ navigation, route }) {
   const { activityId, title } = route.params;
 
   useEffect(() => {
-    getAllActivitySession({ activityId });
-
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerShown: true,
@@ -28,6 +26,7 @@ export default function Session({ navigation, route }) {
       },
       headerTintColor: "#fff",
     });
+    getAllActivitySession({ activityId });
   }, [activityId]);
 
   return (

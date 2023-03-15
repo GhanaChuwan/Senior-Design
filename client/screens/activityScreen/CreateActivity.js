@@ -49,16 +49,13 @@ export default function Activity({ navigation, route }) {
     "other",
   ]);
 
-  const { Activities, setActivities, activitySession } =
-    useContext(AuthContext);
-
   useEffect(() => {
     getAllActivity({ subjectId });
   }, []);
 
-  useEffect(() => {
-    getAllActivity({ subjectId });
-  }, []);
+  // useEffect(() => {
+  //   getAllActivity({ subjectId });
+  // }, []);
 
   useEffect(() => {
     getAllActivitySession({ activityId });
