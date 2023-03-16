@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { createUser, userSignIn } = require("../controllers/user.js");
+const {
+  createUser,
+  userSignIn,
+  forgotPassword,
+  forgotPasswordUI,
+  resetPassword,
+} = require("../controllers/user.js");
 
 const { isAuth } = require("../middlewares/validation/auth");
 const {
@@ -52,6 +58,10 @@ const {
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
+router.post("/forgot-password", forgotPassword);
+router.get("/forgot-password/:userID/:token", forgotPasswordUI);
+
+router.post("/reset-password", resetPassword);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);
