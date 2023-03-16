@@ -37,8 +37,8 @@ const WeeklyProgress = ({ navigation, route }) => {
       <Text style={styles.titleText}>Weekly Progress</Text>
       <BarChart
         data={data}
-        width={Dimensions.get("window").width - 20}
-        height={220}
+        width={Dimensions.get("window").width - 10}
+        height={320}
         chartConfig={{
           backgroundGradientFrom: "#3B71F3",
           backgroundGradientFromOpacity: 1,
@@ -46,7 +46,7 @@ const WeeklyProgress = ({ navigation, route }) => {
           backgroundGradientToOpacity: 1,
           color: (opacity) => `rgba(255, 255, 255,1)`,
           strokeWidth: 2, // optional, default 3
-          barPercentage: 0.5,
+          barPercentage: 0.7,
           useShadowColorFromDataset: false, // optional
         }}
         style={{ borderRadius: 10, alignSelf: "center" }}
