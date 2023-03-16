@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([{ completed: false, day: "M" }, { completed: false, day: "Tu" }, { completed: false, day: "W" }, { completed: false, day: "Th" }, { completed: false, day: "F" }, { completed: false, day: "Sa" }, { completed: false, day: "Su" }]);
-  const [challenges, setChallenges] = useState([{ emblem: "book-open", description: "study for 50 minutes this week " }, { emblem: "brain", description: "have a grade above 80%" }, { emblem: "folder", description: "have 3 or more subjects" }, { emblem: "fire", description: "have a streak of 10" }]);
+  const [challenges, setChallenges] = useState([{ emblem: "book-open", description: "study for 50 minutes this week ", completed: false }, { emblem: "brain", description: "have a grade above 80%", completed: false }, { emblem: "folder", description: "have 3 or more subjects", completed: false }, { emblem: "fire", description: "have a streak of 10", completed: false }]);
   const [streak, setStreak] = useState(10);
 
   const login = async (email, password) => {

@@ -57,9 +57,9 @@ export default function Reward({ navigation, route }) {
         <FlatList
           data={challenges}
           renderItem={({ item }) => (
-            <View style={item == challenges[0] || item == challenges[2] ? styles.completedCheck : styles.challengeCard} >
+            <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
               <FontAwesome5 name={item.emblem} style={{ fontSize: 40, color: "black", marginVertical: 10 }} />
-              <Text style={item == challenges[0] || item == challenges[2] ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
+              <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
             </View>
           )}
         />
