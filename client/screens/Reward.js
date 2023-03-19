@@ -25,8 +25,10 @@ export default function Reward({ navigation, route }) {
     retrieveChallenges();
     retrieveDays();
     retrieveStreaks();
+
   }, [route.params]);
   const { days, challenges, streak, getDays, getStreak, getChallenges } = useContext(AuthContext);
+
 
   const retrieveStreaks = async () => {
     await (getStreak());
@@ -35,31 +37,25 @@ export default function Reward({ navigation, route }) {
     await (getDays());
   }
   const retrieveChallenges = async () => {
-    await (getChallenges());
+    await getChallenges();
+
+
   }
 
   return (
     <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
-      <View style={styles.weeklyStreaks}>
-
-        <FlatList
-          data={days}
-          numColumns={7}
-          renderItem={({ item }) => (
-            <View style={[item.completed == true ? styles.completedDay : styles.day]}>
-              <Text style={[item.completed == true ? styles.completed : styles.initial]}>{item.day}</Text>
-            </View>
-          )}
-        />
-      </View>
+      <Text style={styles.header}>Complete challenges by end of each week</Text>
       <View style={styles.container}>
 
         <FlatList
           data={challenges}
           renderItem={({ item }) => (
             <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
-              <FontAwesome5 name={item.emblem} style={{ fontSize: 40, color: "black", marginVertical: 10 }} />
-              <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
+              <FontAwesome5 name={item.emblem} style={{ fontSize: 30, color: "black", marginVertical: 10 }} />
+              <View>
+                <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
+                <Text style={styles.time}>{item.currentAmount} / {item.totalAmount}</Text>
+              </View>
             </View>
           )}
         />
@@ -81,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1
+    shadowOpacity: 1,
 
   },
   completedChallengeDescription: {
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
     color: "gray"
   },
   challengeCard: {
-    height: 100,
+    height: 105,
     backgroundColor: "white",
     borderRadius: 10,
     marginHorizontal: 10,
@@ -109,7 +105,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1
+    shadowOpacity: 1,
+
   },
   weeklyStreaks: {
     height: 70,
@@ -145,6 +142,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "black"
   },
+  header: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 20,
+  },
+  time: {
+    fontSize: 15,
+    margin: 5,
+    left: 220
+  }
 
 
 });

@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([{ completed: false, day: "M" }, { completed: false, day: "Tu" }, { completed: false, day: "W" }, { completed: false, day: "Th" }, { completed: false, day: "F" }, { completed: false, day: "Sa" }, { completed: false, day: "Su" }]);
-  const [challenges, setChallenges] = useState([{ emblem: "book-open", description: "study for 50 minutes this week ", completed: false }, { emblem: "brain", description: "have a grade above 80%", completed: false }, { emblem: "folder", description: "have 3 or more subjects", completed: false }, { emblem: "fire", description: "have a streak of 10", completed: false }]);
+  const [challenges, setChallenges] = useState([]);
   const [streak, setStreak] = useState(10);
 
   const login = async (email, password) => {
@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }) => {
           authorization: `Bearer ${userToken}`,
         },
       });
+
 
       setSubjects(res.data);
 
@@ -398,20 +399,48 @@ export const AuthProvider = ({ children }) => {
       console.log("get days error")
     }
   }
+
   const getChallenges = async () => {
     try {
-      console.log("getting challenges");
 
-      const data = await axios.get("/getChallenges", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        }
-      })
-      //setChallenges(data.challenges);
+      const res = await axios.post("/getChallenges", {
+        userId: userInfo
+      },
+        {
+
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        });
+      setChallenges(res.data);
     } catch (error) {
       console.log("get challenges error")
     }
   }
+  const updateChallenges = async ({ activityType, activityTime }) => {
+    try {
+      console.log("updating challenges");
+      console.log(activityType);
+      console.log(activityTime);
+      const data = await axios.post("/updateChallenges",
+        {
+
+          activity: activityType,
+          time: activityTime,
+          userId: userInfo
+
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+    } catch (error) {
+      console.log("upatechallenge error ", error);
+    }
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -454,7 +483,8 @@ export const AuthProvider = ({ children }) => {
         streak,
         getDays,
         getStreak,
-        getChallenges
+        getChallenges,
+        updateChallenges
       }}
     >
       {children}
