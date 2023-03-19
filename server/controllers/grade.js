@@ -13,7 +13,6 @@ exports.createGrade = async (req, res) => {
     // });
     const subject = await Subject.findById(subjectId);
 
-
     if (subject != null) {
       const grade = await Grade.create({
         gradeName,

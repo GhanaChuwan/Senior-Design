@@ -15,7 +15,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 function ActivityTime({ navigation, route }) {
   const { activityId, title } = route.params;
-  const { activitySession, addActivitySession, getAllActivitySession } =
+  const { activitySession, addActivitySession, getAllActivitySession, updateChallenges } =
     useContext(AuthContext);
   const [note, setNote] = useState("");
   // const [newTime, setNewTime] = useState(2);
@@ -39,6 +39,7 @@ function ActivityTime({ navigation, route }) {
       //   ),
     });
   }, []);
+
 
   const CreateactivitiesSession = async () => {
     try {
@@ -64,6 +65,12 @@ function ActivityTime({ navigation, route }) {
     }, 1000);
   };
 
+  const updateChallengeCard = async () => {
+    await updateChallenges({
+      activityType: activityId,
+      activityTime: time,
+    })
+  }
   const stopStopwatch = () => {
     // const date = new Date(null);
     // date.setSeconds(time); // specify value for SECONDS here
@@ -85,9 +92,8 @@ function ActivityTime({ navigation, route }) {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time - hours * 3600) / 60);
     const seconds = time % 60;
-    return `${hours < 10 ? "0" + hours : hours}:${
-      minutes < 10 ? "0" + minutes : minutes
-    }:${seconds < 10 ? "0" + seconds : seconds}`;
+    return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes
+      }:${seconds < 10 ? "0" + seconds : seconds}`;
   };
   const [modalVisible, setModalVisible] = useState(false);
   const closeModal = () => {
@@ -190,6 +196,8 @@ function ActivityTime({ navigation, route }) {
                 text="Save"
                 onPress={async () => {
                   await CreateactivitiesSession();
+                  updateChallengeCard();
+
                   navigation.navigate("ActivitySession", {
                     activityId: activityId,
                     title: { title },

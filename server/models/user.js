@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  challenges: {
+    type: [Schema.Types.ObjectId],
+    default: [],
+    required: false
+  }
 
 });
 

@@ -32,7 +32,7 @@ export default function Session({ navigation, route }) {
   return (
     <View
       style={styles.container}
-      // behavior={Platform.OS == "ios" ? "padding" : "height"}
+    // behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       {/* <Text style={styles.text}>Sessions</Text> */}
       <CustomButton
