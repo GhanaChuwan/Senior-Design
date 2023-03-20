@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -6,152 +6,152 @@ import {
   Linking,
   Text,
   View,
+  FlatList,
 } from "react-native";
-import { Card, Paragraph, Title } from "react-native-paper";
-import { Avatar, Badge, Icon, withBadge } from "react-native-elements";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Reward({ navigation, route }) {
   useEffect(() => {
     const parent = navigation.getParent();
-    parent?.setOptions({ title: "Rewards", headerRight: null });
+    parent?.setOptions({
+      title: "Rewards", headerRight: () => (
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <Text style={{ marginRight: 5, fontSize: 20, color: "white" }}>{streak}</Text>
+          <FontAwesome5 name={"fire"} style={{ fontSize: 20, color: "red", marginVertical: 2, marginRight: 10 }} />
+        </View>
+      )
+    });
+    retrieveChallenges();
+    retrieveDays();
+    retrieveStreaks();
+
   }, [route.params]);
+  const { days, challenges, streak, getDays, getStreak, getChallenges } = useContext(AuthContext);
+
+
+  const retrieveStreaks = async () => {
+    await (getStreak());
+  }
+  const retrieveDays = async () => {
+    await (getDays());
+  }
+  const retrieveChallenges = async () => {
+    await getChallenges();
+
+
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Card style={styles.card1}>
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              backgroundColor: "#7f6000",
-              height: 25,
-              marginTop: 10,
-              marginRight: 10,
-            }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/Images/Bronze1.png")}
-              size="large"
-            />
-          </View>
-          <View style={{ display: "flex", height: 100, padding: 10 }}>
-            <Card.Content style={styles.cardContainer}>
-              <Title style={styles.title}>Bronze</Title>
+    <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
+      <Text style={styles.header}>Complete challenges by end of each week</Text>
+      <View style={styles.container}>
 
-              <Paragraph style={styles.paragraph}>
-                Spend 10 hours minimum studying in a specific subject folder.
-              </Paragraph>
-            </Card.Content>
-          </View>
-        </Card>
-        <Card style={styles.card2}>
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              backgroundColor: "#C0C0C0",
-              height: 25,
-              marginTop: 10,
-              marginRight: 10,
-            }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/Images/Silver2.png")}
-              size="large"
-            />
-          </View>
-          <View style={{ display: "flex", height: 100, padding: 10 }}>
-            <Card.Content style={styles.cardContainer}>
-              <Title style={styles.title}>Silver</Title>
+        <FlatList
+          data={challenges}
+          renderItem={({ item }) => (
+            <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
+              <FontAwesome5 name={item.emblem} style={{ fontSize: 30, color: "black", marginVertical: 10 }} />
+              <View>
+                <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
+                <Text style={styles.time}>{item.currentAmount} / {item.totalAmount}</Text>
+              </View>
+            </View>
+          )}
+        />
 
-              <Paragraph target="_blank" style={styles.paragraph}>
-                Spend 30 hours minimum studying in a specific subject folder.
-              </Paragraph>
-              <Paragraph target="_blank" style={styles.paragraph}></Paragraph>
-            </Card.Content>
-          </View>
-        </Card>
-
-        <Card style={styles.card3}>
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              backgroundColor: "#bf9000",
-              height: 25,
-              marginTop: 10,
-              marginRight: 10,
-            }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/badges/gold1.png")}
-              size="large"
-            />
-          </View>
-          <View style={{ display: "flex", height: 100, padding: 10 }}>
-            <Card.Content style={styles.cardContainer}>
-              <Title style={styles.title}>Gold</Title>
-
-              <Paragraph target="_blank" style={styles.paragraph}>
-                Spend 50 hours minimum studying in a specific subject folder.
-              </Paragraph>
-              <Paragraph target="_blank" style={styles.paragraph}></Paragraph>
-            </Card.Content>
-          </View>
-        </Card>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fdf6ec",
-    flex: 1,
-    marginTop: 5,
+
+  completedCheck: {
+    height: 100,
+    backgroundColor: "green",
+    borderRadius: 10,
     marginHorizontal: 10,
+    marginVertical: 10,
+    padding: 20,
+    display: "flex",
+    flexDirection: "row",
+    shadowColor: "gray",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+
   },
-  card1: {
-    backgroundColor: "#7f6000",
-    marginVertical: 5,
+  completedChallengeDescription: {
+    fontSize: 22,
+    paddingHorizontal: 30,
+    color: "white"
+  },
+  checkbox: {
+    fontSize: 40,
+    color: "white"
+  },
+  challengeDescription: {
+    fontSize: 22,
+    paddingHorizontal: 30,
+    color: "gray"
+  },
+  challengeCard: {
+    height: 105,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    padding: 20,
+    display: "flex",
+    flexDirection: "row",
+    shadowColor: "gray",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+
+  },
+  weeklyStreaks: {
+    height: 70,
+    marginBottom: 15
+  },
+  completed: {
+    fontSize: 22,
+    color: "white"
+  },
+  completedDay: {
+    width: 45,
+    height: 45,
+    backgroundColor: "orange",
+    borderRadius: 50,
+    marginHorizontal: 5,
+    marginTop: 15,
+    display: "flex",
     justifyContent: "center",
-    marginVertical: 5,
-    marginHorizontal: 10,
+    alignItems: "center",
   },
-  card2: {
-    backgroundColor: "#C0C0C0",
-    marginVertical: 5,
+  day: {
+    width: 45,
+    height: 45,
+    backgroundColor: "white",
+    borderRadius: 50,
+    marginHorizontal: 5,
+    marginTop: 15,
+    display: "flex",
     justifyContent: "center",
-    marginVertical: 5,
-    marginHorizontal: 10,
+    alignItems: "center",
   },
-  card3: {
-    backgroundColor: "#bf9000",
-    marginVertical: 5,
-    justifyContent: "center",
-    marginVertical: 5,
-    marginHorizontal: 10,
+  initial: {
+    fontSize: 22,
+    color: "black"
   },
-  cardContainer: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginTop: 5,
-    marginRight: 20,
-    paddingRight: 30,
+  header: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 20,
   },
-  title: {
-    color: "#fff",
-  },
-  paragraph: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  underline: {
-    textDecorationLine: "underline",
-  },
+  time: {
+    fontSize: 15,
+    margin: 5,
+    left: 220
+  }
+
+
 });

@@ -50,6 +50,13 @@ const {
   deleteEvents,
 } = require("../controllers/calendar");
 
+const {
+  getStreak,
+  getDays,
+  getChallenges,
+  updateChallenges,
+} = require("../controllers/rewards");
+
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
 router.post("/forgot-password", forgotPassword);
@@ -78,4 +85,8 @@ router.post("/delete-event", isAuth, deleteEvents);
 router.post("/getEvent", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 
+router.get("/getStreak", isAuth, getStreak);
+router.post("/getChallenges", getChallenges);
+router.post("/updateChallenges", updateChallenges);
+router.get("/getDays", isAuth, getDays);
 module.exports = router;

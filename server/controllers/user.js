@@ -4,6 +4,7 @@ const User = require("../models/user.js");
 const passwordResetTokenModal = require("../models/passwordRestToken.js");
 const emailSender = require("../utils/sendMail");
 const passwordResetUI = require("../passwordResetUI/index").passwordResetUI;
+const challenges = require("../controllers/rewards");
 
 exports.createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -16,7 +17,6 @@ exports.createUser = async (req, res) => {
       success: false,
       message: "This email is already in use, try sign-in",
     });
-
   const hashedPassword = bcrypt.hash(password, 8);
   const user = await User.create({
     firstName,
@@ -25,6 +25,7 @@ exports.createUser = async (req, res) => {
     password,
   });
 
+  await challenges.createChallenges(user);
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
   return res.json({ success: true, user, token: token });

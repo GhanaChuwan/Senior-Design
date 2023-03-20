@@ -7,7 +7,7 @@ exports.createSubject = async (req, res) => {
   const { userId } = req.user;
 
   console.log(color);
-
+  console.log("userId", userId);
   try {
     const user = await User.findById(userId);
 
