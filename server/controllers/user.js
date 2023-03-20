@@ -22,7 +22,7 @@ exports.createUser = async (req, res) => {
     firstName,
     lastName,
     email,
-    password: hashedPassword,
+    password,
   });
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
@@ -161,73 +161,8 @@ exports.resetPassword = async (req, res) => {
     console.log(error);
   }
 };
-
-// try {
-//   //invalid email
-//   if (!email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
-//     return res.status(400).json({ error: "Invalid email formate" });
-
-//   const user = await User.findOne({ email });
-//   if (!user)
-//     return res
-//       .status(400)
-//       .json({ error: "User with given email doesn't exist" });
-
-//   let token = await passwordResetTokenModal.findOne({
-//     userId: user._id,
-//   });
-//   if (!token) {
-//     token = await passwordResetTokenModal.create({
-//       userId: user._id,
-//       token: jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY),
-//     });
-//   }
-
-//   const link = process.env.RESET_LINK_BASE_URL + `${user._id}/${token.token}`;
-//   const didSend = await sendEmail(email, "Password reset", link, user.name);
-//   if (didSend) {
-//     return res.status(200).json({
-//       message: "Password reset link sent to your email account",
-//     });
-//   } else {
-//     return res.status(400).json({
-//       message: "Something went wrong. Reset email link was not sent.",
-//     });
-//   }
-// } catch (error) {
-//   res.status(500).json({ error: "Something went wrong" });
-// }
-// };
-
-// exports.resetPassword = async (req, res) => {
-//   try {
-//     const { token, newPassword, confirmPassword } = req.body;
-//     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-//     const user = await User.findById(decodedToken.userId);
-
-//     if (!user) {
-//       return res.json({
-//         success: false,
-//         message: "user not found, with the given email!",
-//       });
-//     }
-//     if (newPassword !== confirmPassword) {
-//       return res.status(400).json({
-//         error: true,
-//         message: "Password didn't match",
-//       });
-//     }
-
-//     const hashedPassword = await brcypt.hash(newPassword, 8);
-//     user.password = hashedPassword;
-//     await user.save();
-//     res.status(200).json({ message: "Password reset successful" });
-//   } catch (error) {
-//     console.error("reset password error", error);
-//     return res.status(500).json({
-//       error: true,
-//       message: error.message,
-//     });
-//   }
-// };
+exports.changePassword = async (req, res) => {
+  const user = await User.findById(req.body.userId);
+  if (!user)
+    return res.status(400).json({ error: "Invalid to change password" });
+};
