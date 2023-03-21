@@ -42,6 +42,15 @@ export default function Reward({ navigation, route }) {
 
   }
 
+  const calcuatedBackground = ({ current, max }) => {
+    const per = (current / max)
+    if (per < 0.1) {
+      return "0%"
+    }
+
+    return (per * 100 + 1) + "%";
+  }
+
   return (
     <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
       <Text style={styles.header}>Complete challenges by end of each week</Text>
@@ -50,18 +59,24 @@ export default function Reward({ navigation, route }) {
         <FlatList
           data={challenges}
           renderItem={({ item }) => (
+
             <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
+
+              {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: 'yellow', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
+
               <FontAwesome5 name={item.emblem} style={{ fontSize: 30, color: "black", marginVertical: 10 }} />
+
               <View>
                 <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
-                <Text style={styles.time}>{item.currentAmount} / {item.totalAmount}</Text>
+                <Text style={item.completed == true ? styles.completedTime : styles.time}>{Math.floor(item.currentAmount / 60)} minutes / {Math.floor(item.totalAmount / 60 / 60)} hours</Text>
               </View>
+
             </View>
           )}
         />
 
       </View>
-    </View>
+    </View >
   );
 }
 const styles = StyleSheet.create({
@@ -78,6 +93,7 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
+    overflow: 'hidden'
 
   },
   completedChallengeDescription: {
@@ -106,6 +122,8 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
+    overflow: 'hidden'
+
 
   },
   weeklyStreaks: {
@@ -149,8 +167,20 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 15,
-    margin: 5,
-    left: 220
+    // margin: 5,
+    // left: 160
+    position: "absolute",
+    left: 160,
+    top: 55
+  },
+  completedTime: {
+    fontSize: 15,
+    // margin: 5,
+    // left: 160
+    position: "absolute",
+    left: 160,
+    top: 55,
+    color: "white"
   }
 
 

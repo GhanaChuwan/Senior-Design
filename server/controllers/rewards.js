@@ -32,7 +32,7 @@ exports.createChallenges = async (user) => {
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
-            totalAmount: 300
+            totalAmount: 18000
         })
         const challenge2 = await challenges.create({
             category: "note",
@@ -41,7 +41,7 @@ exports.createChallenges = async (user) => {
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
-            totalAmount: 300
+            totalAmount: 18000
         })
 
         const challenge3 = await challenges.create({
@@ -51,7 +51,7 @@ exports.createChallenges = async (user) => {
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
-            totalAmount: 600
+            totalAmount: 36000
         })
 
         const challenge4 = await challenges.create({
@@ -61,7 +61,7 @@ exports.createChallenges = async (user) => {
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
-            totalAmount: 480
+            totalAmount: 28800
         })
 
         const challenge5 = await challenges.create({
@@ -71,7 +71,7 @@ exports.createChallenges = async (user) => {
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
-            totalAmount: 120
+            totalAmount: 7200
         })
 
         user.challenges.push(challenge1, challenge2, challenge3, challenge4, challenge5);
@@ -108,24 +108,93 @@ exports.updateChallenges = async (req, res) => {
         const user = await User.findById(userId.user._id);
         const challengeList = await challenges.find({ createdBy: user._id });
 
-        for (let i = 0; i < challengeList.length; i++) {
-            switch (challengeList[i].category) {
-                case "read":
-                    //update read challenge
-                    break;
-                case "note":
-                    //update note challenge
-                    break;
-                case "tutor":
-                    //update tutoring challenge
-                    break;
-                default:
-                    //update work challenge
-                    break;
+        console.log(activitySearchUP.name);
 
-            }
+
+        switch (activitySearchUP.name) {
+            case "reading":
+                var challenge = await challenges.findById(challengeList[0]);
+                console.log(challenge.category)
+                challenge.currentAmount += time;
+                if (challenge.currentAmount >= challenge.totalAmount) {
+                    challenge.completed = true;
+                }
+                challenge.save();
+                break;
+
+            case "reviewing notes":
+                var challenge = await challenges.findById(challengeList[1]);
+                console.log(challenge.category)
+                challenge.currentAmount += 18000;
+                if (challenge.currentAmount >= challenge.totalAmount) {
+                    challenge.completed = true;
+                }
+                challenge.save();
+                break;
+
+            case "go to tutoring":
+                var challenge = await challenges.findById(challengeList[4]);
+                console.log(challenge.category)
+                challenge.currentAmount += time;
+                if (challenge.currentAmount >= challenge.totalAmount) {
+                    challenge.completed = true;
+                }
+                challenge.save();
+                break;
+            default: //work challenges
+                var challenge = await challenges.findById(challengeList[2]);
+                console.log(challenge.category)
+                challenge.currentAmount += time;
+                if (challenge.currentAmount >= challenge.totalAmount) {
+                    challenge.completed = true;
+                }
+                challenge.save();
+                break;
         }
 
+
+        // //reading challenge
+        // if (challenge.category == "read" && activitySearchUP.name == "reading") {
+        //     console.log(challenge.category)
+        //     challenge.currentAmount += time;
+        //     if (challenge.currentAmount >= challenge.totalAmount) {
+        //         challenge.completed = true;
+        //     }
+        //     challenge.save();
+        //     break;
+        // }
+        // //notes challenge
+        // if (challenge.category == "note" && activitySearchUP.name == "reviewing notes") {
+        //     console.log(challenge.category)
+        //     challenge.currentAmount += time;
+        //     if (challenge.currentAmount >= challenge.totalAmount) {
+        //         challenge.completed = true;
+        //     }
+        //     challenge.save();
+        //     break;
+        // }
+        // //tutoring challenge
+        // if (challenge.category == "tutor" && activitySearchUP.name == "go to tutoring") {
+        //     console.log(challenge.category)
+        //     challenge.currentAmount += time;
+        //     if (challenge.currentAmount >= challenge.totalAmount) {
+        //         challenge.completed = true;
+        //     }
+        //     challenge.save();
+        //     break;
+        // }
+        // //work challenge
+        // if (activitySearchUP.name != "reading" && activitySearchUP.name != "notes" && activitySearchUP.name != "go to tutoring") {
+        //     console.log(challenge.category)
+        //     challenge.currentAmount += time;
+        //     if (challenge.currentAmount >= challenge.totalAmount) {
+        //         challenge.completed = true;
+        //     }
+        //     challenge.save();
+        //     break;
+        // }
+
+        console.log("challenge updated");
 
     } catch (error) {
         console.log("error occured when updating challenges ");
