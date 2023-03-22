@@ -69,7 +69,7 @@ exports.forgotPassword = async (req, res) => {
   try {
     //invalid email
     if (!email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))
-      return res.status(400).json({ error: "Invalid email formate" });
+      return res.status(400).json({ error: "Invalid email" });
 
     const user = await User.findOne({ email });
     if (!user)
@@ -88,8 +88,7 @@ exports.forgotPassword = async (req, res) => {
     }
 
     const link =
-      "http://www.localhost:4000/forgot-password/" +
-      `${user._id}/${token.token}`;
+      "http://www.localhost:80/forgot-password/" + `${user._id}/${token.token}`;
 
     const didSend = await emailSender.sendMail(
       email,

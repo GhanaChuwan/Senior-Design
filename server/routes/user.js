@@ -57,10 +57,14 @@ const {
   updateChallenges,
 } = require("../controllers/rewards");
 
+const { downloadProgress } = require("../controllers/downloadData");
+
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
 router.post("/forgot-password", forgotPassword);
 router.get("/forgot-password/:userID/:token", forgotPasswordUI);
+
+router.get("/download-progress", downloadProgress);
 
 router.post("/reset-password", resetPassword);
 
