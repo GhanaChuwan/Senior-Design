@@ -167,7 +167,7 @@ exports.passwordResetUI = ({ name }) => {
   
                               try {
                                 const response = await axios.post(
-                                  "http://www.localhost:4000/reset-password",
+                                  "http://www.localhost:80/reset-password",
                                   {
                                     password: password,
                                     token: token,

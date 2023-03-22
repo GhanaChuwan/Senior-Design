@@ -102,13 +102,13 @@ exports.HTMLGenerator = (options) => {
                                                         <table class="image_block block-2" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                             <tr>
                                                                 <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;padding-top:8px;">
-                                                                    <div class="alignment" align="center" style="line-height:10px"><img src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/3986/header3.png" style="display: block; height: auto; border: 0; width: 232px; max-width: 100%;" width="232" alt="Main Image" title="Main Image"></div>
+                                                                    
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                         <table class="text_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
                                                             <tr>
-                                                                <td class="pad" style="padding-bottom:15px;padding-top:10px;">
+                                                                <td class="pad" style="padding-bottom:15px;padding-top:20px;">
                                                                     <div style="font-family: sans-serif">
                                                                         <div class style="font-size: 14px; mso-line-height-alt: 16.8px; color: #ffffff; line-height: 1.2; font-family: 'Oxygen', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;">
                                                                             <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;"><span style="font-size:30px;">Reset Your Password</span></p>
@@ -157,10 +157,6 @@ exports.HTMLGenerator = (options) => {
                                                             <tr>
                                                                 <td class="pad" style="padding-bottom:40px;padding-left:25px;padding-right:25px;padding-top:10px;">
                                                                     <div style="font-family: sans-serif">
-                                                                        <div class style="font-size: 14px; mso-line-height-alt: 21px; color: #7f96ef; line-height: 1.5; font-family: 'Oxygen', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;">
-                                                                            <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21px;"><strong>Didn’t request a password reset?</strong></p>
-                                                                            <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21px;">You can safely ignore this message.</p>
-                                                                        </div>
                                                                     </div>
                                                                 </td>
                                                             </tr>
