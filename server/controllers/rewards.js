@@ -125,7 +125,7 @@ exports.updateChallenges = async (req, res) => {
             case "reviewing notes":
                 var challenge = await challenges.findById(challengeList[1]);
                 console.log(challenge.category)
-                challenge.currentAmount += 18000;
+                challenge.currentAmount += time;
                 if (challenge.currentAmount >= challenge.totalAmount) {
                     challenge.completed = true;
                 }
