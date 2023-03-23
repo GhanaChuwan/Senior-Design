@@ -50,6 +50,15 @@ export default function Reward({ navigation, route }) {
 
     return (per * 100 + 1) + "%";
   }
+  const getTime = (currentAmount, totalAmount) => {
+    let time = Math.ceil((totalAmount - currentAmount) / 60 / 60);
+    if (time <= 0) {
+      return "challenge completed";
+    }
+    else {
+      return `${time} hours remaining`;
+    }
+  }
 
   return (
     <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
@@ -68,7 +77,7 @@ export default function Reward({ navigation, route }) {
 
               <View>
                 <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
-                <Text style={item.completed == true ? styles.completedTime : styles.time}>{Math.floor(item.currentAmount / 60)} minutes / {Math.floor(item.totalAmount / 60 / 60)} hours</Text>
+                <Text style={item.completed == true ? styles.completedTime : styles.time}>{getTime(item.currentAmount, item.totalAmount)}</Text>
               </View>
 
             </View>
