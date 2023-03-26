@@ -12,17 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
-  const [days, setDays] = useState([
-    { completed: false, day: "M" },
-    { completed: false, day: "Tu" },
-    { completed: false, day: "W" },
-    { completed: false, day: "Th" },
-    { completed: false, day: "F" },
-    { completed: false, day: "Sa" },
-    { completed: false, day: "Su" },
-  ]);
+  const [events, setEvents] = useState([]);
   const [challenges, setChallenges] = useState([]);
-  const [streak, setStreak] = useState(10);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -255,6 +246,75 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const createEvent = async ({
+    eventName,
+    eventType,
+    eventNote,
+    eventDate
+  }) => {
+    // console.log(eventName);
+    // console.log(eventType);
+    // console.log(eventNote);
+    // console.log(eventDate);
+
+    try {
+      const data = await axios.post(
+        "/create-event",
+        {
+          eventName: eventName,
+          eventType: eventType,
+          eventNote: eventNote,
+          eventDate: eventDate
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      setEvents([...events, data.data])
+      await AsyncStorage.setItem("events", JSON.stringify(events));
+    } catch (error) {
+      console.log(error);
+      console.log("was not able to create event");
+    }
+  };
+  const deleteEvent = async ({ event }) => {
+    try {
+      console.log("deleting event")
+      const res = axios.post(
+        "/deleteEvent",
+        {
+
+          event: event,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const retrieveEvents = async () => {
+
+    try {
+      const data = await axios.get("getEvents", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      })
+      setEvents(data.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const createGrade = async ({
     gradeName,
     gradeType,
@@ -292,6 +352,7 @@ export const AuthProvider = ({ children }) => {
       console.log("was not able to create grade");
     }
   };
+
   const getAllGrades = async ({ subjectId }) => {
     try {
       const res = await axios.post(
@@ -500,6 +561,10 @@ export const AuthProvider = ({ children }) => {
         addActivitySession,
         getAllActivitySession,
         activitysessions,
+        createEvent,
+        deleteEvent,
+        retrieveEvents,
+        events,
         days,
         challenges,
         streak,
