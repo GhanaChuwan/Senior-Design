@@ -86,7 +86,7 @@ router.post("/deleteGrade", isAuth, deleteGrade);
 
 router.post("/create-event", isAuth, createEvents);
 router.post("/delete-event", isAuth, deleteEvents);
-router.get("/getEvents", isAuth, getEvents);
+router.post("/getEvent", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 
 router.get("/getStreak", isAuth, getStreak);

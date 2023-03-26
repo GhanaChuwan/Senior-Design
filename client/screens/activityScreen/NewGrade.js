@@ -8,8 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-
-
 export default function NewGrade({ navigation, route }) {
   const { title } = route.params;
   const { createGrade } = useContext(AuthContext);
