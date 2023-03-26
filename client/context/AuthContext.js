@@ -509,6 +509,10 @@ export const AuthProvider = ({ children }) => {
         updateChallenges,
         forgotPasswordLink,
         forgotPassword,
+        createEvent,
+        deleteEvent,
+        retrieveEvents,
+        events,
       }}
     >
       {children}
