@@ -1,28 +1,26 @@
 const mongoose = require("mongoose");
 
 const calendarSchema = new mongoose.Schema({
-  eventName: {
+  title: {
     type: String,
     required: true,
   },
-  eventType: {
-    type: String,
-    required: true,
-  },
-  eventNote: {
-    type: String,
-    required: true,
-  },
-  eventDate: {
+  date: {
     type: Date,
+    required: true,
+  },
+  note: {
+    type: String,
     required: true,
   },
   createdBy: {
     type: String,
     required: true,
   },
-
-
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
-module.exports = mongoose.model("CalendarPage", calendarSchema);
+module.exports = mongoose.model("Calendar", calendarSchema);

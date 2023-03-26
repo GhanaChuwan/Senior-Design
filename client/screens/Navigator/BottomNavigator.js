@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Screens
 import Subject from "../subjectScreens/Subject.js";
-import CalendarPage from "../CalendarScreen/CalendarPage.js";
+import Calendar from "../Calendar.js";
 import Resources from "../Resources.js";
 import Reward from "../Reward.js";
 // Screens names
 const subjectName = "Subject";
-const calendarName = "CalendarPage";
+const calendarName = "Calendar";
 const resourcesName = "Resources";
 const rewardName = "Reward";
 
@@ -51,7 +51,7 @@ function BottomTabNavigator({ navigation, sideBarNav }) {
       />
       <Tab.Screen
         name={calendarName}
-        component={CalendarPage}
+        component={Calendar}
         initialParams={{ sideBarNav: navigation, title: "Calander" }}
         options={{ headerShown: false }}
       />
