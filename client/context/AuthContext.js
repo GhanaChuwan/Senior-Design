@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   ]);
   const [challenges, setChallenges] = useState([]);
   const [streak, setStreak] = useState(10);
+  const [events, setEvents] = useState([]);
 
   const login = async (email, password) => {
     setIsLoading(true);
