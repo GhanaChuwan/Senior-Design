@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { createUser, userSignIn } = require("../controllers/user.js");
+const {
+  createUser,
+  userSignIn,
+  forgotPassword,
+  forgotPasswordUI,
+  resetPassword,
+} = require("../controllers/user.js");
 
 const { isAuth } = require("../middlewares/validation/auth");
 const {
@@ -44,8 +50,23 @@ const {
   deleteEvents,
 } = require("../controllers/calendar");
 
+const {
+  getStreak,
+  getDays,
+  getChallenges,
+  updateChallenges,
+} = require("../controllers/rewards");
+
+const { downloadProgress } = require("../controllers/downloadData");
+
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
+router.post("/forgot-password", forgotPassword);
+router.get("/forgot-password/:userID/:token", forgotPasswordUI);
+
+router.get("/download-progress", downloadProgress);
+
+router.post("/reset-password", resetPassword);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);
@@ -67,4 +88,9 @@ router.post("/create-event", isAuth, createEvents);
 router.post("/delete-event", isAuth, deleteEvents);
 router.get("/getEvents", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
+
+router.get("/getStreak", isAuth, getStreak);
+router.post("/getChallenges", getChallenges);
+router.post("/updateChallenges", updateChallenges);
+router.get("/getDays", isAuth, getDays);
 module.exports = router;

@@ -8,6 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import Logo from "../../assets/Images/PSULogo.png";
@@ -19,6 +20,7 @@ import * as Yup from "yup";
 import API from "../../APIConnection/indexAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../context/AuthContext";
+
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email!").required("Email is required!"),
   password: Yup.string().trim().required("Password is required!"),
@@ -40,6 +42,7 @@ const SignIn = () => {
       },
       headerTintColor: "#fff",
       headerShown: true,
+
       alignItems: "center",
       //   headerRight: () => (
       //     <View>
@@ -59,10 +62,11 @@ const SignIn = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fdf6ec", flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ paddingTop: 70, paddingHorizontal: 20 }}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View>
+        <View style={{ paddingTop: 70, paddingHorizontal: 20 }}>
           <Image source={Logo} style={styles.logo} resizeMode="center" />
           <Formik
             initialValues={userInfo}
@@ -116,7 +120,7 @@ const SignIn = () => {
             }}
           </Formik>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -127,9 +131,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logo: {
-    marginLeft: 40,
-    width: 300,
-    height: 300,
+    marginTop: 5,
+    marginLeft: 140,
+    width: 100,
+    height: 100,
   },
 });
 export default SignIn;

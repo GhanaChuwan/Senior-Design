@@ -16,6 +16,7 @@ import NewGrade from "../../client/screens/activityScreen/NewGrade";
 import ActivitySession from "../screens/activityScreen/ActivitySession";
 import ActivityTime from "../screens/activityScreen/ActivityTime";
 import WeeklyProgress from "../screens/activityScreen/WeeklyProgress";
+import Profile from "../screens/Navigator/sideNavigator/Profile";
 const Stack = createNativeStackNavigator();
 
 function MainNav() {
@@ -72,6 +73,7 @@ function MainNav() {
               options={{ title: "Create a grade" }}
             />
             <Stack.Screen name="WeeklyProgress" component={WeeklyProgress} />
+            <Stack.Screen name="Profile" component={Profile} />
           </Stack.Group>
         )}
       </Stack.Navigator>

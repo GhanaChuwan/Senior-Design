@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 20,
     textAlign: "center",
+    color: "#3B71F3",
   },
   colorChooser: {
     fontSize: 20,
-    borderTopWidth: 1,
     marginTop: 30,
     marginBottom: 20,
     flexDirection: "row",
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   colorContainer: {
     marginBottom: 20,
     height: 30,
-    borderBottomWidth: 1,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

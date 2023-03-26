@@ -18,8 +18,6 @@ export default function Session({ navigation, route }) {
   const { activityId, title } = route.params;
 
   useEffect(() => {
-    getAllActivitySession({ activityId });
-
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerShown: true,
@@ -28,12 +26,13 @@ export default function Session({ navigation, route }) {
       },
       headerTintColor: "#fff",
     });
+    getAllActivitySession({ activityId });
   }, [activityId]);
 
   return (
     <View
       style={styles.container}
-      // behavior={Platform.OS == "ios" ? "padding" : "height"}
+    // behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       {/* <Text style={styles.text}>Sessions</Text> */}
       <CustomButton
@@ -76,9 +75,9 @@ const CustomSessionsCard = ({ activitySession }) => {
       }}
     >
       <Card.Content style={styles.card}>
-        <Title style={styles.title}>{activitySession.note}</Title>
+        <Text style={styles.texts}>{activitySession.note}</Text>
         <Text style={styles.date}>
-          {moment(activitySession.createdAt).fromNow()}
+          {/* {moment(activitySession.createdAt).fromNow()} */}
         </Text>
         <Title style={styles.timeSpent}>
           {`${timeStudied["hr"]} ${timeStudied["min"]} ${timeStudied["sec"]}`}
@@ -113,6 +112,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 15,
+    textAlign: "left",
+    color: "white",
+  },
+  texts: {
+    fontSize: 14,
     textAlign: "left",
     color: "white",
   },

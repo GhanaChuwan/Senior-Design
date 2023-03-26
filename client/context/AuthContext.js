@@ -7,11 +7,13 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [forgotPassword, setForgotPassword] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
   const [events, setEvents] = useState([]);
+  const [challenges, setChallenges] = useState([]);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -73,6 +75,21 @@ export const AuthProvider = ({ children }) => {
     await AsyncStorage.removeItem("userToken");
     await AsyncStorage.removeItem("subjects");
     setIsLoading(false);
+  };
+
+  const forgotPasswordLink = async (email) => {
+    try {
+      const res = await axios.post("/forgot-password", {
+        email,
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+
+      setForgotPassword(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getSubjects = async () => {
@@ -392,21 +409,31 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (activities.activities != undefined || activities.activities != null) {
-        const d = data.data;
-        const newActives = activitysessions.activites;
-        newActives.push(d);
-        const newTotalTime = activitysessions.totalTime + d.time;
+        // Retrieve updated activity session data from response
+        const newActivitySessionData = data.data;
+        // Update activity sessions state with new activity session data
+        setactivitySessions((prevState) => ({
+          ...prevState,
+          activities: [...prevState.activities, newActivitySessionData],
+        }));
 
-        newActives.totalTime = newTotalTime;
-        setactivitySessions(newActives);
+        // Update total time of activity sessions state
+        setactivitySessions((prevState) => ({
+          ...prevState,
+          totalTime: prevState.totalTime + newActivitySessionData.time,
+        }));
       }
 
-      // console.log();
-      // setactivitySessions([...activitysessions, data.data]);
-      // await AsyncStorage.setItem(
-      //   "activitysessions",
-      //   JSON.stringify(activitysessions)
-      // );
+      // if (activities.activities != undefined || activities.activities != null) {
+      //   const d = data.data;
+      //   const newActives = activitysessions.activites;
+      //   newActives.push(d);
+      //   const newTotalTime = activitysessions.totalTime + d.time;
+
+      //   newActives.totalTime = newTotalTime;
+
+      //   setactivitySessions(newActives);
+      // }
     } catch (error) {
       console.log(error);
       console.log("was not able to add activity session");
@@ -420,20 +447,84 @@ export const AuthProvider = ({ children }) => {
           authorization: `Bearer ${userToken}`,
         },
       });
-
-      // // console.log(data.data);
-      // console.log("HERE2");
-      // console.log(data.data);
-
-      setactivitySessions(data.data);
-      // await AsyncStorage.setItem(
-      //   "activitysessions",
-      //   JSON.stringify(activitysessions)
-      // );
+      // Retrieve updated activity session data from response
+      const newActivitySessionData = data.data;
+      // Update activity sessions state with new activity session data
+      setactivitySessions(newActivitySessionData);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getStreak = async () => {
+    try {
+      console.log("getting streaks");
+      const data = await axios.get("/getStreak", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+      // setStreak(data.streak);
+    } catch (error) {
+      console.log("get streak error");
+    }
+  };
+  const getDays = async () => {
+    try {
+      console.log("getting days");
+
+      const data = await axios.get("/getDays", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+      //setDays(data.days);
+    } catch (error) {
+      console.log("get days error");
+    }
+  };
+
+  const getChallenges = async () => {
+    try {
+      const res = await axios.post(
+        "/getChallenges",
+        {
+          userId: userInfo,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      setChallenges(res.data);
+    } catch (error) {
+      console.log("get challenges error");
+    }
+  };
+  const updateChallenges = async ({ activityType, activityTime }) => {
+    try {
+      console.log("updating challenges");
+      console.log(activityType);
+      console.log(activityTime);
+      const data = await axios.post(
+        "/updateChallenges",
+        {
+          activity: activityType,
+          time: activityTime,
+          userId: userInfo,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log("upatechallenge error ", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -474,6 +565,15 @@ export const AuthProvider = ({ children }) => {
         deleteEvent,
         retrieveEvents,
         events,
+        days,
+        challenges,
+        streak,
+        getDays,
+        getStreak,
+        getChallenges,
+        updateChallenges,
+        forgotPasswordLink,
+        forgotPassword,
       }}
     >
       {children}

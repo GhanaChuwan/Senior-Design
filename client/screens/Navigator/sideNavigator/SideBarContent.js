@@ -31,6 +31,8 @@ export function SideBarContent(props) {
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Text
                 label={`${userInfo.user.firstName[0].toUpperCase()}${userInfo.user.lastName[0].toUpperCase()}`}
+                backgroundColor={"#fff"}
+                color={"#1e407c"}
                 size={64}
               />
               <View style={{ flexDirection: "column", marginLeft: 15 }}>
@@ -52,6 +54,7 @@ export function SideBarContent(props) {
               <Icon name="account-outline" color="white" size={size} />
             )}
             label={() => <Text style={{ color: "white" }}>Profile</Text>}
+            onPress={() => navigation.navigate("Profile")}
           />
           <DrawerItem
             icon={({ color, size }) => (
@@ -73,8 +76,20 @@ export function SideBarContent(props) {
             )}
             label={() => <Text style={{ color: "white" }}>Setting</Text>}
           />
+          <DrawerItem
+            icon={({ color, size }) => (
+              <Icon name="exit-to-app" color="white" size={size} />
+            )}
+            label={() => <Text style={{ color: "white" }}>Sign-Out</Text>}
+            onPress={() => {
+              logout();
+            }}
+          />
         </Drawer.Section>
-        <Drawer.Section style={styles.drawerSection} title="Preferences">
+        {/* <Drawer.Section style={styles.bottomDrawerSection}>
+          
+        </Drawer.Section> */}
+        {/* <Drawer.Section style={styles.drawerSection} title="Preferences">
           <TouchableRipple
             onPress={() => {
               toggleTheme();
@@ -87,19 +102,8 @@ export function SideBarContent(props) {
               </View>
             </View>
           </TouchableRipple>
-        </Drawer.Section>
+        </Drawer.Section> */}
       </DrawerContentScrollView>
-      <Drawer.Section style={styles.bottomDrawerSection}>
-        <DrawerItem
-          icon={({ color, size }) => (
-            <Icon name="exit-to-app" color="white" size={size} />
-          )}
-          label={() => <Text style={{ color: "white" }}>Sign-Out</Text>}
-          onPress={() => {
-            logout();
-          }}
-        />
-      </Drawer.Section>
     </View>
   );
 }
@@ -137,12 +141,12 @@ const styles = StyleSheet.create({
   },
   drawerSection: {
     marginTop: 15,
-    borderTopColor: "#fff",
+    //borderTopColor: "#fff",
   },
   bottomDrawerSection: {
     marginBottom: 15,
-    borderTopColor: "#f4f4f4",
-    borderTopWidth: 1,
+    // borderTopColor: "#f4f4f4",
+    //  borderTopWidth: 1,
     color: "white",
   },
   preference: {
