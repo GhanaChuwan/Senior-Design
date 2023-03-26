@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [grades, setGrades] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -228,6 +229,58 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const createEvent = async ({
+    eventName,
+    eventType,
+    eventNote,
+  }) => {
+    console.log(eventName);
+    console.log(eventType);
+    console.log(eventNote);
+
+    try{
+      const data = await axios.post(
+          "/create-event",
+          {
+            eventName: eventName,
+            eventType: eventType,
+            eventNote: eventNote,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+      );
+
+      setEvents([...events, data.data]);
+      await AsyncStorage.setItem("events", JSON.stringify(events));
+    }catch (error) {
+      console.log(error);
+      console.log("was not able to create event");
+    }
+  };
+  const deleteEvent = async ({ event }) => {
+    try {
+      const res = axios.post(
+          "/deleteEvent",
+          {
+
+            event: event,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const createGrade = async ({
     gradeName,
     gradeType,
@@ -265,6 +318,7 @@ export const AuthProvider = ({ children }) => {
       console.log("was not able to create grade");
     }
   };
+
   const getAllGrades = async ({ subjectId }) => {
     try {
       const res = await axios.post(
@@ -399,6 +453,9 @@ export const AuthProvider = ({ children }) => {
         addActivitySession,
         getAllActivitySession,
         activitysessions,
+        createEvent,
+        deleteEvent,
+        events,
       }}
     >
       {children}

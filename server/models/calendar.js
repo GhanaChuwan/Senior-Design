@@ -23,4 +23,4 @@ const calendarSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Calendar", calendarSchema);
+module.exports = mongoose.model("CalendarPage", calendarSchema);
