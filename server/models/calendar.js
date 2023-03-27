@@ -1,3 +1,5 @@
+//calendar model
+
 const mongoose = require("mongoose");
 
 const calendarSchema = new mongoose.Schema({

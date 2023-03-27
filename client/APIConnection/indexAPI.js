@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://nuring-app-server.onrender.com",
+  baseURL: "http://66.71.90.146:80/",
 });
 

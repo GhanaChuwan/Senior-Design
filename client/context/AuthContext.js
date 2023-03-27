@@ -263,19 +263,19 @@ export const AuthProvider = ({ children }) => {
     eventNote,
     eventDate
   }) => {
-    // console.log(eventName);
-    // console.log(eventType);
-    // console.log(eventNote);
-    // console.log(eventDate);
+    console.log(eventName);
+    console.log(eventType);
+    console.log(eventNote);
+    console.log(eventDate);
 
     try {
-      const data = await axios.post(
-        "/create-event",
+      console.log("creating event")
+      const data = await axios.post("/createEvent",
         {
           eventName: eventName,
           eventType: eventType,
           eventNote: eventNote,
-          eventDate: eventDate
+          eventDate: eventDate,
         },
         {
           headers: {
@@ -312,11 +312,14 @@ export const AuthProvider = ({ children }) => {
   const retrieveEvents = async () => {
 
     try {
-      const data = await axios.get("getEvents", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      })
+      console.log("getting events")
+      const data = await axios.get("/getEvents",
+
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        })
       setEvents(data.data);
 
     } catch (error) {

@@ -2,15 +2,17 @@ const User = require("../models/user");
 const Calendar = require("../models/calendar");
 exports.createEvents = async (req, res) => {
   const { eventName, eventType, eventNote, eventDate } = req.body;
-  const { userId } = req.user;
+  const { userId } = req.user
 
   try {
+    const user = await User.findById(userId);
+
+    console.log("test");
     console.log(eventName);
     console.log(eventType);
     console.log(eventNote);
     console.log(eventDate);
 
-    const user = await User.findById(userId);
     console.log(user);
     calendar = await Calendar.create({
       eventName,
@@ -32,11 +34,13 @@ exports.createEvents = async (req, res) => {
 };
 
 exports.getEvents = async (req, res) => {
-  const { userId } = req.user;
+  const { userId } = req.user
   try {
+    console.log("test")
+    const user = await User.findById(userId);
     console.log("getting events");
     const calendar = await Calendar.find({ createdBy: userId });
-    console.log(calendar);
+    //console.log(calendar);
     return res.status(200).json(calendar);
   } catch (error) {
     res.status(409).json({ success: false, message: error.message });
@@ -44,7 +48,7 @@ exports.getEvents = async (req, res) => {
 };
 exports.deleteEvents = async (req, res) => {
   const { calendarId } = req.body;
-  const { userId } = req.user;
+  const user = await User.findById(req.user.userId);
 
   try {
     console.log("deleting events");
