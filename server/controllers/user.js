@@ -162,7 +162,24 @@ exports.resetPassword = async (req, res) => {
   }
 };
 exports.changePassword = async (req, res) => {
-  const user = await User.findById(req.body.userId);
-  if (!user)
-    return res.status(400).json({ error: "Invalid to change password" });
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(400).json({ error: "Invalid to change password" });
+    }
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid current password" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 8);
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+    console.log(error);
+  }
 };

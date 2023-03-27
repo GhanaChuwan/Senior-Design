@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [forgotPassword, setForgotPassword] = useState(null);
+  const [changePassword, setChangePassword] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
@@ -98,6 +99,21 @@ export const AuthProvider = ({ children }) => {
       setForgotPassword(res.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const changePasswordLink = async ({ currentPassword, newPassword }) => {
+    try {
+      const res = await axios.post("/change-password", {
+        currentPassword,
+        newPassword,
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+      setChangePassword(res.data);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -509,6 +525,8 @@ export const AuthProvider = ({ children }) => {
         updateChallenges,
         forgotPasswordLink,
         forgotPassword,
+        changePasswordLink,
+        changePassword,
       }}
     >
       {children}

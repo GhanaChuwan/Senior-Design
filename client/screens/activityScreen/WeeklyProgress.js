@@ -6,10 +6,15 @@ import formatTime from "../../utils/formateTime";
 
 const WeeklyProgress = ({ navigation, route }) => {
   const { subjectId, activityId } = route.params;
-  const { getAllActivity, activities } = useContext(AuthContext);
+  const { getAllActivity, activites, getAllActivitySession } =
+    useContext(AuthContext);
 
   useEffect(() => {
-    getAllActivity({ activityId });
+    getAllActivity({ subjectId });
+  }, []);
+
+  useEffect(() => {
+    getAllActivitySession({ activityId });
   }, [activityId]);
 
   useEffect(() => {
@@ -23,12 +28,12 @@ const WeeklyProgress = ({ navigation, route }) => {
     });
   }, [route]);
 
-  // console.log(timeStudied);
+  console.log(activityId);
   const data = {
     labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: [`${activities.totalTime}`],
+        data: [`${activityId.totalTime}`],
       },
     ],
   };
