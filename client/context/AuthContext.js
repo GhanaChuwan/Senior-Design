@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   ]);
   const [challenges, setChallenges] = useState([]);
   const [streak, setStreak] = useState(10);
+  const [events, setEvents] = useState([]);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -271,6 +272,77 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const createEvent = async ({
+    eventName,
+    eventType,
+    eventNote,
+    eventDate
+  }) => {
+    console.log(eventName);
+    console.log(eventType);
+    console.log(eventNote);
+    console.log(eventDate);
+
+    try {
+      console.log("creating event")
+      const data = await axios.post("/createEvent",
+        {
+          eventName: eventName,
+          eventType: eventType,
+          eventNote: eventNote,
+          eventDate: eventDate,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      setEvents([...events, data.data])
+      await AsyncStorage.setItem("events", JSON.stringify(events));
+    } catch (error) {
+      console.log(error);
+      console.log("was not able to create event");
+    }
+  };
+  const deleteEvent = async ({ event }) => {
+    try {
+      console.log("deleting event")
+      const res = axios.post(
+        "/deleteEvent",
+        {
+
+          event: event,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const retrieveEvents = async () => {
+
+    try {
+      console.log("getting events")
+      const data = await axios.get("/getEvents",
+
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        })
+      setEvents(data.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const createGrade = async ({
     gradeName,
     gradeType,
@@ -525,6 +597,10 @@ export const AuthProvider = ({ children }) => {
         updateChallenges,
         forgotPasswordLink,
         forgotPassword,
+        createEvent,
+        deleteEvent,
+        retrieveEvents,
+        events,
         changePasswordLink,
         changePassword,
       }}
