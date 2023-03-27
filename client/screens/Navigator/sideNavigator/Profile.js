@@ -4,11 +4,27 @@ import CustomButton from "../../../components/CustomButton/CustomButton";
 import { TextInput } from "react-native-paper";
 import { Avatar } from "react-native-paper";
 import { AuthContext } from "../../../context/AuthContext";
+import { Formik } from "formik";
+import * as Yup from "yup";
+const validationSchema = Yup.object({
+  password: Yup.string()
+    .trim()
+    .min(8, "Password is too short! ")
+    .required("Password is required!"),
+  confirmPassword: Yup.string().equals(
+    [Yup.ref("password"), null],
+    "Password does not match!"
+  ),
+});
 const Profile = ({ navigation, route }) => {
   const [inputValue, setInputValue] = useState("");
   const { userInfo } = useContext(AuthContext);
-
-  // const { title } = route.params;
+  const [Info, setUserInfo] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const { changepassword, changePasswordLink } = useContext(AuthContext);
   useEffect(() => {
     //navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
@@ -20,6 +36,18 @@ const Profile = ({ navigation, route }) => {
     });
   }, [route]);
 
+  const changePasswordSubmit = async (values) => {
+    try {
+      await changePasswordLink(
+        values.currentPassword,
+        values.newPassword,
+        values.confirmPassword
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
@@ -29,24 +57,18 @@ const Profile = ({ navigation, route }) => {
           label={`${userInfo.user.firstName[0].toUpperCase()}${userInfo.user.lastName[0].toUpperCase()}`}
         />
       </View>
-
       <View style={styles.row}>
         <Text style={styles.label}> First Name:</Text>
-        <Text style={[styles.input, { height: 40 }]}>
-          {" "}
-          {userInfo.user.firstName}
-        </Text>
+        <Text style={styles.input}> {userInfo.user.firstName}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}> Last Name:</Text>
-        <Text style={[styles.input, { height: 40 }]}>
-          {" "}
-          {userInfo.user.lastName}
-        </Text>
+        <Text style={styles.input}> {userInfo.user.lastName}</Text>
       </View>
+
       <View style={styles.row}>
         <Text style={styles.label}> Email Id:</Text>
-        <Text style={[styles.input, { height: 40 }]}>
+        <Text style={[styles.input, { marginLeft: 17 }]}>
           {" "}
           {userInfo.user.email}
         </Text>
@@ -59,31 +81,67 @@ const Profile = ({ navigation, route }) => {
         }}
       />
       <Text style={styles.textChange}>Change the Password</Text>
-      <View style={styles.row}>
-        <Text style={styles.label}> Current Password:</Text>
-        <TextInput
-          style={[styles.input, { height: 40 }]}
-          onChangeText={(text) => setInputValue(text)}
-          value={inputValue}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}> New Password:</Text>
-        <TextInput
-          style={[styles.input, { height: 40 }]}
-          onChangeText={(text) => setInputValue(text)}
-          value={inputValue}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}> Confirm Password:</Text>
-        <TextInput
-          style={[styles.input, { height: 40 }]}
-          onChangeText={(text) => setInputValue(text)}
-          value={inputValue}
-        />
-      </View>
-      <CustomButton text="Save" />
+      <Formik
+        initialValues={Info}
+        validationSchema={validationSchema}
+        onSubmit={changePasswordSubmit}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => {
+          const { currentPassword, newPassword, confirmPassword } = values;
+          return (
+            <>
+              <View style={styles.row}>
+                <Text style={styles.label}> Current Password:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={currentPassword}
+                  error={touched.currentPassword && errors.currentPassword}
+                  onChangeText={handleChange("currentPassword")}
+                  onBlur={handleBlur("currentPassword")}
+                  autoCapitalize="none"
+                  placeholder="********"
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}> new Password:</Text>
+                <TextInput
+                  style={[styles.input, { marginLeft: 25 }]}
+                  value={newPassword}
+                  error={touched.newPassword && errors.newPassword}
+                  onChangeText={handleChange("newPassword")}
+                  onBlur={handleBlur("newPassword")}
+                  autoCapitalize="none"
+                  placeholder="********"
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.label}> Confirm Password:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={confirmPassword}
+                  error={touched.confirmPassword && errors.confirmPassword}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={handleBlur("confirmPassword")}
+                  autoCapitalize="none"
+                  placeholder="********"
+                  secureTextEntry
+                />
+              </View>
+              <CustomButton text="Save" onPress={handleSubmit} />
+            </>
+          );
+        }}
+      </Formik>
     </View>
   );
 };
