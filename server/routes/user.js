@@ -7,6 +7,7 @@ const {
   forgotPassword,
   forgotPasswordUI,
   resetPassword,
+  changePassword,
 } = require("../controllers/user.js");
 
 const { isAuth } = require("../middlewares/validation/auth");
@@ -63,10 +64,10 @@ router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
 router.post("/forgot-password", forgotPassword);
 router.get("/forgot-password/:userID/:token", forgotPasswordUI);
+router.post("/reset-password", resetPassword);
+router.post("/change-password", isAuth, changePassword);
 
 router.get("/download-progress", downloadProgress);
-
-router.post("/reset-password", resetPassword);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);
