@@ -91,7 +91,6 @@ export default function CalendarPage({ navigation, route }) {
     try {
       await createEvent({
         eventName: name,
-        eventType: selected,
         eventNote: note,
         eventDate: date
       });
@@ -140,6 +139,7 @@ export default function CalendarPage({ navigation, route }) {
             event: item,
           });
           //then update events
+
 
         },
       },
@@ -260,18 +260,11 @@ export default function CalendarPage({ navigation, route }) {
                 <CustomInput
                   placeholder={"Event Name"}
                   onChangeText={(newText) => setName(newText)}
-                  style={{ borderRadius: 30 }} />
-
-                <View style={styles.dropDown}>
-                  <SelectList
-                    setSelected={(val) => setSelected(val)}
-                    data={eventType}
-                    save="value" />
-                </View>
+                />
 
                 <TextInput
                   keyboardType="text"
-                  placeholder="Event Note: description etc.."
+                  placeholder="Event description"
                   placeholderTextColor="lightgray"
                   style={styles.input}
                   onChangeText={(text) => {
@@ -301,7 +294,7 @@ export default function CalendarPage({ navigation, route }) {
         <FlatList
           data={events}
           renderItem={({ item }) => (
-            <TouchableOpacity onLongPress={alertUser} style={styles.event}>
+            <TouchableOpacity onLongPress={() => alertUser(item)} style={styles.event}>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 {getDate(item.eventDate)}
                 <View>
@@ -351,10 +344,11 @@ const styles = StyleSheet.create({
   event: {
     alignSelf: "center",
     width: "95%",
-    backgroundColor: "red",
+    backgroundColor: "orange",
     height: "auto",
     borderRadius: 11,
-    marginTop: 20
+    marginTop: 20,
+
   },
   date: {
     width: 120,
@@ -365,15 +359,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   month: {
-    fontSize: 40
+    fontSize: 30,
   },
   day: {
-    fontSize: 30
+    fontSize: 25
   },
   note: {
     fontSize: 18,
     width: 240,
     margin: 10,
+
   },
   name: {
     fontSize: 25,
