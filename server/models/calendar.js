@@ -7,10 +7,6 @@ const calendarSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  eventType: {
-    type: String,
-    required: true,
-  },
   eventNote: {
     type: String,
     required: true,
