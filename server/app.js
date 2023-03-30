@@ -6,6 +6,7 @@ const User = require("./models/user");
 const userRouter = require("./routes/user");
 const { req, res } = require("express");
 const cors = require("cors");
+const updateChallenges = require("./scheduler/resetChallenges");
 
 const corsOptions = {
   origin: "*",
@@ -14,6 +15,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions)); // Use this after the variable declaration
+
+updateChallenges; //resets challenge progress to 0 every week
 
 app.use(express.json());
 app.use(userRouter);
