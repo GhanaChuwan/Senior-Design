@@ -54,6 +54,8 @@ exports.deleteSubjects = async (req, res) => {
 
     const subject = await Subject.findByIdAndDelete(subjectId);
 
+    console.log(subject);
+
     subject.activities.forEach(
       async (id) => await Activitiy.findByIdAndDelete(id)
     );

@@ -34,6 +34,8 @@ const {
   getAllActivity,
   addActivitySession,
   getAllActivitySession,
+  getWeeklyProgress,
+  getMonthlyProgress,
 } = require("../controllers/activity");
 const {
   validateResources,
@@ -49,7 +51,7 @@ const {
   createEvents,
   getEvents,
   deleteEvents,
-} = require("../controllers/calendar")
+} = require("../controllers/calendar");
 
 const {
   getStreak,
@@ -58,7 +60,7 @@ const {
   updateChallenges,
 } = require("../controllers/rewards");
 
-const { downloadProgress } = require("../controllers/downloadData");
+// const { downloadProgress } = require("../controllers/downloadData");
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
@@ -67,7 +69,10 @@ router.get("/forgot-password/:userID/:token", forgotPasswordUI);
 router.post("/reset-password", resetPassword);
 router.post("/change-password", isAuth, changePassword);
 
-router.get("/download-progress", downloadProgress);
+// router.get("/download-progress", isAuth, downloadProgress);
+
+router.get("/getWeeklyProgress", isAuth, getWeeklyProgress);
+router.get("/getMonthlyProgress", isAuth, getMonthlyProgress);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);

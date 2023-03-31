@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
+  const [weeklySession, setWeeklySession] = useState([]);
+
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([
     { completed: false, day: "M" },
@@ -105,13 +107,17 @@ export const AuthProvider = ({ children }) => {
 
   const changePasswordLink = async ({ currentPassword, newPassword }) => {
     try {
-      const res = await axios.post("/change-password", {
-        currentPassword,
-        newPassword,
-        headers: {
-          authorization: `Bearer ${userToken}`,
+      const res = await axios.post(
+        "/change-password",
+        {
+          currentPassword,
         },
-      });
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       setChangePassword(res.data);
     } catch (e) {
       console.log(e);
@@ -146,6 +152,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         await getSubjects();
         await getAllActivity();
+        await getWeeklyProgress();
         // await getAllActivitySession();
       }
 
@@ -275,16 +282,18 @@ export const AuthProvider = ({ children }) => {
 
   const createEvent = async ({
     eventName,
+    eventType,
     eventNote,
-    eventDate
+    eventDate,
   }) => {
     console.log(eventName);
     console.log(eventNote);
     console.log(eventDate);
 
     try {
-      console.log("creating event")
-      const data = await axios.post("/createEvent",
+      console.log("creating event");
+      const data = await axios.post(
+        "/createEvent",
         {
           eventName: eventName,
           eventNote: eventNote,
@@ -296,7 +305,7 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      setEvents([...events, data.data])
+      setEvents([...events, data.data]);
       await AsyncStorage.setItem("events", JSON.stringify(events));
     } catch (error) {
       console.log(error);
@@ -305,11 +314,10 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteEvent = async ({ event }) => {
     try {
-      console.log("deleting event")
-      const data = axios.post(
+      console.log("deleting event");
+      const res = axios.post(
         "/deleteEvent",
         {
-
           event: event,
         },
         {
@@ -317,31 +325,29 @@ export const AuthProvider = ({ children }) => {
             authorization: `Bearer ${userToken}`,
           },
         }
-      ).then(response => { setEvents(response.data) })
-
-      await AsyncStorage.setItem("events", JSON.stringify(events));
-
+      );
     } catch (error) {
       console.log(error);
     }
   };
   const retrieveEvents = async () => {
-
     try {
-      console.log("getting events")
-      const data = await axios.get("/getEvents",
+      console.log("getting events");
+      const data = await axios.get(
+        "/getEvents",
 
         {
           headers: {
             authorization: `Bearer ${userToken}`,
           },
-        })
+        }
+      );
       setEvents(data.data);
       await AsyncStorage.setItem("events", JSON.stringify(events));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const createGrade = async ({
     gradeName,
@@ -400,18 +406,22 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteGrade = async ({ subject, grade }) => {
     try {
-      const res = axios.post(
-        "/deleteGrade",
-        {
-          subjectId: subject,
-          grade: grade,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
+      const res = axios
+        .post(
+          "/deleteGrade",
+          {
+            subjectId: subject,
+            grade: grade,
           },
-        }
-      ).then(response => { setGrades(response.data) })
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          setGrades(response.data);
+        });
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
@@ -551,6 +561,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getWeeklyProgress = async () => {
+    try {
+      const { data } = await axios.get("/getWeeklyProgress", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+      setWeeklySession(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -602,6 +625,8 @@ export const AuthProvider = ({ children }) => {
         events,
         changePasswordLink,
         changePassword,
+        weeklySession,
+        getWeeklyProgress,
       }}
     >
       {children}

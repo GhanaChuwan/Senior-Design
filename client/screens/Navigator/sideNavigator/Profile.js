@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import { TextInput } from "react-native-paper";
@@ -6,6 +12,7 @@ import { Avatar } from "react-native-paper";
 import { AuthContext } from "../../../context/AuthContext";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { ScrollView } from "react-native-gesture-handler";
 const validationSchema = Yup.object({
   password: Yup.string()
     .trim()
@@ -36,7 +43,7 @@ const Profile = ({ navigation, route }) => {
     });
   }, [route]);
 
-  const changePasswordSubmit = async (values) => {
+  const changePasswordSubmit = async (values, formikActions) => {
     try {
       await changePasswordLink(
         values.currentPassword,
@@ -47,102 +54,108 @@ const Profile = ({ navigation, route }) => {
       console.log(error.message);
     }
   };
-
+  console.log(changePasswordSubmit);
   return (
-    <View style={styles.container}>
-      <View style={{ alignItems: "center" }}>
-        <Avatar.Text
-          size={90}
-          backgroundColor="#1e407c"
-          label={`${userInfo.user.firstName[0].toUpperCase()}${userInfo.user.lastName[0].toUpperCase()}`}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}> First Name:</Text>
-        <Text style={styles.input}> {userInfo.user.firstName}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}> Last Name:</Text>
-        <Text style={styles.input}> {userInfo.user.lastName}</Text>
-      </View>
-
-      <View style={styles.row}>
-        <Text style={styles.label}> Email Id:</Text>
-        <Text style={[styles.input, { marginLeft: 17 }]}>
-          {" "}
-          {userInfo.user.email}
-        </Text>
-      </View>
-      <View
-        style={{
-          borderBottomColor: "#1e407c",
-          borderBottomWidth: 1,
-          marginBottom: 10,
-        }}
-      />
-      <Text style={styles.textChange}>Change the Password</Text>
-      <Formik
-        initialValues={Info}
-        validationSchema={validationSchema}
-        onSubmit={changePasswordSubmit}
+    <ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={100}
       >
-        {({
-          values,
-          errors,
-          touched,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => {
-          const { currentPassword, newPassword, confirmPassword } = values;
-          return (
-            <>
-              <View style={styles.row}>
-                <Text style={styles.label}> Current Password:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={currentPassword}
-                  error={touched.currentPassword && errors.currentPassword}
-                  onChangeText={handleChange("currentPassword")}
-                  onBlur={handleBlur("currentPassword")}
-                  autoCapitalize="none"
-                  placeholder="********"
-                  secureTextEntry
-                />
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}> new Password:</Text>
-                <TextInput
-                  style={[styles.input, { marginLeft: 25 }]}
-                  value={newPassword}
-                  error={touched.newPassword && errors.newPassword}
-                  onChangeText={handleChange("newPassword")}
-                  onBlur={handleBlur("newPassword")}
-                  autoCapitalize="none"
-                  placeholder="********"
-                  secureTextEntry
-                />
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.label}> Confirm Password:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={confirmPassword}
-                  error={touched.confirmPassword && errors.confirmPassword}
-                  onChangeText={handleChange("confirmPassword")}
-                  onBlur={handleBlur("confirmPassword")}
-                  autoCapitalize="none"
-                  placeholder="********"
-                  secureTextEntry
-                />
-              </View>
-              <CustomButton text="Save" onPress={handleSubmit} />
-            </>
-          );
-        }}
-      </Formik>
-    </View>
+        <View style={{ alignItems: "center" }}>
+          <Avatar.Text
+            size={90}
+            backgroundColor="#1e407c"
+            label={`${userInfo.user.firstName[0].toUpperCase()}${userInfo.user.lastName[0].toUpperCase()}`}
+          />
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}> First Name:</Text>
+          <Text style={styles.input}> {userInfo.user.firstName}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}> Last Name:</Text>
+          <Text style={styles.input}> {userInfo.user.lastName}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}> Email Id:</Text>
+          <Text style={[styles.input, { marginLeft: 17 }]}>
+            {" "}
+            {userInfo.user.email}
+          </Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "#1e407c",
+            borderBottomWidth: 1,
+            marginBottom: 10,
+          }}
+        />
+        <Text style={styles.textChange}>Change the Password</Text>
+        <Formik
+          initialValues={Info}
+          validationSchema={validationSchema}
+          onSubmit={changePasswordSubmit}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => {
+            const { currentPassword, newPassword, confirmPassword } = values;
+            return (
+              <>
+                <View style={styles.row}>
+                  <Text style={styles.label}> Current Password:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={currentPassword}
+                    error={touched.currentPassword && errors.currentPassword}
+                    onChangeText={handleChange("currentPassword")}
+                    onBlur={handleBlur("currentPassword")}
+                    autoCapitalize="none"
+                    placeholder="********"
+                    secureTextEntry
+                  />
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}> new Password:</Text>
+                  <TextInput
+                    style={[styles.input, { marginLeft: 25 }]}
+                    value={newPassword}
+                    error={touched.newPassword && errors.newPassword}
+                    onChangeText={handleChange("newPassword")}
+                    onBlur={handleBlur("newPassword")}
+                    autoCapitalize="none"
+                    placeholder="********"
+                    secureTextEntry
+                  />
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.label}> Confirm Password:</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={confirmPassword}
+                    error={touched.confirmPassword && errors.confirmPassword}
+                    onChangeText={handleChange("confirmPassword")}
+                    onBlur={handleBlur("confirmPassword")}
+                    autoCapitalize="none"
+                    placeholder="********"
+                    secureTextEntry
+                  />
+                </View>
+                <CustomButton onPress={handleSubmit} text="Save" />
+              </>
+            );
+          }}
+        </Formik>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
