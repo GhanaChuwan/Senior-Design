@@ -2,6 +2,7 @@ const Activity = require("../models/activity");
 const Subject = require("../models/subject");
 const ActivitySession = require("../models/activitySessions");
 const User = require("../models/user");
+const dayjs = require("dayjs");
 
 exports.createActivity = async (req, res) => {
   const { name, color, description, subjectId } = req.body;
@@ -41,11 +42,17 @@ exports.deleteActivity = async (req, res) => {
   try {
     const subject = await Subject.findById(subjectId);
     subject.activities.splice(subject.activities.indexOf(activityId), 1);
+
     await Subject.findByIdAndUpdate(subjectId, subject, {
-      new: false,
+      new: true,
     });
 
     const activities = await Activity.findByIdAndDelete(activityId);
+
+    activities.activitySessionTime.forEach(
+      async (id) => await ActivitySession.findByIdAndDelete(id)
+    );
+
     return res.status(200).json(activities);
   } catch (error) {
     res.status(409).json({ success: false, message: error.message });
@@ -131,5 +138,51 @@ exports.getAllActivitySession = async (req, res) => {
     return res.status(200).json({ activites: activitySession });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+exports.getWeeklyProgress = async (req, res) => {
+  try {
+    const sessions = await ActivitySession.find({
+      createdBy: req.user.userId,
+      createdAt: { $gte: dayjs().startOf("week"), $lt: dayjs().endOf("week") },
+    });
+
+    const myData = [0, 0, 0, 0, 0, 0];
+
+    sessions.forEach((session) => {
+      myData[dayjs(session.createdAt).day()] += session.time;
+    });
+
+    res.status(200).json(myData);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.getMonthlyProgress = async (req, res) => {
+  try {
+    const sessions = await ActivitySession.find({
+      createdBy: req.user.userId,
+      createdAt: {
+        $gte: dayjs().startOf("month"),
+        $lt: dayjs().endOf("month"),
+      },
+    });
+
+    const myData = new Array(30);
+
+    sessions.forEach((session) => {
+      const i = dayjs(session.createdAt).day();
+      if (myData[i] == null) {
+        myData[i] = session.time;
+      } else {
+        myData[i] += session.time;
+      }
+    });
+
+    res.status(200).json(myData);
+  } catch (e) {
+    console.log(e);
   }
 };

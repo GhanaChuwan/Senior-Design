@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [subjects, setSubjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
+  const [weeklySession, setWeeklySession] = useState([]);
+
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([
     { completed: false, day: "M" },
@@ -150,6 +152,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         await getSubjects();
         await getAllActivity();
+        await getWeeklyProgress();
         // await getAllActivitySession();
       }
 
@@ -281,7 +284,7 @@ export const AuthProvider = ({ children }) => {
     eventName,
     eventType,
     eventNote,
-    eventDate
+    eventDate,
   }) => {
     console.log(eventName);
     console.log(eventNote);
@@ -311,13 +314,10 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteEvent = async ({ event }) => {
     try {
-      console.log("deleting event")
-      const data = axios.post(
       console.log("deleting event");
       const res = axios.post(
         "/deleteEvent",
         {
-
           event: event,
         },
         {
@@ -561,6 +561,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getWeeklyProgress = async () => {
+    try {
+      const { data } = await axios.get("/getWeeklyProgress", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
+      setWeeklySession(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -612,6 +625,8 @@ export const AuthProvider = ({ children }) => {
         events,
         changePasswordLink,
         changePassword,
+        weeklySession,
+        getWeeklyProgress,
       }}
     >
       {children}

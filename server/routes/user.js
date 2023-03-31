@@ -34,6 +34,8 @@ const {
   getAllActivity,
   addActivitySession,
   getAllActivitySession,
+  getWeeklyProgress,
+  getMonthlyProgress,
 } = require("../controllers/activity");
 const {
   validateResources,
@@ -68,6 +70,9 @@ router.post("/reset-password", resetPassword);
 router.post("/change-password", isAuth, changePassword);
 
 // router.get("/download-progress", isAuth, downloadProgress);
+
+router.get("/getWeeklyProgress", isAuth, getWeeklyProgress);
+router.get("/getMonthlyProgress", isAuth, getMonthlyProgress);
 
 router.post("/create-subject", isAuth, createSubject);
 router.get("/subject", isAuth, getSubjects);

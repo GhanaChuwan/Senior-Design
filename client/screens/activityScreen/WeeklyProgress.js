@@ -5,12 +5,10 @@ import { AuthContext } from "../../context/AuthContext";
 import formatTime from "../../utils/formateTime";
 
 const WeeklyProgress = ({ navigation, route }) => {
-  const { subjectId, activityId } = route.params;
-  const { getAllActivitySession, activitysessions, getAllActivity } =
-    useContext(AuthContext);
+  const { weeklySession, getWeeklyProgress } = useContext(AuthContext);
 
   useEffect(() => {
-    getAllActivity({ subjectId });
+    getWeeklyProgress();
   }, []);
 
   // useEffect(() => {
@@ -28,14 +26,11 @@ const WeeklyProgress = ({ navigation, route }) => {
     });
   }, [route]);
 
-  console.log(activitysessions.totalTime);
-
   const data = {
     labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        // data: [`${activitysessions.totalTime}`],
-        data: [10, 15, 32, 10, 20, 1],
+        data: weeklySession,
       },
     ],
   };
