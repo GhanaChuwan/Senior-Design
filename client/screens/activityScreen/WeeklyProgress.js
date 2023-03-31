@@ -6,16 +6,16 @@ import formatTime from "../../utils/formateTime";
 
 const WeeklyProgress = ({ navigation, route }) => {
   const { subjectId, activityId } = route.params;
-  const { getAllActivity, activites, getAllActivitySession } =
+  const { getAllActivitySession, activitysessions, getAllActivity } =
     useContext(AuthContext);
 
   useEffect(() => {
     getAllActivity({ subjectId });
   }, []);
 
-  useEffect(() => {
-    getAllActivitySession({ activityId });
-  }, [activityId]);
+  // useEffect(() => {
+  //   getAllActivity({ activityId });
+  // }, [activityId]);
 
   useEffect(() => {
     //navigation.setOptions({ headerTitle: title });
@@ -28,12 +28,14 @@ const WeeklyProgress = ({ navigation, route }) => {
     });
   }, [route]);
 
-  console.log(activityId);
+  console.log(activitysessions.totalTime);
+
   const data = {
     labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: [`${activityId.totalTime}`],
+        // data: [`${activitysessions.totalTime}`],
+        data: [10, 15, 32, 10, 20, 1],
       },
     ],
   };

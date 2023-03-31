@@ -78,6 +78,13 @@ export function SideBarContent(props) {
           />
           <DrawerItem
             icon={({ color, size }) => (
+              <Icon name="decagram" color="white" size={size} />
+            )}
+            label={() => <Text style={{ color: "white" }}>Notifications</Text>}
+            onPress={() => navigation.navigate("NotificationsPage")}
+          />
+          <DrawerItem
+            icon={({ color, size }) => (
               <Icon name="exit-to-app" color="white" size={size} />
             )}
             label={() => <Text style={{ color: "white" }}>Sign-Out</Text>}

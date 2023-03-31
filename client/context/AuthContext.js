@@ -105,13 +105,17 @@ export const AuthProvider = ({ children }) => {
 
   const changePasswordLink = async ({ currentPassword, newPassword }) => {
     try {
-      const res = await axios.post("/change-password", {
-        currentPassword,
-        newPassword,
-        headers: {
-          authorization: `Bearer ${userToken}`,
+      const res = await axios.post(
+        "/change-password",
+        {
+          currentPassword,
         },
-      });
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       setChangePassword(res.data);
     } catch (e) {
       console.log(e);
@@ -277,7 +281,7 @@ export const AuthProvider = ({ children }) => {
     eventName,
     eventType,
     eventNote,
-    eventDate
+    eventDate,
   }) => {
     console.log(eventName);
     console.log(eventType);
@@ -285,8 +289,9 @@ export const AuthProvider = ({ children }) => {
     console.log(eventDate);
 
     try {
-      console.log("creating event")
-      const data = await axios.post("/createEvent",
+      console.log("creating event");
+      const data = await axios.post(
+        "/createEvent",
         {
           eventName: eventName,
           eventType: eventType,
@@ -299,7 +304,7 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
-      setEvents([...events, data.data])
+      setEvents([...events, data.data]);
       await AsyncStorage.setItem("events", JSON.stringify(events));
     } catch (error) {
       console.log(error);
@@ -308,11 +313,10 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteEvent = async ({ event }) => {
     try {
-      console.log("deleting event")
+      console.log("deleting event");
       const res = axios.post(
         "/deleteEvent",
         {
-
           event: event,
         },
         {
@@ -326,22 +330,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
   const retrieveEvents = async () => {
-
     try {
-      console.log("getting events")
-      const data = await axios.get("/getEvents",
+      console.log("getting events");
+      const data = await axios.get(
+        "/getEvents",
 
         {
           headers: {
             authorization: `Bearer ${userToken}`,
           },
-        })
+        }
+      );
       setEvents(data.data);
-
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const createGrade = async ({
     gradeName,
