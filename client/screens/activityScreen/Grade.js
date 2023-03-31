@@ -224,14 +224,14 @@ const styles = StyleSheet.create({
   task: {
     marginTop: 15,
     backgroundColor: "lightblue",
-    height: 70,
-    width: 370,
+    height: 90,
+    width: 350,
     borderRadius: 10,
+
   },
   assignments: {
     top: 50,
     marginLeft: 9,
-    position: "absolute",
     bottom: 30,
     top: 50,
     marginLeft: 9,
@@ -239,18 +239,19 @@ const styles = StyleSheet.create({
     bottom: 30,
   },
   name: {
-    fontSize: 25,
-    marginLeft: 10,
+    fontSize: 35,
+    marginLeft: 20,
     marginTop: 5,
   },
   type: {
+    marginTop: 10,
     marginLeft: 20,
     fontSize: 15,
   },
   points: {
     position: "absolute",
     left: 272,
-    top: 30,
+    top: 45,
     fontSize: 20,
     fontWeight: "bold",
   },

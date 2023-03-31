@@ -281,10 +281,9 @@ export const AuthProvider = ({ children }) => {
     eventName,
     eventType,
     eventNote,
-    eventDate,
+    eventDate
   }) => {
     console.log(eventName);
-    console.log(eventType);
     console.log(eventNote);
     console.log(eventDate);
 
@@ -294,7 +293,6 @@ export const AuthProvider = ({ children }) => {
         "/createEvent",
         {
           eventName: eventName,
-          eventType: eventType,
           eventNote: eventNote,
           eventDate: eventDate,
         },
@@ -313,10 +311,13 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteEvent = async ({ event }) => {
     try {
+      console.log("deleting event")
+      const data = axios.post(
       console.log("deleting event");
       const res = axios.post(
         "/deleteEvent",
         {
+
           event: event,
         },
         {
@@ -342,6 +343,7 @@ export const AuthProvider = ({ children }) => {
         }
       );
       setEvents(data.data);
+      await AsyncStorage.setItem("events", JSON.stringify(events));
     } catch (error) {
       console.log(error);
     }
@@ -377,7 +379,6 @@ export const AuthProvider = ({ children }) => {
       oldGrade.push(data.data);
 
       // setGrades([...grades, data.data])
-
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
@@ -398,7 +399,6 @@ export const AuthProvider = ({ children }) => {
         }
       );
       setGrades(res.data);
-
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (e) {
       console.log(e);
@@ -406,18 +406,23 @@ export const AuthProvider = ({ children }) => {
   };
   const deleteGrade = async ({ subject, grade }) => {
     try {
-      const res = axios.post(
-        "/deleteGrade",
-        {
-          subjectId: subject,
-          grade: grade,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
+      const res = axios
+        .post(
+          "/deleteGrade",
+          {
+            subjectId: subject,
+            grade: grade,
           },
-        }
-      );
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          setGrades(response.data);
+        });
+      await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
     }
