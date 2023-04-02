@@ -74,8 +74,10 @@ exports.createChallenges = async (user) => {
             totalAmount: 7200
         })
 
-        user.challenges.push(challenge1, challenge2, challenge3, challenge4, challenge5);
-        user.save();
+        user.challenges.push(challenge1._id, challenge2._id, challenge3._id, challenge4._id, challenge5._id);
+        await User.findByIdAndUpdate(user._id, user, {
+            new: true,
+        });
 
         console.log(user);
     } catch (error) {
@@ -152,47 +154,6 @@ exports.updateChallenges = async (req, res) => {
                 break;
         }
 
-
-        // //reading challenge
-        // if (challenge.category == "read" && activitySearchUP.name == "reading") {
-        //     console.log(challenge.category)
-        //     challenge.currentAmount += time;
-        //     if (challenge.currentAmount >= challenge.totalAmount) {
-        //         challenge.completed = true;
-        //     }
-        //     challenge.save();
-        //     break;
-        // }
-        // //notes challenge
-        // if (challenge.category == "note" && activitySearchUP.name == "reviewing notes") {
-        //     console.log(challenge.category)
-        //     challenge.currentAmount += time;
-        //     if (challenge.currentAmount >= challenge.totalAmount) {
-        //         challenge.completed = true;
-        //     }
-        //     challenge.save();
-        //     break;
-        // }
-        // //tutoring challenge
-        // if (challenge.category == "tutor" && activitySearchUP.name == "go to tutoring") {
-        //     console.log(challenge.category)
-        //     challenge.currentAmount += time;
-        //     if (challenge.currentAmount >= challenge.totalAmount) {
-        //         challenge.completed = true;
-        //     }
-        //     challenge.save();
-        //     break;
-        // }
-        // //work challenge
-        // if (activitySearchUP.name != "reading" && activitySearchUP.name != "notes" && activitySearchUP.name != "go to tutoring") {
-        //     console.log(challenge.category)
-        //     challenge.currentAmount += time;
-        //     if (challenge.currentAmount >= challenge.totalAmount) {
-        //         challenge.completed = true;
-        //     }
-        //     challenge.save();
-        //     break;
-        // }
 
         console.log("challenge updated");
 
