@@ -13,6 +13,7 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../../context/AuthContext";
+import Notify from "../../../components/notif";
 
 export function SideBarContent(props) {
   const { logout, userInfo } = useContext(AuthContext);
@@ -92,6 +93,7 @@ export function SideBarContent(props) {
               logout();
             }}
           />
+          <Notify />
         </Drawer.Section>
         {/* <Drawer.Section style={styles.bottomDrawerSection}>
           
