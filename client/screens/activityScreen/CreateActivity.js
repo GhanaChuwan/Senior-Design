@@ -51,7 +51,7 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, []);
+  }, [activitysession]);
 
   // useEffect(() => {
   //   getAllActivity({ subjectId });
@@ -59,7 +59,7 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivitySession({ activityId });
-  }, [activityId]);
+  }, []);
 
   const showModal = () => {
     setZIndex(1);
