@@ -3,12 +3,12 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 export default function CreateFolder({ navigation, location }) {
   return (
-    <TouchableOpacity style={styles.btn}>
+    <TouchableOpacity>
       <View style={styles.btnContainer}>
         <AntDesign
           name="addfolder"
-          color="#3B71F3"
-          size={32}
+          color="#ffff"
+          size={30}
           onPress={() => navigation.navigate(location)}
         />
       </View>
@@ -28,5 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
   },
-  btnContainer: {},
+  btnContainer: {
+    marginRight: 10,
+  },
 });
