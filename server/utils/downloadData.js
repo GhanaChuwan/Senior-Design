@@ -2,47 +2,66 @@ const csvDownload = require("json-to-csv-export");
 const fs = require("fs");
 const Subject = require("../models/subject");
 const User = require("../models/user");
-const downloadProgress = async () => {
-  const { userId } = req.user;
-  let subjects = [];
-  var userData = await Subject.find({ createdBy: userId });
+const Parser = require("@json2csv/plainjs").Parser;
+var jsonexport = require("jsonexport");
 
-  userData.map((user) => {
-    const { id, name, activities, grades } = user;
-    subjects.push({ id, name, activities, grades });
-  });
+const downloadProgress = (callback) => {
+  var data = [
+    {
+      subject: "Test 1",
+      grades: [
+        {
+          name: "Test 2",
+          gradeType: "Exams",
+          gradePoint: "10/100",
+        },
+        {
+          name: "Test 3",
+          gradeType: "Hoemwork",
+          gradePoint: "10/100",
+        },
+        {
+          name: "Test 4",
+          gradeType: "Quizzes",
+          gradePoint: "10/100",
+        },
+      ],
+      activities: [
+        {
+          name: "answering questions",
+          totalTime: 2,
+          activitySessionTime: [
+            {
+              note: "asdasd",
+              time: 30,
+            },
+            {
+              note: "asdasd",
+              time: 30,
+            },
+            {
+              note: "asdasd",
+              time: 30,
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-  // const ipAddressesData = [
-  //   {
-  //     id: "1",
-  //     name: "Sarajane Wheatman",
-  //     ip: "40.98.252.240",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Linell Humpherston",
-  //     ip: "82.225.151.150",
-  //   },
-  // ];
+  try {
+    const parser = new Parser();
+    const csv = parser.parse(data);
 
-  const dataToConvert = {
-    data: userData,
-    filename: "progress. csv",
-    delimiter: ",",
-    headers: ["id", "name", "activities", "grades"],
-  };
-  const csvData = csvDownload(dataToConvert);
-
-  fs.writeFile(dataToConvert.filename, csvData, (err) => {
-    // write CSV data to file
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(`File ${dataToConvert.filename} has been saved.`);
-  });
+    data = jsonexport(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+downloadProgress();
+
 module.exports = {
-  downloadProgress: downloadProgress,
+  makeCsvData: downloadProgress,
 };

@@ -69,7 +69,7 @@ router.get("/forgot-password/:userID/:token", forgotPasswordUI);
 router.post("/reset-password", resetPassword);
 router.post("/change-password", isAuth, changePassword);
 
-router.get("/download-progress", isAuth, downloadProgress);
+router.post("/download-progress", isAuth, downloadProgress);
 
 router.get("/getWeeklyProgress", isAuth, getWeeklyProgress);
 router.get("/getMonthlyProgress", isAuth, getMonthlyProgress);

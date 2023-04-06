@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }) => {
         await getSubjects();
         await getAllActivity();
         await getWeeklyProgress();
-        // await getAllActivitySession();
+        //await getAllActivitySession();
       }
 
       setIsLoading(false);

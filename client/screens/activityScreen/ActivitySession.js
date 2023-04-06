@@ -18,6 +18,9 @@ export default function Session({ navigation, route }) {
   const { activityId, title } = route.params;
 
   useEffect(() => {
+    getAllActivitySession({ activityId });
+  }, [activityId]);
+  useEffect(() => {
     navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerShown: true,
@@ -26,13 +29,12 @@ export default function Session({ navigation, route }) {
       },
       headerTintColor: "#fff",
     });
-    getAllActivitySession({ activityId });
-  }, [activityId]);
+  }, [route]);
 
   return (
     <View
       style={styles.container}
-    // behavior={Platform.OS == "ios" ? "padding" : "height"}
+      // behavior={Platform.OS == "ios" ? "padding" : "height"}
     >
       {/* <Text style={styles.text}>Sessions</Text> */}
       <CustomButton
@@ -55,6 +57,7 @@ export default function Session({ navigation, route }) {
           <CustomSessionsCard
             keyExtractor={(item) => item._id}
             activitySession={item}
+            activityId={activityId}
             navigation={navigation}
           />
         )}
