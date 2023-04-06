@@ -460,6 +460,8 @@ export const AuthProvider = ({ children }) => {
         }));
       }
 
+      await getAllActivitySession({ activityId });
+
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
       //   const newActives = activitysessions.activites;
