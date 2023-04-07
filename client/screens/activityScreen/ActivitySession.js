@@ -12,7 +12,7 @@ import { Card, Title } from "react-native-paper";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 import formatTime from "../../utils/formateTime";
-
+import { Entypo } from "@expo/vector-icons";
 export default function Session({ navigation, route }) {
   const { getAllActivitySession, activitysessions } = useContext(AuthContext);
   const { activityId, title } = route.params;
@@ -21,7 +21,18 @@ export default function Session({ navigation, route }) {
     getAllActivitySession({ activityId });
   }, [activityId]);
   useEffect(() => {
-    navigation.setOptions({ headerTitle: title });
+    navigation.setOptions({
+      headerTitle: title,
+      headerRight: () => (
+        <Entypo
+          name="stopwatch"
+          style={styles.newTaskBtn}
+          onPress={() =>
+            navigation.navigate("ActivityTime", { activityId: activityId })
+          }
+        />
+      ),
+    });
     navigation.setOptions({
       headerShown: true,
       headerStyle: {
@@ -32,24 +43,7 @@ export default function Session({ navigation, route }) {
   }, [route]);
 
   return (
-    <View
-      style={styles.container}
-      // behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      {/* <Text style={styles.text}>Sessions</Text> */}
-      <CustomButton
-        style={{
-          marginTop: 20,
-          alignItems: "flex-end",
-          justifyContent: "flex-end",
-        }}
-        type="LINKBUTTON"
-        // style={{ marginTop: 20, alignItems: "flex-end" }}
-        text="Add Timer"
-        onPress={() =>
-          navigation.navigate("ActivityTime", { activityId: activityId })
-        }
-      />
+    <View style={styles.container}>
       <FlatList
         style={{ marginBottom: 10 }}
         data={activitysessions.activites}
@@ -122,5 +116,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "left",
     color: "white",
+  },
+  newTaskBtn: {
+    height: 40,
+    width: 40,
+    fontSize: 30,
+    margin: 10,
+    left: 10,
+    color: "#ffff",
   },
 });

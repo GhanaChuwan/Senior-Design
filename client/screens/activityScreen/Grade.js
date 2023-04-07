@@ -42,7 +42,25 @@ export default function Grades({ navigation, route }) {
   ]);
 
   useEffect(() => {
-    navigation.setOptions({ headerShown: true });
+    navigation.setOptions({
+      headerShown: true,
+      headerRight: () => (
+        <View>
+          <TouchableOpacity
+            style={{
+              marginRight: 2,
+              width: 50,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => showModal()}
+          >
+            <AntDesign name="form" style={styles.newTaskBtn} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#1e407c",
@@ -68,12 +86,12 @@ export default function Grades({ navigation, route }) {
   };
 
   const showModal = () => {
-    setZIndex(-1);
     setVisible(true);
+    setZIndex(2);
   };
   const hideModal = () => {
-    setZIndex(1);
     setVisible(false);
+    setZIndex(-1);
   };
 
   const retrieveGrades = async () => {
@@ -109,9 +127,13 @@ export default function Grades({ navigation, route }) {
     borderRadius: 20,
   };
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <View
+      style={{
+        position: "absolute",
+        zIndex: zIndex,
+        width: "100%",
+        height: "100%",
+      }}
     >
       <Provider>
         <Portal>
@@ -180,12 +202,7 @@ export default function Grades({ navigation, route }) {
         <TouchableOpacity
           style={{ marginLeft: 11 }}
           onPress={() => showModal()}
-        >
-          <View>
-            <AntDesign name="upload" style={styles.newTaskBtn} />
-            <Text style={styles.btnText}>New Grade</Text>
-          </View>
-        </TouchableOpacity>
+        ></TouchableOpacity>
 
         {/* <TouchableOpacity style={{ marginLeft: 260 }}>
           <AntDesign
@@ -213,7 +230,7 @@ export default function Grades({ navigation, route }) {
           )}
         />
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -227,7 +244,6 @@ const styles = StyleSheet.create({
     height: 90,
     width: 350,
     borderRadius: 10,
-
   },
   assignments: {
     top: 50,
@@ -242,7 +258,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 20,
     marginTop: 5,
-
   },
   type: {
     marginTop: 25,
@@ -278,6 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 10,
     left: 10,
+    color: "#ffff",
   },
   btnText: {
     top: -20,

@@ -79,7 +79,7 @@ export function SideBarContent(props) {
           />
           <DrawerItem
             icon={({ color, size }) => (
-              <Icon name="decagram" color="white" size={size} />
+              <Icon name="bell" color="white" size={size} />
             )}
             label={() => <Text style={{ color: "white" }}>Notifications</Text>}
             onPress={() => navigation.navigate("NotificationsPage")}
