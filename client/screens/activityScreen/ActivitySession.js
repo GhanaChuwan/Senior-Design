@@ -13,6 +13,7 @@ import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 import formatTime from "../../utils/formateTime";
 import { Entypo } from "@expo/vector-icons";
+
 export default function Session({ navigation, route }) {
   const { getAllActivitySession, activitysessions } = useContext(AuthContext);
   const { activityId, title } = route.params;
