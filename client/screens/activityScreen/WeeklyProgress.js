@@ -36,7 +36,6 @@ const WeeklyProgress = ({ navigation, route }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Weekly Progress</Text>
       <BarChart
         data={data}
         width={Dimensions.get("window").width - 10}
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fdf6ec",
     flex: 1,
-    marginTop: 5,
+    marginTop: 25,
     // padding: 50,
     // flexDirection: "row" /,
     //justifyContent: "center",
