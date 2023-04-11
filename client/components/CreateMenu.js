@@ -22,7 +22,7 @@ export default function CreateMenu({ navigation, location, subjectId, title }) {
       />
       <View style={styles.picture}>
         <Image
-          style={{ width: 400, height: 400 }}
+          style={{ width: 300, height: 300 }}
           source={require("../assets/Images/student.png")}
         />
       </View>
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     marginRight: 20,
+    padding: 5,
   },
   rowContainer: {
     flexDirection: "row",

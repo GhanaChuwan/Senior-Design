@@ -1,7 +1,5 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
-const Subject = require("../models/subject");
-const User = require("../models/user");
 const generateHTML = require("./generateProgressHTML.js");
 dotenv.config();
 
@@ -13,9 +11,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.sendDownloadMail = async ({ email, data }) => {
+exports.sendDownloadMail = async (email, data) => {
   try {
-    const { userId } = req.user;
     const encoder = new TextEncoder();
     const csvEncoded = encoder.encode(data);
     // Convert UTF-8 encoded CSV content to base64 encoding
@@ -33,6 +30,7 @@ exports.sendDownloadMail = async ({ email, data }) => {
         },
       ],
     });
+    console.log(response);
     return true;
   } catch (error) {
     console.log(error.message);

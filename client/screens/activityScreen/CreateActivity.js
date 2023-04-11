@@ -51,15 +51,11 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, [activitysession]);
-
-  // useEffect(() => {
-  //   getAllActivity({ subjectId });
-  // }, []);
+  }, []);
 
   useEffect(() => {
     getAllActivitySession({ activityId });
-  }, []);
+  }, [activityId]);
 
   const showModal = () => {
     setZIndex(1);
@@ -206,7 +202,8 @@ export default function Activity({ navigation, route }) {
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
-            activitysession={activitysession}
+            activityId={activityId}
+            // activitysession={item}
             subjectId={subjectId}
             deleteActivity={deleteActivity}
           />
