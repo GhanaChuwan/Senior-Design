@@ -31,6 +31,10 @@ const challengesSchema = new mongoose.Schema({
     totalAmount: {
         type: Number,
         required: true
+    },
+    badges: {
+        type: Number,
+        required: true
     }
 });
 

@@ -73,13 +73,17 @@ export default function Reward({ navigation, route }) {
 
               {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: 'yellow', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
 
-              <FontAwesome5 name={item.emblem} style={{ fontSize: 30, color: "black", marginVertical: 10 }} />
+              <FontAwesome5 name={item.emblem} style={{ fontSize: 25, color: "brown", marginVertical: 10 }} />
 
+              <View style={styles.badgeContainer}>
+                <Text style={{ marginTop: 12 }} >  {item.badges} </Text>
+                <FontAwesome5 name="ribbon" style={{ fontSize: 20, color: "orange", marginVertical: 10 }} />
+
+              </View>
               <View>
                 <Text style={item.completed == true ? styles.completedChallengeDescription : styles.challengeDescription}>{item.description}</Text>
                 <Text style={item.completed == true ? styles.completedTime : styles.time}>{getTime(item.currentAmount, item.totalAmount)}</Text>
               </View>
-
             </View>
           )}
         />
@@ -180,7 +184,8 @@ const styles = StyleSheet.create({
     // left: 160
     position: "absolute",
     left: 160,
-    top: 55
+    top: 55,
+    color: "gray"
   },
   completedTime: {
     fontSize: 15,
@@ -190,7 +195,15 @@ const styles = StyleSheet.create({
     left: 160,
     top: 55,
     color: "white"
+  },
+  badgeContainer: {
+    display: "flex",
+    flexDirection: "row",
+    position: "absolute",
+    top: 60,
+    left: 10
   }
+
 
 
 });
