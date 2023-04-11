@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
   },
   subjectContainer: {
     marginTop: 5,
-    alignItems: "left",
-    // justifyContent: "center",
+    justifyContent: "center",
     marginLeft: 16,
     flex: 1,
   },

@@ -489,6 +489,7 @@ export const AuthProvider = ({ children }) => {
       const newActivitySessionData = data.data;
       // Update activity sessions state with new activity session data
       setactivitySessions(newActivitySessionData);
+      // await getAllActivitySession({ activityId });
     } catch (error) {
       console.log(error);
     }
