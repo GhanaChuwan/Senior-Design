@@ -1,88 +1,67 @@
 const csvDownload = require("json-to-csv-export");
-// const fs = require("fs");
-// const User = require("../models/user");
+const fs = require("fs");
+const Subject = require("../models/subject");
+const User = require("../models/user");
+const Parser = require("@json2csv/plainjs").Parser;
+var jsonexport = require("jsonexport");
 
-const downloadProgress = async () => {
-  // let collection = ["subjects", "activities", "grades"];
-
-  const ipAddressesData = [
+const downloadProgress = (callback) => {
+  var data = [
     {
-      id: "1",
-      name: "Sarajane Wheatman",
-      ip: "40.98.252.240",
-    },
-    {
-      id: "2",
-      name: "Linell Humpherston",
-      ip: "82.225.151.150",
+      subject: "Test 1",
+      grades: [
+        {
+          name: "Test 2",
+          gradeType: "Exams",
+          gradePoint: "10/100",
+        },
+        {
+          name: "Test 3",
+          gradeType: "Hoemwork",
+          gradePoint: "10/100",
+        },
+        {
+          name: "Test 4",
+          gradeType: "Quizzes",
+          gradePoint: "10/100",
+        },
+      ],
+      activities: [
+        {
+          name: "answering questions",
+          totalTime: 2,
+          activitySessionTime: [
+            {
+              note: "asdasd",
+              time: 30,
+            },
+            {
+              note: "asdasd",
+              time: 30,
+            },
+            {
+              note: "asdasd",
+              time: 30,
+            },
+          ],
+        },
+      ],
     },
   ];
 
-  const dataToConvert = {
-    data: ipAddressesData,
-    filename: "ip_addresses_report",
-    delimiter: ",",
-    headers: ["IP", "Full Name", "IP Address"],
-  };
-  csvDownload(dataToConvert);
+  try {
+    const parser = new Parser();
+    const csv = parser.parse(data);
 
-  // const { userId } = req.user;
-  // try {
-  //   let subjects = [];
-
-  //   const userData = await User.findById(userId);
-
-  //   let users = userData.map((data) => {
-  //     const { firstName, lastName, email } = data;
-  //     return { firstName, lastName, email };
-  //   });
-
-  //   let json2csvCallback = function (err, csv) {
-  //     if (err) throw err;
-  //     fs.writeFile("progress.csv", csv, function (err) {
-  //       if (err) throw err;
-  //       console.log("CSV file saved.");
-  //       res.attachment("progress.csv");
-  //       res.status(200).send(documents);
-  //     });
-  //   };
-  //   converter.json2csv(documents, json2csvCallback, options);
-  // } catch (error) {
-  //   res.send({ status: 400, success: false, msg: error.message });
-  // }
-
-  // let json2csvCallback = function (err, csv) {
-  //   if (err) throw err;
-  //   fs.writeFile("Car.csv", csv, function (err) {
-  //     if (err) throw err;
-  //     console.log("CSV file saved.");
-  //     res.attachment("Car.csv");
-  //     res.status(200).send(documents);
-  //   });
-  // };
-  // converter.json2csv(documents, json2csvCallback, options);
+    data = jsonexport(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-/*// let documents = [
-  //   {
-  //     Make: "Nissan",
-  //     Model: " Murano ", // Note: This value has additional padding which can be trimmed
-  //     Year: "2013",
-  //     Specifications: {
-  //       Mileage: "7,106",
-  //       Trim: "", // Note: This value has been changed from the previous example
-  //     },
-  //   },
-  //   {
-  //     Make: "BMW",
-  //     Model: "X5",
-  //     Year: "2014",
-  //     Specifications: {
-  //       Mileage: "3,287",
-  //       Trim: "M",
-  //     },
-  //   },
-  // ]; */
-
 downloadProgress();
-exports.downloadProgress = downloadProgress;
+
+module.exports = {
+  makeCsvData: downloadProgress,
+};

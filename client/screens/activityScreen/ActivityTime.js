@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { StyleSheet, SafeAreaView, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import {
   Modal,
   Portal,
@@ -8,15 +14,37 @@ import {
   Provider,
   TextInput,
 } from "react-native-paper";
-
+import { AppState } from "react-native";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { AuthContext } from "../../context/AuthContext";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 function ActivityTime({ navigation, route }) {
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
   const { activityId, title } = route.params;
-  const { activitySession, addActivitySession, getAllActivitySession, updateChallenges } =
-    useContext(AuthContext);
+  const {
+    activitySession,
+    addActivitySession,
+    getAllActivitySession,
+    updateChallenges,
+  } = useContext(AuthContext);
   const [note, setNote] = useState("");
   // const [newTime, setNewTime] = useState(2);
 
@@ -38,8 +66,50 @@ function ActivityTime({ navigation, route }) {
       //     </View>
       //   ),
     });
+  }, [title]);
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        clearNotify();
+      } else {
+        stopStopwatch();
+        schedulePushNotification();
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   const CreateactivitiesSession = async () => {
     try {
@@ -69,8 +139,8 @@ function ActivityTime({ navigation, route }) {
     await updateChallenges({
       activityType: activityId,
       activityTime: time,
-    })
-  }
+    });
+  };
   const stopStopwatch = () => {
     // const date = new Date(null);
     // date.setSeconds(time); // specify value for SECONDS here
@@ -92,8 +162,9 @@ function ActivityTime({ navigation, route }) {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time - hours * 3600) / 60);
     const seconds = time % 60;
-    return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes
-      }:${seconds < 10 ? "0" + seconds : seconds}`;
+    return `${hours < 10 ? "0" + hours : hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    }:${seconds < 10 ? "0" + seconds : seconds}`;
   };
   const [modalVisible, setModalVisible] = useState(false);
   const closeModal = () => {
@@ -111,6 +182,57 @@ function ActivityTime({ navigation, route }) {
     padding: 10,
     borderRadius: 20,
   };
+  async function clearNotify() {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
+  async function schedulePushNotification() {
+    await clearNotify();
+
+    // const trigger = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+    const d = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Hey You need to go back to the app 📬",
+        body: "You should be studying",
+        data: { data: "goes here" },
+      },
+      trigger: { seconds: 3 },
+      repeats: true,
+    });
+  }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    return token;
+  }
 
   // Using the function to add activity session
 

@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }) => {
         await getSubjects();
         await getAllActivity();
         await getWeeklyProgress();
-        // await getAllActivitySession();
+        //await getAllActivitySession();
       }
 
       setIsLoading(false);
@@ -459,6 +459,8 @@ export const AuthProvider = ({ children }) => {
           totalTime: prevState.totalTime + newActivitySessionData.time,
         }));
       }
+
+      await getAllActivitySession({ activityId });
 
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
