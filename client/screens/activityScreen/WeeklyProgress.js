@@ -43,9 +43,9 @@ const WeeklyProgress = ({ navigation, route }) => {
         chartConfig={{
           backgroundGradientFrom: "#3B71F3",
           backgroundGradientFromOpacity: 1,
-          backgroundGradientTo: "#3B71F3",
+          backgroundGradientTo: "red",
           backgroundGradientToOpacity: 1,
-          color: (opacity) => `rgba(255, 255, 255,1)`,
+          color: (opacity) => `rgba(255, 255, 255,2)`,
           strokeWidth: 2, // optional, default 3
           barPercentage: 0.7,
           useShadowColorFromDataset: false, // optional

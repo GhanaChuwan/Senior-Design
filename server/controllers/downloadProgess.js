@@ -1,15 +1,18 @@
 const { makeCsvData } = require("../utils/downloadData.js");
 const emailSender = require("../utils/sendDownloadMail.js");
-
-exports.downloadProgress = async (req, res) => {
+const User = require("../models/user.js");
+exports.downloadProgressLink = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
+
   try {
+    const user = await User.findOne({ email });
     const data = await makeCsvData();
-    const didSend = await emailSender.sendDownloadMail({ email: email, data });
+
+    const didSend = await emailSender.sendDownloadMail(email, data);
 
     if (didSend) {
       return res.status(200).json({
+        email,
         message: "Progress files sent to your email account",
       });
     } else {

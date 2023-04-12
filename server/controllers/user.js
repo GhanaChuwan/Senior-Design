@@ -5,7 +5,6 @@ const passwordResetTokenModal = require("../models/passwordRestToken.js");
 const emailSender = require("../utils/sendMail");
 const passwordResetUI = require("../passwordResetUI/index").passwordResetUI;
 const challenges = require("../controllers/rewards");
-
 exports.createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
