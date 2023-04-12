@@ -15,27 +15,27 @@ export default function Reward({ navigation, route }) {
   useEffect(() => {
     const parent = navigation.getParent();
     parent?.setOptions({
-      title: "Rewards", headerRight: () => (
+      title: "Challenges", headerRight: () => (
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <Text style={{ marginRight: 5, fontSize: 20, color: "white" }}>{streak}</Text>
-          <FontAwesome5 name={"fire"} style={{ fontSize: 20, color: "red", marginVertical: 2, marginRight: 10 }} />
+          {/* <Text style={{ marginRight: 5, fontSize: 20, color: "white" }}>{streak}</Text>
+          <FontAwesome5 name={"fire"} style={{ fontSize: 20, color: "red", marginVertical: 2, marginRight: 10 }} /> */}
         </View>
       )
     });
     retrieveChallenges();
-    retrieveDays();
-    retrieveStreaks();
+    //retrieveDays();
+    //retrieveStreaks();
 
   }, [route.params]);
   const { days, challenges, streak, getDays, getStreak, getChallenges } = useContext(AuthContext);
 
 
-  const retrieveStreaks = async () => {
-    await (getStreak());
-  }
-  const retrieveDays = async () => {
-    await (getDays());
-  }
+  // const retrieveStreaks = async () => {
+  //   await (getStreak());
+  // }
+  // const retrieveDays = async () => {
+  //   await (getDays());
+  // }
   const retrieveChallenges = async () => {
     await getChallenges();
 
@@ -62,7 +62,9 @@ export default function Reward({ navigation, route }) {
 
   return (
     <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
-      <Text style={styles.header}>Complete challenges by end of each week</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Complete challenges by the end of each week</Text>
+      </View>
       <View style={styles.container}>
 
         <FlatList
@@ -71,7 +73,7 @@ export default function Reward({ navigation, route }) {
 
             <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
 
-              {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: 'yellow', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
+              {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: 'green', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
 
               <FontAwesome5 name={item.emblem} style={{ fontSize: 25, color: "brown", marginVertical: 10 }} />
 
@@ -177,6 +179,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10,
     fontSize: 20,
+    color: "gray"
+
   },
   time: {
     fontSize: 15,
@@ -202,6 +206,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 60,
     left: 10
+  },
+  headerContainer: {
+    backgroundColor: "white",
+    width: 370,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 11,
+
   }
 
 
