@@ -140,7 +140,6 @@ export default function CalendarPage({ navigation, route }) {
           await deleteEvent({
             event: item,
           });
-          //then update events
         },
       },
       { text: "Cancel" },
@@ -207,22 +206,6 @@ export default function CalendarPage({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      {/* <Calendar
-        style={{ zIndex: 1 }}
-        markedDates={{
-          [selectedDate.toISOString().slice(0, 10)]: { selected: true, selectedColor: 'blue' }
-        }}
-        onDayPress={(day) => setSelectedDate(new Date(day.dateString))}
-        onDayLongPress={(day) => console.log('onDayLongPress', day)}
-        onMonthChange={(date) => console.log('onMonthChange', date)}
-        onPressArrowLeft={(goToPreviousMonth) => {
-          console.log('onPressArrowLeft'); goToPreviousMonth();
-        }}
-        onPressArrowRight={(goToNextMonth) => {
-          console.log('onPressArrowRight'); goToNextMonth();
-        }}
-      /> */}
-
       <View
         style={{
           position: "absolute",
@@ -241,6 +224,7 @@ export default function CalendarPage({ navigation, route }) {
                 marginHorizontal: 20,
                 padding: 10,
                 borderRadius: 20,
+                top: -100
               }}
             >
               <View>

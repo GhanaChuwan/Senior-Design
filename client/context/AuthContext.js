@@ -325,7 +325,8 @@ export const AuthProvider = ({ children }) => {
             authorization: `Bearer ${userToken}`,
           },
         }
-      );
+      ).then(response => setEvents(response.data))
+        ;
     } catch (error) {
       console.log(error);
     }
@@ -418,10 +419,9 @@ export const AuthProvider = ({ children }) => {
               authorization: `Bearer ${userToken}`,
             },
           }
-        )
-        .then((response) => {
-          setGrades(response.data);
-        });
+        ).then(response => setGrades(response.data));
+
+
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
@@ -494,33 +494,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const getStreak = async () => {
-    try {
-      console.log("getting streaks");
-      const data = await axios.get("/getStreak", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      });
-      // setStreak(data.streak);
-    } catch (error) {
-      console.log("get streak error");
-    }
-  };
-  const getDays = async () => {
-    try {
-      console.log("getting days");
+  // const getStreak = async () => {
+  //   try {
+  //     console.log("getting streaks");
+  //     const data = await axios.get("/getStreak", {
+  //       headers: {
+  //         authorization: `Bearer ${userToken}`,
+  //       },
+  //     });
+  //     // setStreak(data.streak);
+  //   } catch (error) {
+  //     console.log("get streak error");
+  //   }
+  // };
+  // const getDays = async () => {
+  //   try {
+  //     console.log("getting days");
 
-      const data = await axios.get("/getDays", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      });
-      //setDays(data.days);
-    } catch (error) {
-      console.log("get days error");
-    }
-  };
+  //     const data = await axios.get("/getDays", {
+  //       headers: {
+  //         authorization: `Bearer ${userToken}`,
+  //       },
+  //     });
+  //     //setDays(data.days);
+  //   } catch (error) {
+  //     console.log("get days error");
+  //   }
+  // };
 
   const getChallenges = async () => {
     try {
@@ -615,8 +615,8 @@ export const AuthProvider = ({ children }) => {
         days,
         challenges,
         streak,
-        getDays,
-        getStreak,
+        // getDays,
+        // getStreak,
         getChallenges,
         updateChallenges,
         forgotPasswordLink,

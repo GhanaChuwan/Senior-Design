@@ -113,9 +113,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[0]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
@@ -124,10 +126,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[1]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
-
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
@@ -136,20 +139,23 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[2]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
-
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
             default: //work challenges
                 var challenge = await challenges.findById(challengeList[3]);
                 console.log(challenge.category)
-                challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
+                challenge.currentAmount += 150000;
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;

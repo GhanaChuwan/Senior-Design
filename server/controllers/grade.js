@@ -74,10 +74,14 @@ exports.deleteGrade = async (req, res) => {
         subject.grades.splice(i, 1);
       }
     }
-    console.log(subject.grades);
+    let gradeList = [];
+    for (let i = 0; i < subject.grades.length; i++) {
+      gradeList[i] = await Grade.findById(subject.grades[i]);
+    }
+    console.log(gradeList);
 
     subject.save();
-    return res.status(200).json(subject.grades);
+    return res.status(200).json(gradeList);
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }

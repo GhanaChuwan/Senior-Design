@@ -86,12 +86,12 @@ export default function Grades({ navigation, route }) {
   };
 
   const showModal = () => {
+    setZIndex(-1);
     setVisible(true);
-    setZIndex(2);
   };
   const hideModal = () => {
+    setZIndex(1);
     setVisible(false);
-    setZIndex(-1);
   };
 
   const retrieveGrades = async () => {
@@ -113,7 +113,6 @@ export default function Grades({ navigation, route }) {
             grade: item,
           });
           //then update grades
-          retrieveGrades();
         },
       },
       { text: "Cancel" },
@@ -127,13 +126,9 @@ export default function Grades({ navigation, route }) {
     borderRadius: 20,
   };
   return (
-    <View
-      style={{
-        position: "absolute",
-        zIndex: zIndex,
-        width: "100%",
-        height: "100%",
-      }}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <Provider>
         <Portal>
@@ -202,7 +197,9 @@ export default function Grades({ navigation, route }) {
         <TouchableOpacity
           style={{ marginLeft: 11 }}
           onPress={() => showModal()}
-        ></TouchableOpacity>
+        >
+
+        </TouchableOpacity>
 
         {/* <TouchableOpacity style={{ marginLeft: 260 }}>
           <AntDesign
@@ -230,13 +227,12 @@ export default function Grades({ navigation, route }) {
           )}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 12,
   },
   task: {
     marginTop: 15,
@@ -244,12 +240,12 @@ const styles = StyleSheet.create({
     height: 90,
     width: 350,
     borderRadius: 10,
+    marginHorizontal: 10
   },
   assignments: {
-    top: 50,
     marginLeft: 9,
     bottom: 30,
-    top: 50,
+    top: 10,
     marginLeft: 9,
     position: "absolute",
     bottom: 30,
