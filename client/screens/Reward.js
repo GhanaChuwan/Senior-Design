@@ -73,7 +73,7 @@ export default function Reward({ navigation, route }) {
 
             <View style={item.completed == true ? styles.completedCheck : styles.challengeCard} >
 
-              {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: 'green', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
+              {Math.floor(item.currentAmount) > Math.floor(item.totalAmount) ? <></> : <View style={{ backgroundColor: '#50C878', height: 105, width: calcuatedBackground({ current: Math.floor(item.currentAmount), max: Math.floor(item.totalAmount) }), position: 'absolute', top: 0, zIndex: 0 }} />}
 
               <FontAwesome5 name={item.emblem} style={{ fontSize: 25, color: "brown", marginVertical: 10 }} />
 
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
   completedCheck: {
     height: 100,
-    backgroundColor: "green",
+    backgroundColor: "#50C878",
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 10,
