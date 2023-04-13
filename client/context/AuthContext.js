@@ -286,12 +286,13 @@ export const AuthProvider = ({ children }) => {
     eventNote,
     eventDate,
   }) => {
-    console.log(eventName);
-    console.log(eventNote);
-    console.log(eventDate);
+
 
     try {
       console.log("creating event");
+      console.log(eventName);
+      console.log(eventNote);
+      console.log(eventDate);
       const data = await axios.post(
         "/createEvent",
         {

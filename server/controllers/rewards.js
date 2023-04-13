@@ -48,7 +48,7 @@ exports.createChallenges = async (user) => {
         const challenge3 = await challenges.create({
             category: "note",
             emblem: "sticky-note",
-            description: "Taking notes in courses ",
+            description: "Review notes in courses ",
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
@@ -150,7 +150,7 @@ exports.updateChallenges = async (req, res) => {
             default: //work challenges
                 var challenge = await challenges.findById(challengeList[3]);
                 console.log(challenge.category)
-                challenge.currentAmount += 150000;
+                challenge.currentAmount += time;
                 if (challenge.completed != true) {
                     if (challenge.currentAmount >= challenge.totalAmount) {
                         challenge.completed = true;

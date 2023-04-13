@@ -112,7 +112,6 @@ export default function Grades({ navigation, route }) {
             subject: title,
             grade: item,
           });
-          //then update grades
         },
       },
       { text: "Cancel" },
@@ -162,17 +161,20 @@ export default function Grades({ navigation, route }) {
               <View style={styles.pointsDiv}>
                 <TextInput
                   keyboardType="numeric"
+                  maxLength={3}
                   placeholder="points Earned"
                   placeholderTextColor="lightgray"
                   style={styles.input}
                   onChangeText={(text) => {
                     setPointsEarned(text);
                     setPoints(text + " / " + totalPoints);
+
                   }}
                 />
 
                 <TextInput
                   keyboardType="numeric"
+                  maxLength={3}
                   placeholder="total points"
                   placeholderTextColor="lightgray"
                   style={styles.input}

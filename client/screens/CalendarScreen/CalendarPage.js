@@ -94,9 +94,11 @@ export default function CalendarPage({ navigation, route }) {
   };
   const storeEvent = async () => {
     try {
+
+
       await createEvent({
         eventName: name,
-        eventNote: note,
+        eventNote: note == "" ? " " : note,
         eventDate: date,
       });
       hideModal();
@@ -112,6 +114,8 @@ export default function CalendarPage({ navigation, route }) {
   const showModal = () => {
     setVisible(true);
     setZIndex(2);
+    setName("");
+    setEventNote("");
   };
 
   // date pick mode
@@ -153,9 +157,18 @@ export default function CalendarPage({ navigation, route }) {
     }
     setCalanderVisible(false);
   };
-  const getDate = (date) => {
-    let month = date[5] + date[6];
+  const displayDate = (dateObj) => {
+    let date = dateObj.toString();
+
+    let month = date[4] + date[5] + date[6];
     let day = date[8] + date[9];
+    return month + " " + day;
+
+  }
+  const getDate = (date) => {
+
+    let month = date[5] + date[6];
+    let day = date[8] + date[9] - 1;
 
     switch (month) {
       case "01":
@@ -262,6 +275,7 @@ export default function CalendarPage({ navigation, route }) {
                     />
                   </View>
 
+
                   {calanderVisible && (
                     <DateTimePicker
                       mode="date"
@@ -271,6 +285,10 @@ export default function CalendarPage({ navigation, route }) {
                       onChange={handleCalanderChange}
                     />
                   )}
+                  <View style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+                    <Text style={{ fontSize: 20 }}>Date Selected: </Text>
+                    <Text style={{ fontSize: 20, textAlign: "right", width: 120 }}>{displayDate(date)}</Text>
+                  </View>
                 </SafeAreaView>
 
                 <CustomButton
