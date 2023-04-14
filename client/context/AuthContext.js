@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [weeklySession, setWeeklySession] = useState([]);
+  const [progressDownload, setProgressDownload] = useState([]);
 
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([
@@ -576,7 +577,19 @@ export const AuthProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const getProgressDownload = async () => {
+    try {
+      const res = await axios.post("/download-progress", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
 
+      setProgressDownload(res.updateChallenges);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -630,6 +643,8 @@ export const AuthProvider = ({ children }) => {
         changePassword,
         weeklySession,
         getWeeklyProgress,
+        getProgressDownload,
+        progressDownload,
       }}
     >
       {children}
