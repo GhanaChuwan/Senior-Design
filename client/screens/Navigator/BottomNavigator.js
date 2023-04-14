@@ -11,7 +11,7 @@ import Reward from "../Reward.js";
 const subjectName = "Subject";
 const calendarName = "Calendar";
 const resourcesName = "Resources";
-const rewardName = "Reward";
+const rewardName = "Challenges";
 
 const Tab = createBottomTabNavigator();
 

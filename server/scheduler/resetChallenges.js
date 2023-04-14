@@ -5,7 +5,7 @@ const Challenges = require("../models/challenges");
 
 
 const resetChallenges = async () => {
-
+    console.log("resetting challenges");
     let user = await User.find({});
 
     user.forEach((user) => {
@@ -13,10 +13,10 @@ const resetChallenges = async () => {
             let challenge = await Challenges.findById(challengeId);
             challenge.currentAmount = 0;
             challenge.save();
-            console.log(challenge.category);
         })
     })
 
 };
 // resets challenges every Sunday at 11:59 am
 cron.schedule('59 11 * * 0', resetChallenges);
+//cron.schedule('*/30 * * * * *', resetChallenges);

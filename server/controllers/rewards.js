@@ -48,7 +48,7 @@ exports.createChallenges = async (user) => {
         const challenge3 = await challenges.create({
             category: "note",
             emblem: "sticky-note",
-            description: "Taking notes in courses ",
+            description: "Review notes in courses ",
             completed: false,
             createdBy: user._id,
             currentAmount: 0,
@@ -113,9 +113,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[0]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
@@ -124,10 +126,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[1]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
-
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
@@ -136,10 +139,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[2]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
-
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
@@ -147,9 +151,11 @@ exports.updateChallenges = async (req, res) => {
                 var challenge = await challenges.findById(challengeList[3]);
                 console.log(challenge.category)
                 challenge.currentAmount += time;
-                if (challenge.currentAmount >= challenge.totalAmount) {
-                    challenge.completed = true;
-                    challenge.badges += 1;
+                if (challenge.completed != true) {
+                    if (challenge.currentAmount >= challenge.totalAmount) {
+                        challenge.completed = true;
+                        challenge.badges += 1;
+                    }
                 }
                 challenge.save();
                 break;
