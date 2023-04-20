@@ -101,6 +101,7 @@ exports.addActivitySession = async (req, res) => {
       note: note,
       time: time,
       createdBy: userId,
+      createdAt: new Date(),
     });
 
     activity.totalTime += time;

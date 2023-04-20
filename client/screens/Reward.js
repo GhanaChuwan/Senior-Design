@@ -50,7 +50,7 @@ export default function Reward({ navigation, route }) {
   };
   const getTime = (currentAmount, totalAmount) => {
     let time = Math.ceil((totalAmount - currentAmount) / 60 / 60);
-    if (time <= 100) {
+    if (time <= 0) {
       return "challenge completed";
     } else {
       return `${time} hours remaining`;
@@ -58,7 +58,7 @@ export default function Reward({ navigation, route }) {
   };
 
   return (
-    <View style={{ display: "flex", backgroundColor: "#fdf6ec", flex: 1 }}>
+    <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>
           Complete challenges by the end of each week
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   completedChallengeDescription: {
     fontSize: 22,
     paddingHorizontal: 30,
-    color: "green",
+    color: "white",
   },
   checkbox: {
     fontSize: 40,
@@ -157,11 +157,11 @@ const styles = StyleSheet.create({
   challengeDescription: {
     fontSize: 22,
     paddingHorizontal: 30,
-    color: "white",
+    color: "gray",
   },
   challengeCard: {
     height: 105,
-    backgroundColor: "green",
+    backgroundColor: "white",
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 10,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   header: {
     textAlign: "center",
     margin: 10,
-    fontSize: 22,
+    fontSize: 20,
     color: "gray",
   },
   time: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: "white",
-    width: 395,
+    width: 370,
     marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 11,

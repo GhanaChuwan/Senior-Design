@@ -430,7 +430,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const addActivitySession = async ({ note, time, activityId }) => {
+  const addActivitySession = async ({ note, time, activityId, subjectId }) => {
     try {
       const data = await axios.post(
         "/create-activitySession",
@@ -461,9 +461,8 @@ export const AuthProvider = ({ children }) => {
           totalTime: prevState.totalTime + newActivitySessionData.time,
         }));
       }
-
+      await getAllActivity({ subjectId });
       await getAllActivitySession({ activityId });
-
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
       //   const newActives = activitysessions.activites;
@@ -491,7 +490,7 @@ export const AuthProvider = ({ children }) => {
       const newActivitySessionData = data.data;
       // Update activity sessions state with new activity session data
       setactivitySessions(newActivitySessionData);
-      // await getAllActivitySession({ activityId });
+      // await getAllActivitySession({ subjectId });
     } catch (error) {
       console.log(error);
     }
