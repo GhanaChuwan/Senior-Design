@@ -57,32 +57,32 @@ exports.getAllGrades = async (req, res) => {
 };
 
 exports.deleteGrade = async (req, res) => {
-  const { subjectId, grade } = req.body;
-  const { userId } = req.user;
-  const grades = [];
+  const { subjectId, grade } = req.body; //get subject and grade from clientside
+  const { userId } = req.user; //get user token
   try {
-    const subjectID = await Subject.findOne({
+    const subjectID = await Subject.findOne({ //find subjectID by subject and grade from database
       name: subjectId,
       createdBy: userId,
     });
-    const subject = await Subject.findById(subjectID._id.toString());
+    const subject = await Subject.findById(subjectID._id.toString()); //get subject from database
 
-    await Grade.findByIdAndDelete(grade._id);
+    await Grade.findByIdAndDelete(grade._id); //find grade and delete from database
 
-    for (let i = 0; i < subject.grades.length; i++) {
-      if (subject.grades[i] == grade._id) {
-        subject.grades.splice(i, 1);
+    for (let i = 0; i < subject.grades.length; i++) { //loop through list of grades in subject
+      if (subject.grades[i] == grade._id) { //if grade = grade in list
+        subject.grades.splice(i, 1); //remove grade from list
       }
     }
     let gradeList = [];
-    for (let i = 0; i < subject.grades.length; i++) {
-      gradeList[i] = await Grade.findById(subject.grades[i]);
+    for (let i = 0; i < subject.grades.length; i++) { //loop through updated list of grades in subject 
+      gradeList[i] = await Grade.findById(subject.grades[i]); //add each grade to gradelist 
     }
     console.log(gradeList);
 
-    subject.save();
-    return res.status(200).json(gradeList);
+    subject.save(); //update subject in database
+    return res.status(200).json(gradeList); //return updated list of grades to clientside 
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message }); //return error message
   }
 };
+
