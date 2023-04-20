@@ -82,12 +82,12 @@ exports.createChallenges = async (user) => {
 };
 
 exports.getChallenges = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.user;
   try {
     console.log("get challenges");
-    const user = await User.findById(userId.user._id);
+    const user = await User.findById(userId);
     const challengeList = await challenges.find({ createdBy: user._id });
-
+    console.log(challengeList);
     return res.status(200).json(challengeList);
   } catch (error) {
     console.log("get challenges error");
@@ -95,7 +95,8 @@ exports.getChallenges = async (req, res) => {
 };
 
 exports.updateChallenges = async (req, res) => {
-  const { activity, time, userId } = req.body;
+  const { activity, time } = req.body;
+  const { userId } = req.user;
 
   try {
     console.log("updating challenges");
@@ -109,7 +110,7 @@ exports.updateChallenges = async (req, res) => {
       case "reading":
         var challenge = await challenges.findById(challengeList[0]);
         console.log(challenge.category);
-        challenge.currentAmount += 130000;
+        challenge.currentAmount += time;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;

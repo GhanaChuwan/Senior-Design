@@ -96,7 +96,7 @@ router.get("/getEvents", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 
 router.get("/getStreak", isAuth, getStreak);
-router.post("/getChallenges", getChallenges);
-router.post("/updateChallenges", updateChallenges);
+router.get("/getChallenges", isAuth, getChallenges);
+router.post("/updateChallenges", isAuth, updateChallenges);
 router.get("/getDays", isAuth, getDays);
 module.exports = router;

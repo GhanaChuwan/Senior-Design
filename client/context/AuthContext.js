@@ -526,11 +526,8 @@ export const AuthProvider = ({ children }) => {
 
   const getChallenges = async () => {
     try {
-      const res = await axios.post(
+      const res = await axios.get(
         "/getChallenges",
-        {
-          userId: userInfo,
-        },
         {
           headers: {
             authorization: `Bearer ${userToken}`,
@@ -552,7 +549,6 @@ export const AuthProvider = ({ children }) => {
         {
           activity: activityType,
           time: activityTime,
-          userId: userInfo,
         },
         {
           headers: {
