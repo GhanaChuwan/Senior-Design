@@ -338,6 +338,7 @@ function ActivityTime({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fdf6ec",
     flex: 1,
   },
   time: {

@@ -94,8 +94,6 @@ export default function CalendarPage({ navigation, route }) {
   };
   const storeEvent = async () => {
     try {
-
-
       await createEvent({
         eventName: name,
         eventNote: note == "" ? " " : note,
@@ -163,10 +161,8 @@ export default function CalendarPage({ navigation, route }) {
     let month = date[4] + date[5] + date[6];
     let day = date[8] + date[9];
     return month + " " + day;
-
-  }
+  };
   const getDate = (date) => {
-
     let month = date[5] + date[6];
     let day = date[8] + date[9] - 1;
 
@@ -237,7 +233,7 @@ export default function CalendarPage({ navigation, route }) {
                 marginHorizontal: 20,
                 padding: 10,
                 borderRadius: 20,
-                top: -100
+                top: -100,
               }}
             >
               <View>
@@ -275,7 +271,6 @@ export default function CalendarPage({ navigation, route }) {
                     />
                   </View>
 
-
                   {calanderVisible && (
                     <DateTimePicker
                       mode="date"
@@ -285,9 +280,19 @@ export default function CalendarPage({ navigation, route }) {
                       onChange={handleCalanderChange}
                     />
                   )}
-                  <View style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      margin: 10,
+                    }}
+                  >
                     <Text style={{ fontSize: 20 }}>Date Selected: </Text>
-                    <Text style={{ fontSize: 20, textAlign: "right", width: 120 }}>{displayDate(date)}</Text>
+                    <Text
+                      style={{ fontSize: 20, textAlign: "right", width: 120 }}
+                    >
+                      {displayDate(date)}
+                    </Text>
                   </View>
                 </SafeAreaView>
 
@@ -303,25 +308,23 @@ export default function CalendarPage({ navigation, route }) {
         </Provider>
       </View>
 
-      <ScrollView>
-        <FlatList
-          data={events}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onLongPress={() => alertUser(item)}
-              style={styles.event}
-            >
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                {getDate(item.eventDate)}
-                <View>
-                  <Text style={styles.name}>{item.eventName}</Text>
-                  <Text style={styles.note}>{item.eventNote}</Text>
-                </View>
+      <FlatList
+        data={events}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onLongPress={() => alertUser(item)}
+            style={styles.event}
+          >
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              {getDate(item.eventDate)}
+              <View>
+                <Text style={styles.name}>{item.eventName}</Text>
+                <Text style={styles.note}>{item.eventNote}</Text>
               </View>
-            </TouchableOpacity>
-          )}
-        />
-      </ScrollView>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
@@ -334,6 +337,7 @@ const containerStyle = {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fdf6ec",
     flex: 1,
   },
   body: {
