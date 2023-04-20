@@ -5,49 +5,8 @@ const User = require("../models/user");
 const Parser = require("@json2csv/plainjs").Parser;
 var jsonexport = require("jsonexport");
 
-const downloadProgress = (callback) => {
-  var data = [
-    {
-      subject: "Test 1",
-      grades: [
-        {
-          name: "Test 2",
-          gradeType: "Exams",
-          gradePoint: "10/100",
-        },
-        {
-          name: "Test 3",
-          gradeType: "Hoemwork",
-          gradePoint: "10/100",
-        },
-        {
-          name: "Test 4",
-          gradeType: "Quizzes",
-          gradePoint: "10/100",
-        },
-      ],
-      activities: [
-        {
-          name: "answering questions",
-          totalTime: 2,
-          activitySessionTime: [
-            {
-              note: "asdasd",
-              time: 30,
-            },
-            {
-              note: "asdasd",
-              time: 30,
-            },
-            {
-              note: "asdasd",
-              time: 30,
-            },
-          ],
-        },
-      ],
-    },
-  ];
+const downloadProgress = (finalData) => {
+  var data = [...finalData];
 
   try {
     const parser = new Parser();
@@ -59,8 +18,6 @@ const downloadProgress = (callback) => {
     console.log(error);
   }
 };
-
-downloadProgress();
 
 module.exports = {
   makeCsvData: downloadProgress,

@@ -51,7 +51,7 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, []);
+  }, [subjectId]);
 
   useEffect(() => {
     getAllActivitySession({ activityId });

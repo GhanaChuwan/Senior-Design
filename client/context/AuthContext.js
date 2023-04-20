@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [weeklySession, setWeeklySession] = useState([]);
+  const [progressDownload, setProgressDownload] = useState(null);
 
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([
@@ -153,6 +154,7 @@ export const AuthProvider = ({ children }) => {
         await getSubjects();
         await getAllActivity();
         await getWeeklyProgress();
+
         //await getAllActivitySession();
       }
 
@@ -286,8 +288,6 @@ export const AuthProvider = ({ children }) => {
     eventNote,
     eventDate,
   }) => {
-
-
     try {
       console.log("creating event");
       console.log(eventName);
@@ -316,18 +316,19 @@ export const AuthProvider = ({ children }) => {
   const deleteEvent = async ({ event }) => {
     try {
       console.log("deleting event");
-      const res = axios.post(
-        "/deleteEvent",
-        {
-          event: event,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
+      const res = axios
+        .post(
+          "/deleteEvent",
+          {
+            event: event,
           },
-        }
-      ).then(response => setEvents(response.data))
-        ;
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((response) => setEvents(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -420,8 +421,8 @@ export const AuthProvider = ({ children }) => {
               authorization: `Bearer ${userToken}`,
             },
           }
-        ).then(response => setGrades(response.data));
-
+        )
+        .then((response) => setGrades(response.data));
 
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
@@ -429,7 +430,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const addActivitySession = async ({ note, time, activityId }) => {
+  const addActivitySession = async ({ note, time, activityId, subjectId }) => {
     try {
       const data = await axios.post(
         "/create-activitySession",
@@ -460,9 +461,8 @@ export const AuthProvider = ({ children }) => {
           totalTime: prevState.totalTime + newActivitySessionData.time,
         }));
       }
-
+      await getAllActivity({ subjectId });
       await getAllActivitySession({ activityId });
-
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
       //   const newActives = activitysessions.activites;
@@ -490,7 +490,7 @@ export const AuthProvider = ({ children }) => {
       const newActivitySessionData = data.data;
       // Update activity sessions state with new activity session data
       setactivitySessions(newActivitySessionData);
-      // await getAllActivitySession({ activityId });
+      // await getAllActivitySession({ subjectId });
     } catch (error) {
       console.log(error);
     }
@@ -577,7 +577,21 @@ export const AuthProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const getProgressDownload = async () => {
+    try {
+      console.log(userToken);
+      const res = await axios.post("/download-progress", null, {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
 
+      setProgressDownload(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -631,6 +645,8 @@ export const AuthProvider = ({ children }) => {
         changePassword,
         weeklySession,
         getWeeklyProgress,
+        getProgressDownload,
+        progressDownload,
       }}
     >
       {children}
