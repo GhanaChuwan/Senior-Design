@@ -168,7 +168,7 @@ export default function CalendarPage({ navigation, route }) {
   const getDate = (date) => {
 
     let month = date[5] + date[6];
-    let day = date[8] + date[9] - 1;
+    let day = date[8] + date[9];
 
     switch (month) {
       case "01":
