@@ -67,8 +67,8 @@ exports.getAllActivity = async (req, res) => {
     const subject = await Subject.findById(subjectId);
 
     for (let i = 0; i < subject.activities.length; i++) {
-      const a = await Activity.findById(subject.activities[i]);
-      activities.push(a);
+      const list = await Activity.findById(subject.activities[i]);
+      activities.push(list);
     }
 
     return res.status(200).json(activities);
@@ -129,12 +129,6 @@ exports.getAllActivitySession = async (req, res) => {
       );
       activitySession.push(session);
     }
-
-    // let totalTime = 0;
-
-    // activitySession.forEach((session) => {
-    //   totalTime += session.time;
-    // });
 
     return res.status(200).json({ activites: activitySession });
   } catch (error) {

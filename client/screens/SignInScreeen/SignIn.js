@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-import Logo from "../../assets/Images/PSULogo.png";
+import Logo from "../../assets/Images/PsuLifeLine.png";
 import CustomInput from "../../components/CustomInput/CustomInput.js";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { StackActions, useNavigation } from "@react-navigation/native";
@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 5,
-    marginLeft: 140,
-    width: 100,
-    height: 100,
+    marginLeft: 80,
+    width: 200,
+    height: 200,
   },
 });
 export default SignIn;

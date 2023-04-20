@@ -51,11 +51,7 @@ export default function Activity({ navigation, route }) {
 
   useEffect(() => {
     getAllActivity({ subjectId });
-  }, [subjectId]);
-
-  useEffect(() => {
-    getAllActivitySession({ activityId });
-  }, [activityId]);
+  }, []);
 
   const showModal = () => {
     setZIndex(1);
@@ -254,6 +250,7 @@ const CustomActivityCard = ({
         navigation.navigate("ActivitySession", {
           title: activity.name,
           activityId: activity._id,
+          subjectId: subjectId,
         });
       }}
     >
