@@ -1,0 +1,134 @@
+[
+
+
+    // {
+    //     "id": 1,
+    //     "title": "Penn State Starfish",
+    //     "info": "Penn State Starfish Information",
+    //     "login": "Log into Starfish",
+    //     "faq": "FAQ's about Penn State Starfish",
+    //     "infoLink": "https://sites.psu.edu/starfishinfo/",
+    //     "loginLink": "https://psu.starfishsolutions.com/starfish-ops/instructor/index.html?tenantId=9045",
+    //     "faqLink": "https://sites.psu.edu/starfishinfo/resources/faq/"
+       
+       
+    //    },
+       {
+       "id": 2,
+       
+       "title": "Exploratory & Pre-Major Advising",
+        "info": "Exploratory & Pre-Major Advising Information",
+        "email": "bdadvising@psu.edu",
+        "phone": "814-898-6164",
+        "hours": "Monday-Friday, 8:00am-5:00pm",
+        "address": "125 Reed Union Building (Second Floor)",
+        "infoLink": "https://behrend.psu.edu/academics/academic-services/learning-resource-center-lrc/tutoring",
+        "emailLink": "mailto:bdadvising@psu.edu",
+        "phoneLink": "tel:8148986164",
+        "addressLink": "https://www.google.com/maps/dir/42.1194843,-79.9695141/Reed+Union+Building,+Station+Road,+Erie,+PA/@42.1195588,-79.9813296,16z/data=!3m2!4b1!5s0x882d7d8cf7a26271:0xb1bf4579c1618a63!4m9!4m8!1m1!4e1!1m5!1m1!1s0x882d7d8c57e2c281:0xd0d9d419f7ced7b3!2m2!1d-79.9837758!2d42.1194295"
+       },
+       {
+       "id": 3,
+           
+       "title": "Behrend Peer Tutoring",
+       "info": "Behrend Peer Tutoring Information",
+       "email": "bdtutor@psu.edu",
+       "phone": "814-898-6164",
+       "hours": "Monday-Friday, 8:00am-5:00pm. (appointments preferred)",
+       "address": "203 John M. Lilley Library (Second Floor)",
+       "infoLink": "https://behrend.psu.edu/academics/academic-services/learning-resource-center-lrc/tutoring",
+       "emailLink": "mailto:bdtutor@psu.edu",
+       "phoneLink": "tel:8148986164",
+       "addressLink":"https://www.google.com/maps/place/4951+Behrend+College+Dr,+Erie,+PA+16563/@42.1205434,-79.9836427,17z/data=!3m1!4b1!4m5!3m4!1s0x882d7d8dd0228c81:0x3106e6b4e06889e!8m2!3d42.1205434!4d-79.981454"
+
+       },
+       {
+       
+       "id": 4,
+               
+       "title": "Personal Counseling Office",
+       "info": "Personal Counseling Office Information",
+       "phone": "814-456-2014",
+       "hours": "Monday-Friday, 8:00am-5:00pm. (appointments preferred)",
+       "address": "4651 College Drive, Erie, PA 16563",
+       "infoLink": "https://behrend.psu.edu/student-life/student-services/personal-counseling"
+    , "phoneLink": "tel:8144562014",
+    "addressLink": "https://www.google.com/maps/dir//Penn+State+Behrend/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x882d7df323fbd6dd:0x92d0be316aaf3b16?sa=X&ved=2ahUKEwip2-v9kaf-AhVvlYkEHZ2tAiQQ9Rd6BAhsEAQ"
+   
+},
+       {
+       
+        "id": 5,
+                   
+       "title": "Student Disability Resources",
+       "info": "Student Disability Resources Information",
+       "email": "DiversityBehrend@psu.edu",
+       "phone": "814-898-7101",
+       "hours": "Monday-Friday, 8:00am-5:00pm. (appointments preferred)",
+       "address": "1 Reed Union Building (First Floor)",
+       "infoLink": "https://behrend.psu.edu/student-life/educational-equity-and-diversity/services-for-students-with-disabilities-and-learning-differences",    
+        "emailLink": "mailto:DiversityBehrend@psu.edu",
+        "phoneLink": "tel:8148987101",
+        "addressLink": "https://www.google.com/maps/dir/42.1194843,-79.9695141/Reed+Union+Building,+Station+Road,+Erie,+PA/@42.1195588,-79.9813296,16z/data=!3m2!4b1!5s0x882d7d8cf7a26271:0xb1bf4579c1618a63!4m9!4m8!1m1!4e1!1m5!1m1!1s0x882d7d8c57e2c281:0xd0d9d419f7ced7b3!2m2!1d-79.9837758!2d42.1194295"
+      
+    },
+       {
+       
+       "id": 6,
+                      
+       "title": "Campus Health and Wellness Center",
+       "info": "Campus Health and Wellness Center Information",
+       "email": "DiversityBehrend@psu.edu",
+       "phone": "814-898-6217",
+       "hours": "Monday-Friday, 8:00am-5:00pm",
+       "address": "Carriage House/Burke 110",
+       "infoLink": "https://behrend.psu.edu/student-life/student-services/health",
+       "emailLink": "mailto:DiversityBehrend@psu.edu",
+       "phoneLink": "tel:8148986217",
+       "addressLink": "https://www.google.com/maps/place/Burke+Center/@42.1188193,-79.9820322,17z/data=!3m1!4b1!4m5!3m4!1s0x882d7d5dcb17d6e5:0xc5c93bc7744d495b!8m2!3d42.1188193!4d-79.9798435"
+      
+                      
+          },
+       {
+       
+        "id": 7,
+                          
+       "title": "International Student Advising",
+       "info": "International Student Advising Information",
+       "phone": "814-898-6031",
+       "hours": "Monday-Friday, 8:00am-5:00pm",
+       "address": "Perry Hall, Floor 1",
+       "infoLink": "https://behrend.psu.edu/student-life/educational-equity-and-diversity/international-students",
+       "phoneLink": "tel:8148986031",
+       "addressLink": "https://www.google.com/maps/place/Penn+State+Behrend/@42.1180177,-79.9862938,17z/data=!4m10!1m2!2m1!1sPerry+Hall+Behrend!3m6!1s0x882d7d921e0a23a3:0x1c048d8c1b62fafd!8m2!3d42.1198964!4d-79.9827376!15sChJQZXJyeSBIYWxsIEJlaHJlbmRaFCIScGVycnkgaGFsbCBiZWhyZW5kkgEHY29sbGVnZZoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VSNVoweFlkV2hCUlJBQuABAA!16s%2Fg%2F113dl389w"
+
+       },
+
+       {
+       
+       "id": 8,
+                             
+       "title": "Student Conduct",
+       "info": "Student Affairs Information",
+       "phone": "814-898-6111",
+       "hours": "Monday-Friday, 8:00am-5:00pm",
+       "address": "155 Reed Union Building (Second Floor)",
+       "infoLink": "https://behrend.psu.edu/student-life/student-affairs",
+       "phoneLink": "tel:8148986111",
+       "addressLink": "https://www.google.com/maps/dir/42.1194843,-79.9695141/Reed+Union+Building,+Station+Road,+Erie,+PA/@42.1195588,-79.9813296,16z/data=!3m2!4b1!5s0x882d7d8cf7a26271:0xb1bf4579c1618a63!4m9!4m8!1m1!4e1!1m5!1m1!1s0x882d7d8c57e2c281:0xd0d9d419f7ced7b3!2m2!1d-79.9837758!2d42.1194295"
+
+
+                             
+       }
+       
+   
+
+
+
+
+
+
+
+
+
+]
