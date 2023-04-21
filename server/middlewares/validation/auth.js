@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user.js");
 exports.isAuth = async (req, res, next) => {
-  console.log(req);
+  //console.log(req);
   try {
     if (
       req.headers.authorization === undefined ||
