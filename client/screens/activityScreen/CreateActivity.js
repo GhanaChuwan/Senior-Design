@@ -21,7 +21,7 @@ import { AuthContext } from "../../context/AuthContext";
 import moment from "moment";
 import { SelectList } from "react-native-dropdown-select-list";
 import formatTime from "../../utils/formateTime";
-
+import { AntDesign } from "@expo/vector-icons";
 export default function Activity({ navigation, route }) {
   const {
     createActivity,
@@ -52,14 +52,6 @@ export default function Activity({ navigation, route }) {
   useEffect(() => {
     getAllActivity({ subjectId });
   }, []);
-
-  // useEffect(() => {
-  //   getAllActivity({ subjectId });
-  // }, []);
-
-  useEffect(() => {
-    getAllActivitySession({ activityId });
-  }, [activityId]);
 
   const showModal = () => {
     setZIndex(1);
@@ -95,7 +87,25 @@ export default function Activity({ navigation, route }) {
   };
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: title });
+    navigation.setOptions({
+      headerTitle: title,
+      headerRight: () => (
+        <View>
+          <TouchableOpacity
+            style={{
+              marginRight: 2,
+              width: 50,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => showModal()}
+          >
+            <AntDesign name="addfile" style={styles.newTaskBtn} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#1e407c",
@@ -180,13 +190,6 @@ export default function Activity({ navigation, route }) {
         </Provider>
       </View>
 
-      <Button
-        style={{ marginTop: 20, alignItems: "flex-end" }}
-        onPress={showModal}
-      >
-        Create Activity +
-      </Button>
-
       <FlatList
         style={{ marginBottom: 10, zIndex: zIndexCard }}
         data={activities}
@@ -195,7 +198,8 @@ export default function Activity({ navigation, route }) {
             navigation={navigation}
             keyExtractor={(item) => item._id}
             activity={item}
-            activitysession={activitysession}
+            activityId={activityId}
+            // activitysession={item}
             subjectId={subjectId}
             deleteActivity={deleteActivity}
           />
@@ -246,6 +250,7 @@ const CustomActivityCard = ({
         navigation.navigate("ActivitySession", {
           title: activity.name,
           activityId: activity._id,
+          subjectId: subjectId,
         });
       }}
     >
@@ -335,5 +340,13 @@ const styles = StyleSheet.create({
   dropDown: {
     marginVertical: 10,
     borderRadius: 10,
+  },
+  newTaskBtn: {
+    height: 40,
+    width: 40,
+    fontSize: 30,
+    margin: 10,
+    left: 10,
+    color: "#ffff",
   },
 });

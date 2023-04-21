@@ -2,7 +2,16 @@
 
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, Alert, FlatList, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+  FlatList,
+  ScrollView,
+} from "react-native";
 
 import { Modal, Portal, Provider, TextInput } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
@@ -10,22 +19,26 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import { SelectList } from "react-native-dropdown-select-list";
 // import { Calendar } from 'react-native-calendars';
 import { AuthContext } from "../../context/AuthContext";
-
-import DateTimePicker from '@react-native-community/datetimepicker';
-
-
+import { AntDesign } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function CalendarPage({ navigation, route }) {
-
   const [visible, setVisible] = useState(false);
-  const [date, setDate] = useState(new Date())
-  const [calanderVisible, setCalanderVisible] = useState(false)
+  const [date, setDate] = useState(new Date());
+  const [calanderVisible, setCalanderVisible] = useState(false);
   const [selected, setSelected] = useState();
-  const [zIndex, setZIndex] = useState(-1)
+  const [zIndex, setZIndex] = useState(-1);
   const [name, setName] = useState();
-  const [eventType, setEventType] = useState(["Group Meeting", "Client Meeting", "Office hour", "Discussions", "Normal Meeting"])
+  const [eventType, setEventType] = useState([
+    "Group Meeting",
+    "Client Meeting",
+    "Office hour",
+    "Discussions",
+    "Normal Meeting",
+  ]);
   const [note, setEventNote] = useState();
-  const { events, createEvent, deleteEvent, retrieveEvents } = useContext(AuthContext);
+  const { events, createEvent, deleteEvent, retrieveEvents } =
+    useContext(AuthContext);
 
   // set calendar
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -34,16 +47,19 @@ export default function CalendarPage({ navigation, route }) {
   };
 
   //date picker
-  const [displaymode, setMode] = useState('date');
+  const [displaymode, setMode] = useState("date");
   const [isDisplayDate, setShow] = useState(false);
   const changeSelectedDate = (event, selectedDate) => {
     const currentDate = selectedDate || mydate;
     setDate(currentDate);
   };
 
-  const closeCalanderView = () => { setCalanderVisible(false) };
-  const openCalanderView = () => { setCalanderVisible(true) };
-
+  const closeCalanderView = () => {
+    setCalanderVisible(false);
+  };
+  const openCalanderView = () => {
+    setCalanderVisible(true);
+  };
 
   useEffect(() => {
     const parent = navigation.getParent();
@@ -60,20 +76,9 @@ export default function CalendarPage({ navigation, route }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => showModal()}>
-
-            <View style={{
-              width: 40,
-              height: 40,
-              backgroundColor: "white",
-              borderRadius: 25,
-              justifyContent: "center",
-              alignItems: "center",
-            }}>
-
-              <Icon name="create" size={32} />
-
-            </View>
+            onPress={() => showModal()}
+          >
+            <AntDesign name="form" style={styles.newTaskBtn} />
           </TouchableOpacity>
         </View>
       ),
@@ -86,13 +91,13 @@ export default function CalendarPage({ navigation, route }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const storeEvent = async () => {
     try {
       await createEvent({
         eventName: name,
-        eventNote: note,
-        eventDate: date
+        eventNote: note == "" ? " " : note,
+        eventDate: date,
       });
       hideModal();
     } catch (error) {
@@ -102,14 +107,14 @@ export default function CalendarPage({ navigation, route }) {
 
   const hideModal = () => {
     setVisible(false);
-    setZIndex(-1)
+    setZIndex(-1);
   };
   const showModal = () => {
     setVisible(true);
-    setZIndex(2)
-
+    setZIndex(2);
+    setName("");
+    setEventNote("");
   };
-
 
   // date pick mode
   const showMode = (currentMode) => {
@@ -117,9 +122,8 @@ export default function CalendarPage({ navigation, route }) {
     setMode(currentMode);
   };
   const displayDatepicker = () => {
-    setCalanderVisible(true)
+    setCalanderVisible(true);
   };
-
 
   // const retrieveEvents = async () => {
   //   try {
@@ -138,9 +142,6 @@ export default function CalendarPage({ navigation, route }) {
           await deleteEvent({
             event: item,
           });
-          //then update events
-
-
         },
       },
       { text: "Cancel" },
@@ -150,51 +151,57 @@ export default function CalendarPage({ navigation, route }) {
   const handleCalanderChange = (e) => {
     if (e.type === "dismissed") {
     } else if (e.type === "set") {
-      setDate(new Date(e.nativeEvent.timestamp))
+      setDate(new Date(e.nativeEvent.timestamp));
     }
-    setCalanderVisible(false)
+    setCalanderVisible(false);
+  };
+  const displayDate = (dateObj) => {
+    let date = dateObj.toString();
 
-  }
+    let month = date[4] + date[5] + date[6];
+    let day = date[8] + date[9];
+    return month + " " + day;
+  };
   const getDate = (date) => {
     let month = date[5] + date[6];
     let day = date[8] + date[9];
 
     switch (month) {
       case "01":
-        month = "Jan"
+        month = "Jan";
         break;
       case "02":
-        month = "Feb"
+        month = "Feb";
         break;
       case "03":
-        month = "Mar"
+        month = "Mar";
         break;
       case "04":
-        month = "Apr"
+        month = "Apr";
         break;
       case "05":
-        month = "May"
+        month = "May";
         break;
       case "06":
-        month = "Jun"
+        month = "Jun";
         break;
       case "07":
-        month = "Jul"
+        month = "Jul";
         break;
       case "08":
-        month = "Aug"
+        month = "Aug";
         break;
       case "09":
-        month = "Sep"
+        month = "Sep";
         break;
       case "10":
-        month = "Oct"
+        month = "Oct";
         break;
       case "11":
-        month = "Nov"
+        month = "Nov";
         break;
       case "12":
-        month = "Dec"
+        month = "Dec";
         break;
     }
 
@@ -202,58 +209,42 @@ export default function CalendarPage({ navigation, route }) {
       <View style={styles.date}>
         <Text style={styles.month}>{month}</Text>
         <Text style={styles.day}>{day}</Text>
-      </View>)
-  }
-
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-
-      {/* <Calendar
-        style={{ zIndex: 1 }}
-        markedDates={{
-          [selectedDate.toISOString().slice(0, 10)]: { selected: true, selectedColor: 'blue' }
+      <View
+        style={{
+          position: "absolute",
+          zIndex: zIndex,
+          width: "100%",
+          height: "100%",
         }}
-        onDayPress={(day) => setSelectedDate(new Date(day.dateString))}
-        onDayLongPress={(day) => console.log('onDayLongPress', day)}
-        onMonthChange={(date) => console.log('onMonthChange', date)}
-        onPressArrowLeft={(goToPreviousMonth) => {
-          console.log('onPressArrowLeft'); goToPreviousMonth();
-        }}
-        onPressArrowRight={(goToNextMonth) => {
-          console.log('onPressArrowRight'); goToNextMonth();
-        }}
-      /> */}
-
-
-
-      <View style={{
-        position: "absolute",
-        zIndex: zIndex,
-        width: "100%",
-        height: "100%",
-      }}>
-
+      >
         <Provider>
           <Portal>
             <Modal
               visible={visible}
-
               onDismiss={hideModal}
               contentContainerStyle={{
                 backgroundColor: "#fff",
                 marginHorizontal: 20,
                 padding: 10,
                 borderRadius: 20,
-              }}>
-
+                top: -100,
+              }}
+            >
               <View>
-                <Text style={{
-                  fontSize: 30,
-                  margin: 20,
-                  textAlign: "center",
-                  color: "#3B71F3",
-                }}>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    margin: 20,
+                    textAlign: "center",
+                    color: "#3B71F3",
+                  }}
+                >
                   Let's create an event
                 </Text>
 
@@ -274,44 +265,67 @@ export default function CalendarPage({ navigation, route }) {
 
                 <SafeAreaView>
                   <View>
-                    <CustomButton onPress={displayDatepicker} text="Show date picker!" />
+                    <CustomButton
+                      onPress={displayDatepicker}
+                      text="Show date picker!"
+                    />
                   </View>
 
-                  {calanderVisible && <DateTimePicker mode="date" value={date} display="inline" is24Hour={false} onChange={handleCalanderChange}
-                  />}
-
+                  {calanderVisible && (
+                    <DateTimePicker
+                      mode="date"
+                      value={date}
+                      display="inline"
+                      is24Hour={false}
+                      onChange={handleCalanderChange}
+                    />
+                  )}
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      margin: 10,
+                    }}
+                  >
+                    <Text style={{ fontSize: 20 }}>Date Selected: </Text>
+                    <Text
+                      style={{ fontSize: 20, textAlign: "right", width: 120 }}
+                    >
+                      {displayDate(date)}
+                    </Text>
+                  </View>
                 </SafeAreaView>
 
-                <CustomButton text="Create Event" onPress={() => { storeEvent(); }} />
-
+                <CustomButton
+                  text="Create Event"
+                  onPress={() => {
+                    storeEvent();
+                  }}
+                />
               </View>
             </Modal>
           </Portal>
         </Provider>
       </View>
 
-      <ScrollView >
-        <FlatList
-          data={events}
-          renderItem={({ item }) => (
-            <TouchableOpacity onLongPress={() => alertUser(item)} style={styles.event}>
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                {getDate(item.eventDate)}
-                <View>
-                  <Text style={styles.name}>{item.eventName}</Text>
-                  <Text style={styles.note}>{item.eventNote}</Text>
-
-                </View>
+      <FlatList
+        data={events}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onLongPress={() => alertUser(item)}
+            style={styles.event}
+          >
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              {getDate(item.eventDate)}
+              <View>
+                <Text style={styles.name}>{item.eventName}</Text>
+                <Text style={styles.note}>{item.eventNote}</Text>
               </View>
-            </TouchableOpacity>)}
-
-        />
-      </ScrollView>
-
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
-
-
-
   );
 }
 const containerStyle = {
@@ -323,6 +337,7 @@ const containerStyle = {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fdf6ec",
     flex: 1,
   },
   body: {
@@ -330,7 +345,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 2,
-    borderColor: '#3B71F3',
+    borderColor: "#3B71F3",
     padding: 10,
     borderRadius: 5,
     fontSize: 16,
@@ -348,7 +363,6 @@ const styles = StyleSheet.create({
     height: "auto",
     borderRadius: 11,
     marginTop: 20,
-
   },
   date: {
     width: 120,
@@ -362,22 +376,24 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   day: {
-    fontSize: 25
+    fontSize: 25,
   },
   note: {
     fontSize: 18,
     width: 240,
     margin: 10,
-
   },
   name: {
     fontSize: 25,
     width: 250,
     margin: 5,
-
-  }
-
-
+  },
+  newTaskBtn: {
+    height: 40,
+    width: 40,
+    fontSize: 30,
+    margin: 10,
+    left: 10,
+    color: "#ffff",
+  },
 });
-
-

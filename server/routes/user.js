@@ -60,7 +60,7 @@ const {
   updateChallenges,
 } = require("../controllers/rewards");
 
-const { downloadProgress } = require("../controllers/downloadProgess.js");
+const { downloadProgressLink } = require("../controllers/downloadProgess");
 
 router.post("/create-user", validateUsersSignUp, userValidation, createUser);
 router.post("/sign-in", validateUsersSignIn, userValidation, userSignIn);
@@ -69,7 +69,7 @@ router.get("/forgot-password/:userID/:token", forgotPasswordUI);
 router.post("/reset-password", resetPassword);
 router.post("/change-password", isAuth, changePassword);
 
-router.get("/download-progress", isAuth, downloadProgress);
+router.post("/download-progress", isAuth, downloadProgressLink);
 
 router.get("/getWeeklyProgress", isAuth, getWeeklyProgress);
 router.get("/getMonthlyProgress", isAuth, getMonthlyProgress);
@@ -96,7 +96,7 @@ router.get("/getEvents", isAuth, getEvents);
 router.post("/resources", validateResources, resources);
 
 router.get("/getStreak", isAuth, getStreak);
-router.post("/getChallenges", getChallenges);
-router.post("/updateChallenges", updateChallenges);
+router.get("/getChallenges", isAuth, getChallenges);
+router.post("/updateChallenges", isAuth, updateChallenges);
 router.get("/getDays", isAuth, getDays);
 module.exports = router;

@@ -42,7 +42,25 @@ export default function Grades({ navigation, route }) {
   ]);
 
   useEffect(() => {
-    navigation.setOptions({ headerShown: true });
+    navigation.setOptions({
+      headerShown: true,
+      headerRight: () => (
+        <View>
+          <TouchableOpacity
+            style={{
+              marginRight: 2,
+              width: 50,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => showModal()}
+          >
+            <AntDesign name="form" style={styles.newTaskBtn} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#1e407c",
@@ -94,8 +112,6 @@ export default function Grades({ navigation, route }) {
             subject: title,
             grade: item,
           });
-          //then update grades
-          retrieveGrades();
         },
       },
       { text: "Cancel" },
@@ -145,17 +161,20 @@ export default function Grades({ navigation, route }) {
               <View style={styles.pointsDiv}>
                 <TextInput
                   keyboardType="numeric"
+                  maxLength={3}
                   placeholder="points Earned"
                   placeholderTextColor="lightgray"
                   style={styles.input}
                   onChangeText={(text) => {
                     setPointsEarned(text);
                     setPoints(text + " / " + totalPoints);
+
                   }}
                 />
 
                 <TextInput
                   keyboardType="numeric"
+                  maxLength={3}
                   placeholder="total points"
                   placeholderTextColor="lightgray"
                   style={styles.input}
@@ -181,10 +200,7 @@ export default function Grades({ navigation, route }) {
           style={{ marginLeft: 11 }}
           onPress={() => showModal()}
         >
-          <View>
-            <AntDesign name="upload" style={styles.newTaskBtn} />
-            <Text style={styles.btnText}>New Grade</Text>
-          </View>
+
         </TouchableOpacity>
 
         {/* <TouchableOpacity style={{ marginLeft: 260 }}>
@@ -219,7 +235,6 @@ export default function Grades({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 12,
   },
   task: {
     marginTop: 15,
@@ -227,13 +242,12 @@ const styles = StyleSheet.create({
     height: 90,
     width: 350,
     borderRadius: 10,
-
+    marginHorizontal: 10
   },
   assignments: {
-    top: 50,
     marginLeft: 9,
     bottom: 30,
-    top: 50,
+    top: 10,
     marginLeft: 9,
     position: "absolute",
     bottom: 30,
@@ -242,7 +256,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 20,
     marginTop: 5,
-
   },
   type: {
     marginTop: 25,
@@ -278,6 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 10,
     left: 10,
+    color: "#ffff",
   },
   btnText: {
     top: -20,

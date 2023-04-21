@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
   const [activitysessions, setactivitySessions] = useState([]);
   const [weeklySession, setWeeklySession] = useState([]);
+  const [progressDownload, setProgressDownload] = useState(null);
 
   const [grades, setGrades] = useState([]);
   const [days, setDays] = useState([
@@ -153,7 +154,8 @@ export const AuthProvider = ({ children }) => {
         await getSubjects();
         await getAllActivity();
         await getWeeklyProgress();
-        // await getAllActivitySession();
+
+        //await getAllActivitySession();
       }
 
       setIsLoading(false);
@@ -235,8 +237,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getAllActivity = async ({ subjectId }) => {
-    console.log(subjectId);
     try {
+      console.log("HEREEEEEE: " + subjectId);
       const res = await axios.get(`/activity-all/${subjectId}`, {
         headers: {
           authorization: `Bearer ${userToken}`,
@@ -286,12 +288,11 @@ export const AuthProvider = ({ children }) => {
     eventNote,
     eventDate,
   }) => {
-    console.log(eventName);
-    console.log(eventNote);
-    console.log(eventDate);
-
     try {
       console.log("creating event");
+      console.log(eventName);
+      console.log(eventNote);
+      console.log(eventDate);
       const data = await axios.post(
         "/createEvent",
         {
@@ -315,17 +316,19 @@ export const AuthProvider = ({ children }) => {
   const deleteEvent = async ({ event }) => {
     try {
       console.log("deleting event");
-      const res = axios.post(
-        "/deleteEvent",
-        {
-          event: event,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
+      const res = axios
+        .post(
+          "/deleteEvent",
+          {
+            event: event,
           },
-        }
-      );
+          {
+            headers: {
+              authorization: `Bearer ${userToken}`,
+            },
+          }
+        )
+        .then((response) => setEvents(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -419,16 +422,15 @@ export const AuthProvider = ({ children }) => {
             },
           }
         )
-        .then((response) => {
-          setGrades(response.data);
-        });
+        .then((response) => setGrades(response.data));
+
       await AsyncStorage.setItem("grades", JSON.stringify(grades));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const addActivitySession = async ({ note, time, activityId }) => {
+  const addActivitySession = async ({ note, time, activityId, subjectId }) => {
     try {
       const data = await axios.post(
         "/create-activitySession",
@@ -460,9 +462,11 @@ export const AuthProvider = ({ children }) => {
         }));
       }
 
+      await getAllActivitySession({ activityId });
+      await getAllActivity({ subjectId });
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
-      //   const newActives = activitysessions.activites;
+      //   const newActives = activitysessions.activitesrrr;
       //   newActives.push(d);
       //   const newTotalTime = activitysessions.totalTime + d.time;
 
@@ -487,52 +491,49 @@ export const AuthProvider = ({ children }) => {
       const newActivitySessionData = data.data;
       // Update activity sessions state with new activity session data
       setactivitySessions(newActivitySessionData);
+
+      console.log(newActivitySessionData);
+      // await getAllActivitySession({ subjectId });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getStreak = async () => {
-    try {
-      console.log("getting streaks");
-      const data = await axios.get("/getStreak", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      });
-      // setStreak(data.streak);
-    } catch (error) {
-      console.log("get streak error");
-    }
-  };
-  const getDays = async () => {
-    try {
-      console.log("getting days");
+  // const getStreak = async () => {
+  //   try {
+  //     console.log("getting streaks");
+  //     const data = await axios.get("/getStreak", {
+  //       headers: {
+  //         authorization: `Bearer ${userToken}`,
+  //       },
+  //     });
+  //     // setStreak(data.streak);
+  //   } catch (error) {
+  //     console.log("get streak error");
+  //   }
+  // };
+  // const getDays = async () => {
+  //   try {
+  //     console.log("getting days");
 
-      const data = await axios.get("/getDays", {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      });
-      //setDays(data.days);
-    } catch (error) {
-      console.log("get days error");
-    }
-  };
+  //     const data = await axios.get("/getDays", {
+  //       headers: {
+  //         authorization: `Bearer ${userToken}`,
+  //       },
+  //     });
+  //     //setDays(data.days);
+  //   } catch (error) {
+  //     console.log("get days error");
+  //   }
+  // };
 
   const getChallenges = async () => {
     try {
-      const res = await axios.post(
-        "/getChallenges",
-        {
-          userId: userInfo,
+      const res = await axios.get("/getChallenges", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
         },
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
+      });
       setChallenges(res.data);
     } catch (error) {
       console.log("get challenges error");
@@ -548,7 +549,6 @@ export const AuthProvider = ({ children }) => {
         {
           activity: activityType,
           time: activityTime,
-          userId: userInfo,
         },
         {
           headers: {
@@ -573,7 +573,21 @@ export const AuthProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const getProgressDownload = async () => {
+    try {
+      console.log(userToken);
+      const res = await axios.post("/download-progress", null, {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
 
+      setProgressDownload(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -613,8 +627,8 @@ export const AuthProvider = ({ children }) => {
         days,
         challenges,
         streak,
-        getDays,
-        getStreak,
+        // getDays,
+        // getStreak,
         getChallenges,
         updateChallenges,
         forgotPasswordLink,
@@ -627,6 +641,8 @@ export const AuthProvider = ({ children }) => {
         changePassword,
         weeklySession,
         getWeeklyProgress,
+        getProgressDownload,
+        progressDownload,
       }}
     >
       {children}

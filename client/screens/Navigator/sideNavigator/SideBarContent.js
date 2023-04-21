@@ -16,12 +16,20 @@ import { AuthContext } from "../../../context/AuthContext";
 import Notify from "../../../components/notif";
 
 export function SideBarContent(props) {
-  const { logout, userInfo } = useContext(AuthContext);
+  const { logout, userInfo, getProgressDownload, progressDownload } =
+    useContext(AuthContext);
   const navigation = useNavigation();
 
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
+  };
+  const progressDownloadButton = async () => {
+    try {
+      await getProgressDownload();
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -64,6 +72,7 @@ export function SideBarContent(props) {
             label={() => (
               <Text style={{ color: "white" }}>Download Progress</Text>
             )}
+            onPress={progressDownloadButton}
           />
           <DrawerItem
             icon={({ color, size }) => (
@@ -79,7 +88,7 @@ export function SideBarContent(props) {
           />
           <DrawerItem
             icon={({ color, size }) => (
-              <Icon name="decagram" color="white" size={size} />
+              <Icon name="bell" color="white" size={size} />
             )}
             label={() => <Text style={{ color: "white" }}>Notifications</Text>}
             onPress={() => navigation.navigate("NotificationsPage")}
