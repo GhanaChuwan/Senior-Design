@@ -237,8 +237,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getAllActivity = async ({ subjectId }) => {
-    console.log(subjectId);
     try {
+      console.log("HEREEEEEE: " + subjectId);
       const res = await axios.get(`/activity-all/${subjectId}`, {
         headers: {
           authorization: `Bearer ${userToken}`,
@@ -461,11 +461,12 @@ export const AuthProvider = ({ children }) => {
           totalTime: prevState.totalTime + newActivitySessionData.time,
         }));
       }
-      await getAllActivity({ subjectId });
+
       await getAllActivitySession({ activityId });
+      await getAllActivity({ subjectId });
       // if (activities.activities != undefined || activities.activities != null) {
       //   const d = data.data;
-      //   const newActives = activitysessions.activites;
+      //   const newActives = activitysessions.activitesrrr;
       //   newActives.push(d);
       //   const newTotalTime = activitysessions.totalTime + d.time;
 
@@ -490,6 +491,8 @@ export const AuthProvider = ({ children }) => {
       const newActivitySessionData = data.data;
       // Update activity sessions state with new activity session data
       setactivitySessions(newActivitySessionData);
+
+      console.log(newActivitySessionData);
       // await getAllActivitySession({ subjectId });
     } catch (error) {
       console.log(error);
@@ -526,14 +529,11 @@ export const AuthProvider = ({ children }) => {
 
   const getChallenges = async () => {
     try {
-      const res = await axios.get(
-        "/getChallenges",
-        {
-          headers: {
-            authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
+      const res = await axios.get("/getChallenges", {
+        headers: {
+          authorization: `Bearer ${userToken}`,
+        },
+      });
       setChallenges(res.data);
     } catch (error) {
       console.log("get challenges error");

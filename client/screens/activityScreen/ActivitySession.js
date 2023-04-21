@@ -15,11 +15,13 @@ import formatTime from "../../utils/formateTime";
 import { Entypo } from "@expo/vector-icons";
 
 export default function Session({ navigation, route }) {
-  const { getAllActivitySession, activitysessions } = useContext(AuthContext);
-  const { activityId, title } = route.params;
+  const { getAllActivitySession, activitysessions, getAllActivity } =
+    useContext(AuthContext);
+  const { activityId, title, subjectId } = route.params;
 
   useEffect(() => {
     getAllActivitySession({ activityId });
+    getAllActivity({ subjectId });
   }, [activityId]);
   useEffect(() => {
     navigation.setOptions({
