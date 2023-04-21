@@ -49,13 +49,19 @@ export default function Reward({ navigation, route }) {
     return per * 100 + 1 + "%";
   };
   const getTime = (currentAmount, totalAmount) => {
-    let time = Math.ceil((totalAmount - currentAmount) / 60 / 60);
-    if (time <= 0) {
+    let secondsRemaining = totalAmount - currentAmount;
+    if (secondsRemaining <= 0) {
       return "challenge completed";
     } else {
-      return `${time} hours remaining`;
+      let hours = Math.floor(secondsRemaining / 3600);
+      let minutes = Math.floor((secondsRemaining % 3600) / 60);
+      if (minutes == 0)
+        return `${hours} hours remaining`;
+      else
+        return `${hours} hours and ${minutes} minutes remaining`
     }
   };
+
 
   return (
     <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
@@ -67,6 +73,7 @@ export default function Reward({ navigation, route }) {
       <View style={styles.container}>
         <FlatList
           data={challenges}
+          scrollEnabled={false}
           renderItem={({ item }) => (
             <View
               style={
@@ -218,9 +225,10 @@ const styles = StyleSheet.create({
     // margin: 5,
     // left: 160
     position: "absolute",
-    left: 160,
     top: 55,
     color: "gray",
+    width: 250,
+    left: 40
   },
   completedTime: {
     fontSize: 15,
@@ -245,4 +253,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 11,
   },
+  container: {
+  }
 });

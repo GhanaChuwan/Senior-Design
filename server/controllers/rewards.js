@@ -75,7 +75,6 @@ exports.createChallenges = async (user) => {
       new: true,
     });
 
-    console.log(user);
   } catch (error) {
     console.log("get challenges error");
   }
@@ -87,7 +86,6 @@ exports.getChallenges = async (req, res) => {
     console.log("get challenges");
     const user = await User.findById(userId);
     const challengeList = await challenges.find({ createdBy: user._id });
-    console.log(challengeList);
     return res.status(200).json(challengeList);
   } catch (error) {
     console.log("get challenges error");
@@ -98,19 +96,19 @@ exports.updateChallenges = async (req, res) => {
   const { activity, time } = req.body;
   const { userId } = req.user;
 
+
   try {
     console.log("updating challenges");
     const activitySearchUP = await activityList.findById(activity);
-    const user = await User.findById(userId.user._id);
+    const user = await User.findById(userId);
+
     const challengeList = await challenges.find({ createdBy: user._id });
-
     console.log(activitySearchUP.name);
-
     switch (activitySearchUP.name) {
       case "reading":
+        console.log("r");
         var challenge = await challenges.findById(challengeList[0]);
-        console.log(challenge.category);
-        challenge.currentAmount += time;
+        challenge.currentAmount += 24300;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
@@ -121,9 +119,9 @@ exports.updateChallenges = async (req, res) => {
         break;
 
       case "study with a friend":
+        console.log("f");
         var challenge = await challenges.findById(challengeList[1]);
-        console.log(challenge.category);
-        challenge.currentAmount += time;
+        challenge.currentAmount += 140000;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
@@ -134,9 +132,9 @@ exports.updateChallenges = async (req, res) => {
         break;
 
       case "reviewing notes":
+        console.log("n");
         var challenge = await challenges.findById(challengeList[2]);
-        console.log(challenge.category);
-        challenge.currentAmount += time;
+        challenge.currentAmount += 120000;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
@@ -146,8 +144,8 @@ exports.updateChallenges = async (req, res) => {
         challenge.save();
         break;
       default: //work challenges
+        console.log("w");
         var challenge = await challenges.findById(challengeList[3]);
-        console.log(challenge.category);
         challenge.currentAmount += time;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
@@ -158,7 +156,6 @@ exports.updateChallenges = async (req, res) => {
         challenge.save();
         break;
     }
-
     console.log("challenge updated");
   } catch (error) {
     console.log("error occured when updating challenges ");
