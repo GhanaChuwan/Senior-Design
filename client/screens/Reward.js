@@ -55,16 +55,13 @@ export default function Reward({ navigation, route }) {
     } else {
       let hours = Math.floor(secondsRemaining / 3600);
       let minutes = Math.floor((secondsRemaining % 3600) / 60);
-      if (minutes == 0)
-        return `${hours} hours remaining`;
-      else
-        return `${hours} hours and ${minutes} minutes remaining`
+      if (minutes == 0) return `${hours} hours remaining`;
+      else return `${hours} hours and ${minutes} minutes remaining`;
     }
   };
 
-
   return (
-    <View style={{ display: "flex", backgroundColor: "lightgray", flex: 1 }}>
+    <View style={{ display: "flex", backgroundColor: "#fdf6ec", flex: 1 }}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>
           Complete challenges by the end of each week
@@ -217,8 +214,8 @@ const styles = StyleSheet.create({
   header: {
     textAlign: "center",
     margin: 10,
-    fontSize: 20,
-    color: "gray",
+    fontSize: 23,
+    color: "#ffff",
   },
   time: {
     fontSize: 15,
@@ -228,7 +225,7 @@ const styles = StyleSheet.create({
     top: 55,
     color: "gray",
     width: 250,
-    left: 40
+    left: 40,
   },
   completedTime: {
     fontSize: 15,
@@ -247,12 +244,11 @@ const styles = StyleSheet.create({
     left: 10,
   },
   headerContainer: {
-    backgroundColor: "white",
-    width: 370,
+    backgroundColor: "#50C878",
+    width: 390,
     marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 11,
   },
-  container: {
-  }
+  container: {},
 });

@@ -307,8 +307,12 @@ function ActivityTime({ navigation, route }) {
               onDismiss={closeModal}
               contentContainerStyle={containerStyle}
             >
-              <Text style={styles.modalTitle}>Time</Text>
-              <Text style={styles.modalTime}>{formatTime(time)}</Text>
+              <Text style={[styles.modalTitle, { textAlign: "center" }]}>
+                Time
+              </Text>
+              <Text style={[styles.modalTime, { textAlign: "center" }]}>
+                {formatTime(time)}
+              </Text>
               <CustomInput
                 placeholder="Note"
                 onChangeText={(e) => setNote(e)}
@@ -373,19 +377,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 70,
     borderRadius: 10,
-    alignItems: "center",
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#3B71F3",
-    marginLeft: 150,
   },
   modalTime: {
     fontSize: 48,
     fontWeight: "bold",
     marginBottom: 10,
-    marginLeft: 100,
+
     color: "#3B71F3",
   },
 });

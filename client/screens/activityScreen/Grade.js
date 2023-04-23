@@ -9,13 +9,14 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  title,
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { AuthContext } from "../../context/AuthContext";
-
-import { Modal, Portal, Provider, TextInput } from "react-native-paper";
+import { Card } from "react-native-paper";
+import { Modal, Portal, Provider, TextInput, Title } from "react-native-paper";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -26,7 +27,8 @@ export default function Grades({ navigation, route }) {
     useContext(AuthContext);
 
   const [visible, setVisible] = React.useState(false);
-  const [zIndex, setZIndex] = useState(2);
+  const [zIndex, setZIndex] = useState(3);
+  const [zIndexCard, setZIndexCard] = useState(1);
   const [name, setName] = useState();
   const [type, setType] = useState();
   const [selected, setSelected] = useState();
@@ -86,11 +88,13 @@ export default function Grades({ navigation, route }) {
   };
 
   const showModal = () => {
-    setZIndex(-1);
+    setZIndex(1);
+    setZIndexCard(-1);
     setVisible(true);
   };
   const hideModal = () => {
-    setZIndex(1);
+    setZIndex(-1);
+    setZIndexCard(1);
     setVisible(false);
   };
 
@@ -129,112 +133,119 @@ export default function Grades({ navigation, route }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Provider>
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={containerStyle}
-          >
-            <View>
-              <Text style={styles.modalHeader}>Let's create a grade</Text>
-
-              <CustomInput
-                placeholder={"grade Name"}
-                onChangeText={(newText) => setName(newText)}
-                style={{ borderRadius: 30 }}
-              />
-              <View style={styles.dropDown}>
-                <SelectList
-                  setSelected={(val) => setSelected(val)}
-                  data={gradeTypes}
-                  placeholder="Select Grade"
-                  boxStyles={{ backgroundColor: "#3B71F3" }}
-                  inputStyles={{ color: "#fff" }}
-                  disabledTextStyles={{ color: "#fff" }}
-                  dropdownStyles={{ backgroundColor: "#3B71F3" }}
-                  dropdownTextStyles={{ color: "#fff" }}
-                  save="value"
-                />
-              </View>
-
-              <View style={styles.pointsDiv}>
-                <TextInput
-                  keyboardType="numeric"
-                  maxLength={3}
-                  placeholder="points Earned"
-                  placeholderTextColor="lightgray"
-                  style={styles.input}
-                  onChangeText={(text) => {
-                    setPointsEarned(text);
-                    setPoints(text + " / " + totalPoints);
-
-                  }}
-                />
-
-                <TextInput
-                  keyboardType="numeric"
-                  maxLength={3}
-                  placeholder="total points"
-                  placeholderTextColor="lightgray"
-                  style={styles.input}
-                  onChangeText={(text) => {
-                    setTotalPoints(text);
-                    setPoints(pointsEarned + " / " + text);
-                  }}
-                />
-              </View>
-
-              <CustomButton
-                text="Create Grade"
-                onPress={() => {
-                  storeGrade();
-                }}
-              />
-            </View>
-          </Modal>
-        </Portal>
-      </Provider>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={{ marginLeft: 11 }}
-          onPress={() => showModal()}
-        >
-
-        </TouchableOpacity>
-
-        {/* <TouchableOpacity style={{ marginLeft: 260 }}>
-          <AntDesign
-            name="filter"
-            onPress={() => (alert("filtering stuff"))}
-            style={styles.newTaskBtn}
-          />
-          <Text style={[styles.btnText, { marginLeft: 14 }]}>filter</Text>
-        </TouchableOpacity> */}
-      </View>
-
-      <View style={{ ...styles.assignments, zIndex: zIndex, marginTop: 5 }}>
-        <FlatList
-          data={grades}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onLongPress={() => alertUser(item)}
-              style={styles.task}
+      <View
+        style={{
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <Provider>
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}
             >
-              <Text style={styles.name}>{item.gradeName}</Text>
-              <Text style={styles.type}>{item.gradeType}</Text>
-              <Text style={styles.points}>{item.gradePoints}</Text>
-            </TouchableOpacity>
-          )}
-        />
+              <View>
+                <Text style={styles.modalHeader}>Let's create a grade</Text>
+
+                <CustomInput
+                  placeholder={"grade Name"}
+                  onChangeText={(newText) => setName(newText)}
+                  style={{ borderRadius: 30 }}
+                />
+                <View style={styles.dropDown}>
+                  <SelectList
+                    setSelected={(val) => setSelected(val)}
+                    data={gradeTypes}
+                    placeholder="Select Grade"
+                    boxStyles={{ backgroundColor: "#3B71F3" }}
+                    inputStyles={{ color: "#fff" }}
+                    disabledTextStyles={{ color: "#fff" }}
+                    dropdownStyles={{ backgroundColor: "#3B71F3" }}
+                    dropdownTextStyles={{ color: "#fff" }}
+                    save="value"
+                  />
+                </View>
+
+                <View style={styles.pointsDiv}>
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={3}
+                    placeholder="points Earned"
+                    placeholderTextColor="lightgray"
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      setPointsEarned(text);
+                      setPoints(text + " / " + totalPoints);
+                    }}
+                  />
+
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={3}
+                    placeholder="total points"
+                    placeholderTextColor="lightgray"
+                    style={styles.input}
+                    onChangeText={(text) => {
+                      setTotalPoints(text);
+                      setPoints(pointsEarned + " / " + text);
+                    }}
+                  />
+                </View>
+
+                <CustomButton
+                  text="Create Grade"
+                  onPress={() => {
+                    storeGrade();
+                  }}
+                />
+              </View>
+            </Modal>
+          </Portal>
+        </Provider>
       </View>
+      <FlatList
+        style={{ marginBottom: 10, zIndex: zIndexCard }}
+        data={grades}
+        // showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.container}
+            onLongPress={() => alertUser(item)}
+          >
+            <Card
+              style={{
+                backgroundColor: "lightgreen",
+                marginVertical: 1,
+                marginHorizontal: 10,
+                padding: 1,
+                alignContent: "center",
+              }}
+            >
+              <Card.Content style={styles.card}>
+                <Title style={styles.title}>{item.gradeName}</Title>
+                <Text style={styles.point}>{item.gradeType}</Text>
+                <Title style={styles.gradesP}>{item.gradePoints}</Title>
+              </Card.Content>
+            </Card>
+
+            {/* <Text style={styles.name}>{item.gradeName}</Text>
+              <Text style={styles.type}>{item.gradeType}</Text>
+              <Text style={styles.points}>{item.gradePoints}</Text> */}
+          </TouchableOpacity>
+        )}
+      />
     </KeyboardAvoidingView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fdf6ec",
     flex: 1,
+    flexDirection: "column",
   },
   task: {
     marginTop: 15,
@@ -242,10 +253,10 @@ const styles = StyleSheet.create({
     height: 90,
     width: 350,
     borderRadius: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   assignments: {
-    marginLeft: 9,
+    marginRight: 10,
     bottom: 30,
     top: 10,
     marginLeft: 9,
@@ -324,5 +335,30 @@ const styles = StyleSheet.create({
     margin: 20,
     textAlign: "center",
     color: "#3B71F3",
+  },
+  cardContainer: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginTop: 5,
+  },
+  card: {
+    justifyContent: "center",
+    height: 80,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "left",
+    color: "black",
+  },
+  point: {
+    fontSize: 15,
+    textAlign: "left",
+    color: "black",
+  },
+  gradesP: {
+    fontSize: 20,
+    textAlign: "right",
+    color: "black",
   },
 });
