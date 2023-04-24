@@ -218,7 +218,7 @@ export default function Grades({ navigation, route }) {
             <Card
               style={{
                 backgroundColor: "lightgreen",
-                marginVertical: 1,
+                marginVertical: 5,
                 marginHorizontal: 10,
                 padding: 1,
                 alignContent: "center",

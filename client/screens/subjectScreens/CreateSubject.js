@@ -61,6 +61,16 @@ export default function CreateSubject({ navigation, route }) {
               thumbSize={40}
               noSnap={true}
               sliderSize={40}
+              palette={[
+                "#888888",
+                "#ed1c24",
+                "#d11cd5",
+                "#1633e6",
+                "#00aeef",
+                "#00c85d",
+                "#fdb833",
+                "#f26522",
+              ]}
               // Snap={true}
               row={false}
             />

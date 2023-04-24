@@ -167,7 +167,6 @@ export default function Activity({ navigation, route }) {
                       "#1633e6",
                       "#00aeef",
                       "#00c85d",
-                      "#57ff0a",
                       "#fdb833",
                       "#f26522",
                     ]}
