@@ -61,7 +61,7 @@ export default function Reward({ navigation, route }) {
   };
 
   return (
-    <View style={{ display: "flex", backgroundColor: "#fdf6ec", flex: 1 }}>
+    <View style={{ display: "flex", backgroundColor: "#fdf6ec", flex: 1,alignItems:'center' }}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>
           Complete challenges by the end of each week
@@ -93,6 +93,18 @@ export default function Reward({ navigation, route }) {
                     position: "absolute",
                     top: 0,
                     zIndex: 0,
+
+                        shadowColor: "green",
+                      shadowOffset: {
+                        width: 0,
+                        height: 6,
+                      },
+                      shadowOpacity: 1,
+                      shadowRadius: 10,
+                      elevation: 13,
+
+
+
                   }}
                 />
               )}
@@ -147,12 +159,25 @@ const styles = StyleSheet.create({
     shadowColor: "gray",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
-    overflow: "hidden",
+
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 13,
+
+    // overflow: "hidden",
+    
   },
   completedChallengeDescription: {
     fontSize: 22,
     paddingHorizontal: 30,
     color: "white",
+    
   },
   checkbox: {
     fontSize: 40,
@@ -172,10 +197,18 @@ const styles = StyleSheet.create({
     padding: 20,
     display: "flex",
     flexDirection: "row",
-    shadowColor: "gray",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 1,
-    overflow: "hidden",
+    // shadowColor: "gray",
+    // shadowOffset: { width: 0, height: 1 },
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 13,
+
   },
   weeklyStreaks: {
     height: 70,
@@ -195,6 +228,8 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+
+    
   },
   day: {
     width: 45,
@@ -242,13 +277,24 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 60,
     left: 10,
+
   },
   headerContainer: {
     backgroundColor: "#50C878",
     width: 390,
     marginHorizontal: 10,
     marginVertical: 10,
+    justifyContent:'center',
     borderRadius: 11,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 30,
+    elevation: 13,
   },
   container: {},
 });

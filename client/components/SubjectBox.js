@@ -26,29 +26,53 @@ export default function SubjectBox({ navigation, subject, deleteSubject }) {
         });
       }}
     >
-      <View
+      <Text style={styles.text}>{subject.name.toUpperCase()}</Text>
+      {/* <View
         style={[styles.top, { backgroundColor: `${subject.color}` }]}
       ></View>
-      <Text style={styles.text}>{subject.name}</Text>
+      <Text style={styles.text}>{subject.name}</Text> */}
     </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "",
-    width: 160,
-    height: 100,
-    margin: 15,
+    width: 180,
+    height: 180,
     borderRadius: 5,
+    marginHorizontal: 8,
+    marginVertical: 8,
+    borderWidth: 5,
+    borderRadius: 20,
+    borderColor: 'rgba(0, 0, 0, .5)',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 7.30,
+    elevation: 13,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   },
 
   text: {
-    fontSize: 20,
-    textAlign: "left",
-    padding: 10,
-    marginTop: 10,
+    fontSize: 30,
+    textAlign: "center",
     color: "white",
-    fontStyle: "Bold",
+    fontWeight:'600',
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 7.30,
+    elevation: 13,
+
   },
   top: {
     width: 60,
