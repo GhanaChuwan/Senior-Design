@@ -363,6 +363,17 @@ const styles = StyleSheet.create({
     height: "auto",
     borderRadius: 11,
     marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10.30,
+    elevation: 13,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   },
   date: {
     width: 120,
