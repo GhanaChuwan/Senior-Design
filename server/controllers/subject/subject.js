@@ -1,6 +1,6 @@
-const Subject = require("../models/subject");
-const User = require("../models/user");
-const Activitiy = require("../models/activity");
+const Subject = require("../../models/subject");
+const User = require("../../models/user");
+const Activitiy = require("../../models/activity");
 
 exports.createSubject = async (req, res) => {
   const { name, color } = req.body;

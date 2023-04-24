@@ -23,7 +23,7 @@ const {
   createSubject,
   getSubjects,
   deleteSubjects,
-} = require("../controllers/subject");
+} = require("../controllers/subject/subject.js");
 const {
   validateActivity,
 } = require("../middlewares/validation/activityValidation");
@@ -36,7 +36,7 @@ const {
   getAllActivitySession,
   getWeeklyProgress,
   getMonthlyProgress,
-} = require("../controllers/activity");
+} = require("../controllers/activity/activity.js");
 const {
   validateResources,
 } = require("../middlewares/validation/resourcesValidation");

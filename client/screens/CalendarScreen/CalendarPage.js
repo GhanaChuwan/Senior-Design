@@ -65,7 +65,7 @@ export default function CalendarPage({ navigation, route }) {
     const parent = navigation.getParent();
     getEvents();
     parent?.setOptions({
-      title: "CalendarPage",
+      title: "Calendar",
       headerRight: () => (
         <View>
           <TouchableOpacity

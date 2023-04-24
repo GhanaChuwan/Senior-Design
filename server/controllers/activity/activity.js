@@ -1,7 +1,7 @@
-const Activity = require("../models/activity");
-const Subject = require("../models/subject");
-const ActivitySession = require("../models/activitySessions");
-const User = require("../models/user");
+const Activity = require("../../models/activity");
+const Subject = require("../../models/subject");
+const ActivitySession = require("../../models/activitySessions");
+const User = require("../../models/user");
 const dayjs = require("dayjs");
 
 exports.createActivity = async (req, res) => {
