@@ -1,6 +1,6 @@
-const challenges = require("../models/challenges");
-const activityList = require("../models/activity");
-const User = require("../models/user");
+const challenges = require("../../models/challenges");
+const activityList = require("../../models/activity");
+const User = require("../../models/user");
 
 exports.getStreak = (req, res) => {
   // try {

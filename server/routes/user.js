@@ -45,7 +45,7 @@ const {
   createGrade,
   getAllGrades,
   deleteGrade,
-} = require("../controllers/grade");
+} = require("../controllers/grade/grade.js");
 
 const {
   createEvents,
@@ -58,7 +58,7 @@ const {
   getDays,
   getChallenges,
   updateChallenges,
-} = require("../controllers/rewards");
+} = require("../controllers/reward/rewards.js");
 
 const { downloadProgressLink } = require("../controllers/downloadProgess");
 
