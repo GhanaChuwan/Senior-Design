@@ -1,6 +1,6 @@
-const Grade = require("../models/grade");
-const Subject = require("../models/subject");
-const User = require("../models/user");
+const Grade = require("../../models/grade");
+const Subject = require("../../models/subject");
+const User = require("../../models/user");
 
 exports.createGrade = async (req, res) => {
   const { gradeName, gradeType, gradePoints, subjectId } = req.body;
