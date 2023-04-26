@@ -108,7 +108,7 @@ exports.updateChallenges = async (req, res) => {
       case "reading":
         console.log("r");
         var challenge = await challenges.findById(challengeList[0]);
-        challenge.currentAmount += 24300;
+        challenge.currentAmount += time;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
@@ -121,7 +121,7 @@ exports.updateChallenges = async (req, res) => {
       case "study with a friend":
         console.log("f");
         var challenge = await challenges.findById(challengeList[1]);
-        challenge.currentAmount += 140000;
+        challenge.currentAmount += time;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
@@ -134,7 +134,7 @@ exports.updateChallenges = async (req, res) => {
       case "reviewing notes":
         console.log("n");
         var challenge = await challenges.findById(challengeList[2]);
-        challenge.currentAmount += 120000;
+        challenge.currentAmount += time;
         if (challenge.completed != true) {
           if (challenge.currentAmount >= challenge.totalAmount) {
             challenge.completed = true;
