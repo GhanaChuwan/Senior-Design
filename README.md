@@ -10,6 +10,8 @@ To get started with Academic Performance and Success App, follow these steps:
  cd server 
  cd client 
  npm install </code>
+ 
+3. Change the IP address on APIConnection folder located within the client folder.
    
-3. To start the application, run the following command: `npm start` 
+4. To start the application, run the following command: `npm start` 
  
