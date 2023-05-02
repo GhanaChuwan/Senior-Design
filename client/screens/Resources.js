@@ -9,7 +9,7 @@ export default function Resources({ navigation, route }) {
   }, [route.params]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
     <ScrollView>
 
     <Card style={styles.card}>
@@ -34,27 +34,9 @@ export default function Resources({ navigation, route }) {
                 target="_blank"
                 style={styles.paragraph}
               >
-               <Text style={styles.underline}>{"Log into Starfish"}</Text> 
+               <Text style={styles.underline}>Website: {"Log into Starfish"}</Text> 
               </Paragraph>
-              {/* <Paragraph
-                onPress={() =>
-                  Linking.openURL(
-                    record.faqLink
-                  )
-                }
-                target="_blank"
-                style={styles.paragraph}
-              >
-                 <Text style={styles.underline}>{record.faq}</Text> 
-              </Paragraph> */}
-              <Paragraph
-             
-             >
-
-             </Paragraph>
- 
-
-
+              
              
             </Card.Content>
           </Card>
@@ -74,7 +56,7 @@ export default function Resources({ navigation, route }) {
                 style={styles.paragraph}
               >
              
-             <Text style={styles.underline}>{record.info}</Text>
+             <Text style={styles.underline}>Website: {record.info}</Text>
               </Paragraph>
               <Paragraph
                 onPress={() =>
@@ -109,19 +91,19 @@ export default function Resources({ navigation, route }) {
               target="_blank"
               style={styles.paragraph}
             >
-            <Text style={styles.underline}>{record.email}</Text>  
+            <Text style={styles.underline}>Email: {record.email}</Text>  
             </Paragraph>
             <Paragraph
               onPress={() => Linking.openURL(record.phoneLink)}
               target="_blank"
               style={styles.paragraph}
             >
-               <Text style={styles.underline}>{record.phone}</Text> 
+               <Text style={styles.underline}>Phone Number: {record.phone}</Text> 
             </Paragraph>
             <Paragraph
              
              >
-             <Title style={styles.paragraph}>{record.hours}</Title> 
+             <Title style={styles.paragraph}>Office: {record.hours}</Title> 
              </Paragraph>
              <Paragraph
               onPress={() =>
@@ -143,10 +125,8 @@ export default function Resources({ navigation, route }) {
      
       
     </ScrollView>
-  </SafeAreaView>
+  </View>
 
-
-    
             
   );
             

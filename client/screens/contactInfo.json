@@ -1,18 +1,7 @@
 [
 
 
-    // {
-    //     "id": 1,
-    //     "title": "Penn State Starfish",
-    //     "info": "Penn State Starfish Information",
-    //     "login": "Log into Starfish",
-    //     "faq": "FAQ's about Penn State Starfish",
-    //     "infoLink": "https://sites.psu.edu/starfishinfo/",
-    //     "loginLink": "https://psu.starfishsolutions.com/starfish-ops/instructor/index.html?tenantId=9045",
-    //     "faqLink": "https://sites.psu.edu/starfishinfo/resources/faq/"
-       
-       
-    //    },
+
        {
        "id": 2,
        
@@ -48,6 +37,7 @@
                
        "title": "Personal Counseling Office",
        "info": "Personal Counseling Office Information",
+       "email": "mms6641@psu.edu",
        "phone": "814-456-2014",
        "hours": "Monday-Friday, 8:00am-5:00pm. (appointments preferred)",
        "address": "4651 College Drive, Erie, PA 16563",
@@ -78,7 +68,7 @@
                       
        "title": "Campus Health and Wellness Center",
        "info": "Campus Health and Wellness Center Information",
-       "email": "DiversityBehrend@psu.edu",
+       "email": "smc37@psu.edu",
        "phone": "814-898-6217",
        "hours": "Monday-Friday, 8:00am-5:00pm",
        "address": "Carriage House/Burke 110",
@@ -95,6 +85,7 @@
                           
        "title": "International Student Advising",
        "info": "International Student Advising Information",
+       "email": "akh17@psu.edu",
        "phone": "814-898-6031",
        "hours": "Monday-Friday, 8:00am-5:00pm",
        "address": "Perry Hall, Floor 1",
@@ -110,6 +101,7 @@
                              
        "title": "Student Conduct",
        "info": "Student Affairs Information",
+       "email": "kqm3@psu.edu",
        "phone": "814-898-6111",
        "hours": "Monday-Friday, 8:00am-5:00pm",
        "address": "155 Reed Union Building (Second Floor)",

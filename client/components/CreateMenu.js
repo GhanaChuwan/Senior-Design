@@ -35,7 +35,7 @@ const ActivitiesCard = ({ onPress }) => {
       <View style={styles.ReactangleCard}>
         <View style={styles.cardContent}>
           <FontAwesome5 name="tasks" style={styles.iconButton} />
-          <Text style={styles.titleText}>Activities</Text>
+          <Text style={styles.titleText}>Activity</Text>
         </View>
         {/* Your card content goes here */}
       </View>

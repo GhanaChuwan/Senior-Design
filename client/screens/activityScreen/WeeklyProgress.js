@@ -30,7 +30,8 @@ const WeeklyProgress = ({ navigation, route }) => {
     labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: weeklySession,
+        data:[50, 70, 90, 40, 30, 20, 0]
+        //data: weeklySession,
       },
     ],
   };

@@ -53,7 +53,7 @@ function ActivityTime({ navigation, route }) {
   }, [activityId]);
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: title });
+   // navigation.setOptions({ headerTitle: title });
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#1e407c",
@@ -66,7 +66,7 @@ function ActivityTime({ navigation, route }) {
       //     </View>
       //   ),
     });
-  }, [title]);
+  }, []);
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
