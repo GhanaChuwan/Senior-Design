@@ -76,8 +76,8 @@ async function schedulePushNotification() {
   const trigger = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
   const d = await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
+      title: "Hey, you have been inactive for 3 days! 📬",
+      body: "Please get back to app and complete challenges",
       data: { data: "goes here" },
     },
     trigger,

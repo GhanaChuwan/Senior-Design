@@ -5,16 +5,17 @@ const Subject = require("../models/subject");
 const User = require("../models/user");
 
 describe("createSubject", () => {
-  let user;
+  const { userId } = req.user;
   beforeAll(async () => {
-    connect = await mongoose.connect(process.env.MONGODB_URI_TEST, {
+    connect = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    const user = await User.findById(userId);
 
     user = await User.create({
-      email: "test@example.com",
-      password: "password",
+      email: email,
+      password:password,
     });
   });
 
