@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 
-import Logo from "../../assets/Images/PsuLifeLine.png";
+import Logo from "../../assets/Images/LifeLineLogo.png";
 import CustomInput from "../../components/CustomInput/CustomInput.js";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { StackActions, useNavigation } from "@react-navigation/native";
